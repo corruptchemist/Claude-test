@@ -12,28 +12,31 @@ from zerosum import dur_of
 
 # (part key, REAPER track name, GM program 0-indexed, clef)
 PARTS = [
-    ("LEAD",    "Lead 1 (pulse 25%)",  80, clef.TrebleClef),
-    ("LEAD2",   "Lead 2 (pulse 12.5%)", 81, clef.TrebleClef),
-    ("BELL",    "Bell / Glock",         9, clef.TrebleClef),
-    ("STRINGS", "Strings (pad)",       49, clef.TrebleClef),
-    ("GUITAR",  "Guitar (offbeat)",    27, clef.TrebleClef),
-    ("ARP",     "Arp engine 16ths",    11, clef.TrebleClef),
-    ("BASS",    "Bass",                38, clef.BassClef),
-    ("SUB",     "Sub bass",            87, clef.BassClef),
-    ("DRUMS",   "Drums",                0, clef.PercussionClef),
+    ("LEAD",     "Lead 1 (pulse 25%)",   80, clef.TrebleClef),
+    ("LEAD2",    "Lead 2 (pulse 12.5%)", 81, clef.TrebleClef),
+    ("BELL",     "Bell / Glock",          9, clef.TrebleClef),
+    ("STRINGS",  "Chords (pad)",         50, clef.TrebleClef),
+    ("GUITAR",   "Guitar (offbeat)",     27, clef.TrebleClef),
+    ("POWER",    "Guitar (distorted)",   30, clef.BassClef),
+    ("LOWBRASS", "Low brass",            58, clef.BassClef),
+    ("ARP",      "Arp engine 16ths",     11, clef.TrebleClef),
+    ("BASS",     "Bass",                 38, clef.BassClef),
+    ("SUB",      "Sub bass",             87, clef.BassClef),
+    ("DRUMS",    "Drums",                 0, clef.PercussionClef),
 ]
 
 DRUM_MIDI = {"K": 36, "S": 38, "H": 42, "O": 46, "C": 49, "R": 51,
              "T": 47, "F": 41, "Z": 38}
 
 TEMPO_AT = {1: A.BPM}
-KEY_AT = {1: -2, 129: 5}          # Bb major -> B major
-TEXT_AT = {9: "engine starts", 17: "bass enters", 81: "bass alone",
-           129: "up a semitone", 193: "back to the opening"}
-MARKS = {1: "bells alone", 9: "engine", 17: "THE DROP",
-         33: "A figurated", 49: "tune moves to Lead 2", 65: "+ Your Best Friend",
-         81: "BASS FEATURE", 97: "both themes", 113: "build",
-         129: "B MAJOR - the strain", 153: "quodlibet", 177: "climax",
+KEY_AT = {1: -2, 129: 5}   # G minor / Bb major share 2 flats; B major at 129
+TEXT_AT = {33: "poco piu luminoso", 81: "bass alone",
+           97: "oscuro", 129: "up a semitone", 193: "back to the opening"}
+MARKS = {1: "G MINOR - the fight", 17: "theme, minor",
+         33: "Bb MAJOR - hope arrives", 49: "tune moves to Lead 2",
+         65: "+ Your Best Friend", 81: "BASS FEATURE",
+         97: "G MINOR - phase two", 113: "minor build",
+         129: "B MAJOR - the payoff", 153: "quodlibet", 177: "climax",
          193: "coda"}
 
 

@@ -92,43 +92,39 @@ are within a tone of what they decorate, and that glissandi span a third or more
 
 # AFTERLIGHT
 
-208 bars, ♩=176, ~4:46. Nine tracks. Multi-track MIDI for REAPER.
+208 bars, ♩=176, ~4:46. Eleven tracks. Multi-track MIDI for REAPER.
 
-"Lots happening while nothing is happening" — the boss-music trick, and what
-this is built around:
+## Mode plan — hope is arrived at, not sat in
 
-| happening | not happening |
-|---|---|
-| a 16th engine that never stops from m.9 to the end | harmony moves once every **two** bars |
-| bass in constant motion, 2006 attacks | the loop never changes |
-| hats on every 8th, fills every 4 bars | melody is long notes with real holes |
+| mm. | mode | what |
+|---|---|---|
+| 1–32 | **G minor** | the fight. Distorted guitar chugging, low brass, no bells |
+| 33–96 | B♭ major | hope arrives. Power guitar drops to offbeats |
+| 81–96 | | bass feature, everything else out of the way |
+| 97–128 | **G minor** | phase two. Dark again, chug returns |
+| 129–208 | B major | the payoff, then coda |
 
-Remove any one of the three and it stops sounding like a boss fight.
-`verify()` asserts the engine never stops and the bass never drops below five
-attacks a bar between the drop and the coda.
+G minor and B♭ major share a key signature, so the shift is **modal, not a
+modulation** — and the dark phases move harmonically twice as fast (one chord
+per bar against one per two), which is most of why they read as agitated.
 
-## Quoted directly
+`verify()` asserts the bells never sound in a minor phase and the distorted
+guitar is always chugging there rather than sitting on offbeats.
 
-    A  Once Upon a Time / main theme   5 5 2 | 1 5 5 | 5 7 7 1 | 7 5 3
-    B  Your Best Friend                1 2 3 1 | 2 | 2 3 2 1 || 3 4 5 1 | 6 5
-    C  Snowdin Town pt.2 (the strain
-       Last Goodbye leans on)          5 5 5 5 5 4 3 4 | 1 5 2 3
+## Depth
 
-A and B sound together at mm.97–128; A, B and C stack at mm.153–176.
+Three layers exist purely for weight: **distorted rhythm guitar** (root-and-fifth
+power chords, chugging 16ths in the dark phases), **low brass**, and a **sub-bass**
+octave under the bass. Toby spent his only paid samples on bass and rhythm rock
+guitar — leaving the distorted guitar out was the main reason the previous
+version read as a win screen.
 
-## The melody changes hands
+## Balance
 
-No voice carries the tune for more than sixteen bars:
-
-    m1 bell · m17 lead 1 · m49 lead 2 (lead 1 takes 16ths) · m65 both, two themes
-    m81 bell only, over the bass feature · m97 all three · m129 leads in octaves
-    m153 all three, quodlibet · m193 bell closes it
-
-## Bass
-
-Silent for 16 bars, then constant. Four patterns rotating with a fill every
-fourth bar, an eight-bar **unaccompanied feature** at mm.81–96 with the kit
-reduced to hat and rim, and a sub-octave track under it for weight.
+Offsets: pad and low brass and distorted guitar at −1, offbeat guitar and arp
+at −2, bass level with the melody. In the preview render the pad, arp and
+guitars were raised substantially and the bell and bass pulled back — the
+middle of the picture was inaudible before.
 
     cd tools && python3 afterlight.py && python3 export_afterlight.py
     python3 render_audio.py ../score/afterlight.mid ../score/afterlight.mp3

@@ -103,6 +103,8 @@ def osc(kind, freq, n):
         return 2.0 * ph - 1.0
     if kind == "tri":
         return 4.0 * np.abs(ph - 0.5) - 1.0
+    if kind == "dist":                      # distorted rhythm guitar
+        return np.tanh((2.0 * ph - 1.0) * 6.0) * 0.8
     return np.sin(2 * np.pi * freq * t)
 
 
@@ -126,18 +128,22 @@ def env(n, a, d, s, r):
 
 
 # channel -> (waveform, gain, attack, decay, sustain, release, pan)
+# Rebalanced: last pass you could hear only melody and bass.  The middle of
+# the picture -- pad, arp, guitars -- comes up; bell and bass come down.
 VOICES = {
-    0:  ("pulse25", 0.30, 0.004, 0.05, 0.80, 0.06,  0.00),   # Lead 1
-    1:  ("pulse12", 0.19, 0.005, 0.06, 0.72, 0.06, -0.33),   # Lead 2
-    2:  ("sine",    0.20, 0.001, 0.35, 0.05, 0.30,  0.22),   # Bell / glock
-    3:  ("saw",     0.085, 0.130, 0.22, 0.85, 0.28,  0.30),  # Strings
-    4:  ("pulse12", 0.095, 0.002, 0.04, 0.28, 0.05, 0.42),   # Guitar
-    5:  ("tri",     0.115, 0.003, 0.04, 0.58, 0.05, -0.28),  # Arp engine
-    6:  ("square",  0.46, 0.003, 0.06, 0.82, 0.05,  0.00),   # Bass -- loud
-    7:  ("sine",    0.40, 0.010, 0.10, 0.90, 0.08,  0.00),   # Sub bass
+    0:  ("pulse25", 0.27, 0.004, 0.05, 0.80, 0.06,  0.00),   # Lead 1
+    1:  ("pulse12", 0.17, 0.005, 0.06, 0.72, 0.06, -0.33),   # Lead 2
+    2:  ("sine",    0.13, 0.001, 0.35, 0.05, 0.30,  0.24),   # Bell -- pulled back
+    3:  ("saw",     0.175, 0.100, 0.20, 0.85, 0.26,  0.30),  # Chord pad -- UP
+    4:  ("pulse12", 0.140, 0.002, 0.04, 0.28, 0.05,  0.44),  # Guitar offbeat -- UP
+    5:  ("dist",    0.225, 0.002, 0.05, 0.70, 0.05, -0.42),  # Distorted guitar
+    6:  ("saw",     0.200, 0.045, 0.12, 0.88, 0.12,  0.10),  # Low brass
+    7:  ("tri",     0.165, 0.003, 0.04, 0.58, 0.05, -0.26),  # Arp engine -- UP
+    8:  ("square",  0.340, 0.003, 0.06, 0.82, 0.05,  0.00),  # Bass -- down a bit
+    10: ("sine",    0.300, 0.010, 0.10, 0.90, 0.08,  0.00),  # Sub bass
 }
 # channels that get an echo send, and how much
-DELAY = {0: 0.26, 2: 0.20}
+DELAY = {0: 0.26, 2: 0.22}
 
 DRUMS = {36: ("kick", 0.55), 38: ("snare", 0.34), 41: ("tom", 0.30),
          42: ("hat", 0.13), 46: ("ohat", 0.16), 47: ("tom", 0.30),
