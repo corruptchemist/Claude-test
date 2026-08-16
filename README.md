@@ -87,3 +87,54 @@ a quarter or longer, that grace notes
 are within a tone of what they decorate, and that glissandi span a third or more.
 
     cd tools && python3 threefights2.py && python3 export_threefights.py
+
+---
+
+# AFTERLIGHT
+
+200 bars, ♩=176, 4/4, ~4:32. Built for REAPER — the deliverable is multi-track MIDI.
+
+Modelled closely on *Hopes and Dreams* and *Last Goodbye*, which share a key
+world: Hopes and Dreams is B♭ major and lifts a semitone to B major at its 2/3
+point, and Last Goodbye is in B major. The piece starts in the first song's key
+and arrives in the second's.
+
+## The engine
+
+    || Cm7 | Bb/D | Ebmaj7 | Fsus4 -> F ||     ii7 - I6 - IV - V
+
+One chord per TWO bars. Bass ascends C–D–E♭–F. The tonic never appears in root
+position — always B♭/D — which is why the loop climbs and never arrives.
+Fast pulse plus slow harmonic rhythm is the whole "heroic, not panicked" formula.
+
+The theme is the Undertale-family scale-degree cell `5 5 2 | 1 5 5 | 5 7 7 1 |
+7 5 3`, stated in long values, high, over a fast bed.
+
+## Getting more complicated, still manageable
+
+Complexity arrives by adding layers and figurating the same eight bars — never
+by making any single part harder. Structural pitches stay on the strong beats
+at every stage; only the space between them fills in.
+
+| stage | mm. | what arrives | layers |
+|---|---|---|---|
+| 1 | 1–16 | theme + arp only, no bass, no drums | 2 |
+| 2 | 17–32 | **the drop** — bass enters, light kit | 3 |
+| 3 | 33–48 | counter-line, full kit | 4 |
+| 4 | 49–64 | strings; theme grows 8th tails | 5 |
+| 5 | 65–80 | offbeat guitar; theme in 8ths | 6 |
+| 6 | 81–96 | 16th figuration | 6 |
+| 7 | 97–128 | tutti, octave up | 6 |
+| 8 | 129–160 | **B major** — semitone lift, no pivot | 6 |
+| 9 | 161–184 | the strain: iii–IV–iii–V→vi, bass oscillates | 6 |
+| coda | 185–200 | strips back to the opening texture | 6 |
+
+`verify()` checks bar lengths, the dynamics offsets, and that the texture never
+thins before the coda.
+
+    cd tools && python3 afterlight.py && python3 export_afterlight.py
+
+## REAPER import
+
+`afterlight.mid` is format-1 multi-track. Track names say which patch to load;
+drums are on channel 10. Insert → Media file, and tick "import as new tracks".
