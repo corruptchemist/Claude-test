@@ -16,7 +16,11 @@ major-mode "Payoff Matrix", and returns respelled G♯ as the ♯11 of the final
     tools/zerosum.py    notation parser, ostinato/stab/drum generators, section I
     tools/zerosum2.py   sections II–VII, score assembly, verification
     tools/render.py     renders the complete note listing as an HTML score page
-    score/zero-sum.html the deliverable
+    tools/export_musicxml.py  exports MusicXML + MIDI from the same data
+    score/zero-sum.html       readable note listing
+    score/zero-sum.mxl        compressed MusicXML -- import this into Finale
+    score/zero-sum.musicxml   uncompressed MusicXML
+    score/zero-sum.mid        MIDI, for listening
 
 ## Verify
 
@@ -28,3 +32,13 @@ exactly to its meter, then reports where the withheld elements first appear.
 ## Render
 
     cd tools && python3 render.py ../score/zero-sum.html
+
+## Import notes
+
+Written at **concert pitch**. Set up transposing instruments in Finale after import.
+
+Drums use General MIDI pitches on a percussion staff: 36 kick, 38 snare, 42 closed hat,
+46 open hat, 47 tom, 49 crash, 51 ride. Rolls are notated as plain snare notes -- add
+tremolo marks by hand.
+
+    cd tools && python3 export_musicxml.py
