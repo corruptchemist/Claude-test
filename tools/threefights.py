@@ -52,8 +52,11 @@ N = 216
 # ---------------------------------------------------------------------------
 LEVELS = ["ppp", "pp", "p", "mp", "mf", "f", "ff", "fff"]
 LVL = {d: i for i, d in enumerate(LEVELS)}
-OFFSET = {"LEAD": 0, "COUNTER": -1, "SUSTAIN": -2, "STABS": -2,
-          "KEYS": -1, "BASS": 0, "DRUMS": -1}     # BASS now equals the melody
+OFFSET = {"LEAD": 0, "COUNTER": -1, "SUSTAIN": -2, "STABS": -3,
+          "KEYS": -2, "BASS": 0, "DRUMS": -1}
+# Stabs three steps down, keys two.  Marking alone was not enough last time --
+# the keys were also arpeggiating an octave UP, straight into the melody's
+# register.  They now sit below it.  See KEYS in threefights2.py.
 
 LEAD_DYN = [
     (1, "f"), (5, "ff"), (9, "mf"), (17, "f"), (25, "mf"), (33, "ff"),
@@ -147,27 +150,37 @@ def q1(chord, oct_shift=0):
 # ---------------------------------------------------------------------------
 # I.  FLOWER            mm. 1-56       F minor (4b)      q = 95
 # ---------------------------------------------------------------------------
-CH_I = (["Fm", "Fm", "Db", "Eb", "Fm", "Fm", "C7", "C7"]        # 1-8  intro
-        + ["Fm", "Fm", "Db", "Eb", "Fm", "Fm", "C7", "Fm"]      # 9-16 Q3
-        + ["Fm", "Fm", "Db", "Eb", "Db", "Eb", "C7", "Fm"]      # 17-24 Q3 varied
+CH_I = (["Fm", "Fm", "Db", "C7", "Fm", "Bbm", "C7", "Fm"]       # 1-8  intro
+        + ["Fm", "Fm", "Db", "Eb", "Fm", "Bbm", "C7", "Fm"]     # 9-16 Q3
+        + ["Fm", "Ab", "Db", "Eb", "Db", "Eb", "C7", "Fm"]      # 17-24 Q3 varied
         + ["Db", "Eb", "Ab", "Cm", "Db", "Eb", "Fm", "C7"]      # 25-32 B
-        + ["Fm", "Fm", "Db", "Eb", "Fm", "Fm", "C7", "Fm"]      # 33-40 Q3 ornamented
-        + ["Db", "Eb", "Fm", "Cm", "Db", "Eb", "C7", "Fm"]      # 41-48
-        + ["Fm", "Db", "Eb", "Fm", "Db", "Db", "C7", "C7"])     # 49-56 build
+        + ["Fm", "Fm", "Db", "Eb", "Fm", "Bbm", "C7", "Fm"]     # 33-40 Q3 ornamented
+        + ["Db", "Eb", "Ab", "Fm", "Bbm", "Eb", "Ab", "C7"]     # 41-48
+        + ["Fm", "Db", "Eb", "Fm", "Bbm", "Db", "C7", "C7"])    # 49-56 build
 
 LEAD_I = [
-    # 1-8  the motto, brass, grand
-    "R/2 Db5/4 C5/4", "F5/1~", "F5/2 Db5/4 C5/4", "F5/4 Ab5/4 C6/2",
-    "C6/2 Db6/4 C6/4", "F6/1~", "F6/2 C6/4 Ab5/4", "G5/2 R/4 C5/8 Db5/8",
-    # 9-16  Q3 -- "Your Best Friend", stated plainly in F minor
-    "F5/8 G5/8 Ab5/4 F5/2",
+    # 1-8  INTRO.  Finale is desperate, not stately -- so the piece opens on a
+    # falling flourish and hammered brass hits, with the kit already going.
+    # The motto arrives as a rhythmic figure, not as whole notes.
+    "F6/8 R/8 F6/8 R/8 Db6/4 C6/4",
+    "F6/8 R/8 F6/8 R/8 C6/2",
+    "Db6/16 C6/16 Bb5/16 Ab5/16 G5/8 F5/8 C6/4 Db6/4",
+    "C6/1~",
+    "C6/8 Db6/8 C6/8 Ab5/8 F5/4 R/4",
+    "Db6/8 Eb6/8 F6/8 Ab6/8 G6/4 F6/4",
+    "E6/16 F6/16 G6/16 Ab6/16 Bb6/8 C7/8 Bb6/4 G6/4",
+    "F6/2 R/4 C5/8 Db5/8",
+    # 9-16  Q3 -- "Your Best Friend" in F minor.  The gaps are deliberate:
+    # the counter and bass answer inside them, so the tune is a dialogue
+    # rather than a paragraph.
+    "F5/8 G5/8 Ab5/4 F5/4 R/4",
     "G5/4 G5/8 Ab5/8 G5/4 F5/4",
-    "Ab5/8 Bb5/8 C6/4 F5/2",
-    "Db6/4 C6/2 R/8 C5/8",
-    "F5/8 G5/8 Ab5/4 F5/2",
-    "G5/4 G5/8 Ab5/8 G5/4 F5/4",
-    "Ab5/8 Bb5/8 C6/4 Db6/4 C6/4",
-    "F5/1",
+    "Ab5/8 Bb5/8 C6/4 F5/4 R/4",
+    "Db6/4 C6/2 R/4",
+    "F5/8 G5/8 Ab5/4 C6/8 Ab5/8 F5/4",
+    "G5/16 Ab5/16 G5/16 F5/16 G5/4 Ab5/8 G5/8 F5/4",
+    "Ab5/8 Bb5/8 C6/8 Eb6/8 Db6/4 C6/4",
+    "F5/2 R/8 C6/16 Db6/16 C6/4",
     # 17-24  Q3 again, but Toby-ised: leaps, 16ths, blue notes, register jumps
     "F5/16 G5/16 Ab5/16 C6/16 F6/8 C6/8 Ab5/4 F5/4",
     "G5/16 Ab5/16 G5/16 F5/16 G5/8 Bb5/8 G5/4 Eb5/4",
@@ -213,6 +226,24 @@ LEAD_I = [
     "Db6/8 F6/8 Ab6/8 C7/8 Db7/4 Ab6/4",
     "E6/8 G6/8 Bb6/8 Db7/8 E7/4 Db7/4",
     "Bb6/16 G6/16 E6/16 Db6/16 Bb5/4 R/2",
+]
+
+# The answering phrases that fill the gaps in mm.9-16.  Scored an octave
+# below the lead so they read as a reply, not as competition.
+COUNTER_I = [
+    "R/1", "R/1", "R/1", "R/1",
+    "R/2 Ab4/8 Bb4/8 C5/4",
+    "R/1",
+    "R/2 G4/8 Ab4/8 Bb4/4",
+    "R/1",
+    "R/2 R/4 C4/8 Db4/8",          # answers the rest in m.9
+    "R/1",
+    "R/2 R/4 Ab3/8 Bb3/8",         # answers m.11
+    "R/2 F4/8 G4/8 Ab4/8 C5/8",    # answers m.12
+    "R/1",
+    "R/1",
+    "R/2 Ab4/8 G4/8 F4/4",
+    "R/2 C4/8 Db4/8 C4/4",
 ]
 
 # ---------------------------------------------------------------------------

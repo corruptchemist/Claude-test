@@ -72,10 +72,18 @@ A fan arrangement — commercial release would need clearance.
 The **quodlibet** at mm.185–200 runs Q1 in the bass, Q3 in the lead and Q4's
 ♭7→6 slur in the counter — all three fights sounding at once in D minor.
 
+## Balance
+
+The lead is the reference; everything else is a fixed offset from it, enforced
+in `verify()`. Stabs sit **three** steps under the melody and keys **two** —
+and in movement I the keys also move an octave *below* the tune rather than
+arpeggiating into its register, which was the real masking problem.
+
 ## What verify() checks
 
 Bar lengths, chord-grid length, the dynamics rule (stabs strictly under the
-melody), that ornaments land on notes of a quarter or longer, that grace notes
+melody by at least two steps, keys likewise), that ornaments land on notes of
+a quarter or longer, that grace notes
 are within a tone of what they decorate, and that glissandi span a third or more.
 
     cd tools && python3 threefights2.py && python3 export_threefights.py

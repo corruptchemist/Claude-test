@@ -23,7 +23,7 @@ PARTS = [
 DRUM_MIDI = {"K": 36, "S": 38, "H": 42, "O": 46, "C": 49, "R": 51,
              "T": 47, "F": 41, "Z": 38, "X": 49}
 
-TEMPO_AT = {1: 95, 65: 148, 129: 126}
+TEMPO_AT = {1: 112, 65: 148, 129: 126}
 KEY_AT = {1: -4, 61: 2, 129: -1}
 TEXT_AT = {63: "rit.", 65: "a tempo", 127: "poco rit.", 129: "a tempo",
            97: "bass break", 185: "all three themes together", 213: "allargando"}

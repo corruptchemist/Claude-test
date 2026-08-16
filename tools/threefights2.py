@@ -47,6 +47,7 @@ ROOTS = {
     "Dm":  ("D2", "D3", "A2", "F2", "C#2"),   "Bb": ("Bb1", "Bb2", "F2", "D2", "A1"),
     "A5":  ("A1", "A2", "E2", "C#2", "G#1"),  "Gm": ("G1", "G2", "D2", "Bb1", "F#1"),
     "F":   ("F1", "F2", "C2", "A1", "E1"),
+    "Bbm": ("Bb1", "Bb2", "F2", "Db2", "A1"),
     "Edim7": ("E1", "E2", "Bb1", "G1", "D#1"),
     "A#dim7": ("A#1", "A#2", "E2", "C#2", "A1"),
     "Ebdim7": ("Eb2", "Eb3", "A2", "Gb2", "D2"),
@@ -143,7 +144,7 @@ VOICE = {
     "Em7": "G4+B4+D5", "A": "A4+C#5+E5", "F#7": "A#4+C#5+E5", "G": "G4+B4+D5",
     "B7": "B4+D#5+A4", "C": "C4+E4+G4",
     "Dm": "D4+F4+A4", "Bb": "Bb3+D4+F4", "A5": "A3+C#4+E4", "Gm": "G3+Bb3+D4",
-    "F": "F3+A3+C4",
+    "F": "F3+A3+C4", "Bbm": "Bb3+Db4+F4",
     "Edim7": "E4+G4+Bb4+Db5", "A#dim7": "E4+G4+A#4+C#5", "Ebdim7": "Eb4+Gb4+A4+C5",
 }
 PAD = {k: "+".join(v.split("+")[:2]) for k, v in VOICE.items()}
@@ -161,6 +162,15 @@ def arp(c, o=0):
     v = VOICE[c].split("+")
     seq = (v * 3)[:4]
     line = " ".join(f"{p}/16" for p in (seq + seq[::-1]) * 2)
+    return shift(line, o) if o else line
+
+
+def arp8(c, o=0):
+    """Half the density of arp(): eighths, not sixteenths.  Used wherever the
+    melody is carrying the line and the keys are only colour."""
+    v = VOICE[c].split("+")
+    seq = (v * 3)[:4]
+    line = " ".join(f"{p}/8" for p in seq + seq[::-1])
     return shift(line, o) if o else line
 
 
@@ -188,14 +198,18 @@ for i, c in enumerate(CHORDS):
     # ---- keys ----
     if m <= 8 or 65 <= m <= 72 or 97 <= m <= 104:
         KEYS.append("R/1")
+    elif m <= 24 or 33 <= m <= 40:
+        KEYS.append(arp8(c, -12))          # thin, and an octave below the tune
     elif m <= 64:
-        KEYS.append(arp(c, 12))
+        KEYS.append(arp(c, -12))
     elif m <= 128:
         KEYS.append(arp(c))
     else:
         KEYS.append(T.q1(c, 12))                  # Q1 doubled up an octave
     # ---- counter ----
-    if m <= 16 or 57 <= m <= 88 or 97 <= m <= 104 or 121 <= m <= 160:
+    if m <= 16:
+        COUNTER.append(T.COUNTER_I[m - 1])
+    elif 57 <= m <= 88 or 97 <= m <= 104 or 121 <= m <= 160:
         COUNTER.append("R/1")
     elif 185 <= m <= 200:
         # the quodlibet's third strand: Q4's b7 -> 6 slur, now in D Dorian
@@ -208,8 +222,13 @@ COUNTER[-1] = "D4+A4+D5/1"
 DRUMS = []
 for i in range(N):
     m = i + 1
-    if m <= 4:
-        DRUMS.append("fin_half")
+    if m == 1:
+        DRUMS.append("fin_fill")           # the kit is in from bar one
+    elif m <= 8:
+        DRUMS.append("fin_c" if m % 4 == 1 else ("fin_b" if m % 2 == 0 else "fin_a"))
+    elif m <= 16:
+        DRUMS.append("fin_fill" if m == 16 else
+                     ("fin_half" if m % 4 == 1 else "fin_b"))   # lighter under the theme
     elif m <= 56:
         DRUMS.append("fin_fill" if m % 8 == 0 else
                      ("fin_c" if m % 8 == 1 else ("fin_b" if m % 2 == 0 else "fin_a")))
@@ -256,8 +275,11 @@ def verify():
     if len(CHORDS) != N:
         p.append(f"chord grid {len(CHORDS)} != {N}")
     for m in range(1, N + 1):
-        if T.LVL[T.dyn_for("STABS", m)] >= T.LVL[T.dyn_for("LEAD", m)]:
-            p.append(f"m.{m}: stabs not under lead")
+        lead = T.LVL[T.dyn_for("LEAD", m)]
+        if T.LVL[T.dyn_for("STABS", m)] > lead - 2:
+            p.append(f"m.{m}: stabs not far enough under lead")
+        if T.LVL[T.dyn_for("KEYS", m)] > lead - 2:
+            p.append(f"m.{m}: keys not far enough under lead")
     # ornaments must land on a real note of a quarter or longer
     from zerosum import dur_of
     for (pt, m, idx), kind in T.ORNAMENTS.items():
