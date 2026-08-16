@@ -138,3 +138,11 @@ thins before the coda.
 
 `afterlight.mid` is format-1 multi-track. Track names say which patch to load;
 drums are on channel 10. Insert → Media file, and tick "import as new tracks".
+
+## Hearing it without a soundfont
+
+    cd tools && python3 render_audio.py ../score/afterlight.mid ../score/afterlight.mp3
+
+`render_audio.py` is a small chiptune synth -- pulse/saw/triangle oscillators
+plus filtered noise for the kit, per MIDI channel. No soundfont or external
+tool needed. Writes .wav, or .mp3 if the filename ends in .mp3.
