@@ -127,13 +127,17 @@ def env(n, a, d, s, r):
 
 # channel -> (waveform, gain, attack, decay, sustain, release, pan)
 VOICES = {
-    0:  ("pulse25", 0.30, 0.004, 0.05, 0.80, 0.06,  0.00),   # Lead
-    1:  ("saw",     0.16, 0.006, 0.06, 0.70, 0.06, -0.35),   # Counter
-    2:  ("saw",     0.10, 0.120, 0.20, 0.85, 0.25,  0.25),   # Strings
-    3:  ("pulse12", 0.11, 0.002, 0.04, 0.30, 0.05,  0.40),   # Guitar
-    4:  ("tri",     0.13, 0.003, 0.04, 0.60, 0.05, -0.25),   # Arp
-    5:  ("square",  0.26, 0.004, 0.07, 0.75, 0.06,  0.00),   # Bass
+    0:  ("pulse25", 0.30, 0.004, 0.05, 0.80, 0.06,  0.00),   # Lead 1
+    1:  ("pulse12", 0.19, 0.005, 0.06, 0.72, 0.06, -0.33),   # Lead 2
+    2:  ("sine",    0.20, 0.001, 0.35, 0.05, 0.30,  0.22),   # Bell / glock
+    3:  ("saw",     0.085, 0.130, 0.22, 0.85, 0.28,  0.30),  # Strings
+    4:  ("pulse12", 0.095, 0.002, 0.04, 0.28, 0.05, 0.42),   # Guitar
+    5:  ("tri",     0.115, 0.003, 0.04, 0.58, 0.05, -0.28),  # Arp engine
+    6:  ("square",  0.46, 0.003, 0.06, 0.82, 0.05,  0.00),   # Bass -- loud
+    7:  ("sine",    0.40, 0.010, 0.10, 0.90, 0.08,  0.00),   # Sub bass
 }
+# channels that get an echo send, and how much
+DELAY = {0: 0.26, 2: 0.20}
 
 DRUMS = {36: ("kick", 0.55), 38: ("snare", 0.34), 41: ("tom", 0.30),
          42: ("hat", 0.13), 46: ("ohat", 0.16), 47: ("tom", 0.30),
@@ -174,9 +178,11 @@ def render(midi_path, wav_path):
                 t0, vel = st.pop(0)
                 notes.append((ch, p, vel, tick_to_sec(t0, div, tempos),
                               tick_to_sec(tick, div, tempos)))
-    total = max(n[4] for n in notes) + 2.5
+    total = max(n[4] for n in notes) + 3.0
     L = int(total * SR)
     out = np.zeros((L, 2), dtype=np.float32)
+    wet = np.zeros((L, 2), dtype=np.float32)
+    bpm = 60e6 / tempos[0][1]
 
     for ch, p, vel, t0, t1 in notes:
         i0 = int(t0 * SR)
@@ -199,6 +205,18 @@ def render(midi_path, wav_path):
             r = sig * (1 + min(0.0, pan)) ** 0.5
         out[i0:i0 + n, 0] += l[:n]
         out[i0:i0 + n, 1] += r[:n]
+        send = DELAY.get(ch)
+        if send:
+            wet[i0:i0 + n, 0] += l[:n] * send
+            wet[i0:i0 + n, 1] += r[:n] * send
+
+    # echo on the leads -- Toby's leads carry heavy delay, and it is a large
+    # part of why a single melody line fills so much space
+    if wet is not None:
+        for beats, gain in ((0.75, 0.42), (1.5, 0.20), (2.25, 0.09)):
+            d = int(beats * 60.0 / bpm * SR)
+            if d < L:
+                out[d:] += wet[:L - d] * gain
 
     # gentle limiter, then normalise
     out = np.tanh(out * 1.25) / 1.25

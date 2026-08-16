@@ -12,12 +12,14 @@ from zerosum import dur_of
 
 # (part key, REAPER track name, GM program 0-indexed, clef)
 PARTS = [
-    ("LEAD",    "Lead (square/pulse)", 80, clef.TrebleClef),
-    ("COUNTER", "Counter (saw)",       81, clef.TrebleClef),
+    ("LEAD",    "Lead 1 (pulse 25%)",  80, clef.TrebleClef),
+    ("LEAD2",   "Lead 2 (pulse 12.5%)", 81, clef.TrebleClef),
+    ("BELL",    "Bell / Glock",         9, clef.TrebleClef),
     ("STRINGS", "Strings (pad)",       49, clef.TrebleClef),
     ("GUITAR",  "Guitar (offbeat)",    27, clef.TrebleClef),
-    ("ARP",     "Arp 16ths",           11, clef.TrebleClef),
+    ("ARP",     "Arp engine 16ths",    11, clef.TrebleClef),
     ("BASS",    "Bass",                38, clef.BassClef),
+    ("SUB",     "Sub bass",            87, clef.BassClef),
     ("DRUMS",   "Drums",                0, clef.PercussionClef),
 ]
 
@@ -26,12 +28,13 @@ DRUM_MIDI = {"K": 36, "S": 38, "H": 42, "O": 46, "C": 49, "R": 51,
 
 TEMPO_AT = {1: A.BPM}
 KEY_AT = {1: -2, 129: 5}          # Bb major -> B major
-TEXT_AT = {17: "bass enters", 129: "up a semitone",
-           161: "the strain", 185: "back to the opening"}
-MARKS = {1: "1 - theme + arp", 17: "2 - THE DROP", 33: "3 - counter, full kit",
-         49: "4 - strings", 65: "5 - guitar, 8ths", 81: "6 - 16ths",
-         97: "7 - tutti", 129: "8 - B MAJOR", 161: "9 - strain",
-         185: "coda"}
+TEXT_AT = {9: "engine starts", 17: "bass enters", 81: "bass alone",
+           129: "up a semitone", 193: "back to the opening"}
+MARKS = {1: "bells alone", 9: "engine", 17: "THE DROP",
+         33: "A figurated", 49: "tune moves to Lead 2", 65: "+ Your Best Friend",
+         81: "BASS FEATURE", 97: "both themes", 113: "build",
+         129: "B MAJOR - the strain", 153: "quodlibet", 177: "climax",
+         193: "coda"}
 
 
 def parse_bar(s, is_drums):

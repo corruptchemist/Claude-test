@@ -92,57 +92,43 @@ are within a tone of what they decorate, and that glissandi span a third or more
 
 # AFTERLIGHT
 
-200 bars, ♩=176, 4/4, ~4:32. Built for REAPER — the deliverable is multi-track MIDI.
+208 bars, ♩=176, ~4:46. Nine tracks. Multi-track MIDI for REAPER.
 
-Modelled closely on *Hopes and Dreams* and *Last Goodbye*, which share a key
-world: Hopes and Dreams is B♭ major and lifts a semitone to B major at its 2/3
-point, and Last Goodbye is in B major. The piece starts in the first song's key
-and arrives in the second's.
+"Lots happening while nothing is happening" — the boss-music trick, and what
+this is built around:
 
-## The engine
+| happening | not happening |
+|---|---|
+| a 16th engine that never stops from m.9 to the end | harmony moves once every **two** bars |
+| bass in constant motion, 2006 attacks | the loop never changes |
+| hats on every 8th, fills every 4 bars | melody is long notes with real holes |
 
-    || Cm7 | Bb/D | Ebmaj7 | Fsus4 -> F ||     ii7 - I6 - IV - V
+Remove any one of the three and it stops sounding like a boss fight.
+`verify()` asserts the engine never stops and the bass never drops below five
+attacks a bar between the drop and the coda.
 
-One chord per TWO bars. Bass ascends C–D–E♭–F. The tonic never appears in root
-position — always B♭/D — which is why the loop climbs and never arrives.
-Fast pulse plus slow harmonic rhythm is the whole "heroic, not panicked" formula.
+## Quoted directly
 
-The theme is the Undertale-family scale-degree cell `5 5 2 | 1 5 5 | 5 7 7 1 |
-7 5 3`, stated in long values, high, over a fast bed.
+    A  Once Upon a Time / main theme   5 5 2 | 1 5 5 | 5 7 7 1 | 7 5 3
+    B  Your Best Friend                1 2 3 1 | 2 | 2 3 2 1 || 3 4 5 1 | 6 5
+    C  Snowdin Town pt.2 (the strain
+       Last Goodbye leans on)          5 5 5 5 5 4 3 4 | 1 5 2 3
 
-## Getting more complicated, still manageable
+A and B sound together at mm.97–128; A, B and C stack at mm.153–176.
 
-Complexity arrives by adding layers and figurating the same eight bars — never
-by making any single part harder. Structural pitches stay on the strong beats
-at every stage; only the space between them fills in.
+## The melody changes hands
 
-| stage | mm. | what arrives | layers |
-|---|---|---|---|
-| 1 | 1–16 | theme + arp only, no bass, no drums | 2 |
-| 2 | 17–32 | **the drop** — bass enters, light kit | 3 |
-| 3 | 33–48 | counter-line, full kit | 4 |
-| 4 | 49–64 | strings; theme grows 8th tails | 5 |
-| 5 | 65–80 | offbeat guitar; theme in 8ths | 6 |
-| 6 | 81–96 | 16th figuration | 6 |
-| 7 | 97–128 | tutti, octave up | 6 |
-| 8 | 129–160 | **B major** — semitone lift, no pivot | 6 |
-| 9 | 161–184 | the strain: iii–IV–iii–V→vi, bass oscillates | 6 |
-| coda | 185–200 | strips back to the opening texture | 6 |
+No voice carries the tune for more than sixteen bars:
 
-`verify()` checks bar lengths, the dynamics offsets, and that the texture never
-thins before the coda.
+    m1 bell · m17 lead 1 · m49 lead 2 (lead 1 takes 16ths) · m65 both, two themes
+    m81 bell only, over the bass feature · m97 all three · m129 leads in octaves
+    m153 all three, quodlibet · m193 bell closes it
+
+## Bass
+
+Silent for 16 bars, then constant. Four patterns rotating with a fill every
+fourth bar, an eight-bar **unaccompanied feature** at mm.81–96 with the kit
+reduced to hat and rim, and a sub-octave track under it for weight.
 
     cd tools && python3 afterlight.py && python3 export_afterlight.py
-
-## REAPER import
-
-`afterlight.mid` is format-1 multi-track. Track names say which patch to load;
-drums are on channel 10. Insert → Media file, and tick "import as new tracks".
-
-## Hearing it without a soundfont
-
-    cd tools && python3 render_audio.py ../score/afterlight.mid ../score/afterlight.mp3
-
-`render_audio.py` is a small chiptune synth -- pulse/saw/triangle oscillators
-plus filtered noise for the kit, per MIDI channel. No soundfont or external
-tool needed. Writes .wav, or .mp3 if the filename ends in .mp3.
+    python3 render_audio.py ../score/afterlight.mid ../score/afterlight.mp3
