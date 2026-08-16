@@ -47,31 +47,35 @@ tremolo marks by hand.
 
 # THREE FIGHTS
 
-A variation suite after three Toby Fox battle themes. 200 measures, ~6:00.
+A medley-variation suite on three Toby Fox battle themes. 216 measures, ~6:30.
+A fan arrangement — commercial release would need clearance.
 
 | | mm. | key | tempo | source |
 |---|---|---|---|---|
-| I. FLOWER | 1–64 | F minor | ♩=95 | *Finale* |
-| bridge A | 65–72 | E°7 = A♯°7 | — | — |
-| II. GLAMOUR | 73–128 | B minor / E Dorian | ♩=148 | *Death by Glamour* |
-| bridge B | 129–136 | E → E♭ → D | — | — |
-| III. BAD TIME | 137–200 | D minor | ♩=126 | *MEGALOVANIA* |
+| I. FLOWER | 1–56 | F minor | ♩=95 | *Finale* |
+| bridge A | 57–64 | E°7 = A♯°7 | | |
+| II. GLAMOUR | 65–120 | B minor / E Dorian | ♩=148 | *Death by Glamour* |
+| — bass break | 97–104 | | | |
+| bridge B | 121–128 | E → E♭ → D | | |
+| III. BAD TIME | 129–184 | D minor | ♩=126 | *MEGALOVANIA* |
+| IV. QUODLIBET + coda | 185–216 | D minor | ♩=126 | all three |
 
-Original writing that develops each source's harmonic frame, bass shape and
-rhythmic signature. No source melody is transcribed.
+## Quoted material
 
-A three-note motto — ♭6, 5, 1 — welds the suite together: D♭–C–F in F minor,
-G–F♯–B in B minor, B♭–A–D in D minor. It opens the piece, marks both bridges,
-and closes the coda.
+    Q1  MEGALOVANIA riff   D3 D3 D4 A3 Ab3 G3 F3 D3 F3 G3
+                           durations 1 1 2 3 2 2 2 1 1 1 sixteenths
+                           only the first two notes move: D-D, C-C, B-B, Bb-Bb
+    Q2  MEGALOVANIA verse  A A G F E E D C  D E F G A G F E
+    Q3  Your Best Friend   1 2 3 | 1 | 2 | 2 3 2 | 1 || 3 4 5 | 1 | 6 | 5
+    Q4  Death by Glamour   E - G - D - C#   (D->C# slurred; the C# is the sound)
 
-## Dynamics
+The **quodlibet** at mm.185–200 runs Q1 in the bass, Q3 in the lead and Q4's
+♭7→6 slur in the counter — all three fights sounding at once in D minor.
 
-Levels are derived from a single LEAD spine; every other part is offset from it
-and the offsets are enforced in `verify()`, not eyeballed. Stabs and pads sit
-**two** steps under the melody, bass/keys/drums one step. 26 hairpins carry the
-level changes; only three bare changes remain, where the drop is the gesture.
+## What verify() checks
 
-    tools/threefights.py        motto, dynamics engine, drum library, melodies
-    tools/threefights2.py       bass, accompaniment, assembly, verification
-    tools/export_threefights.py MusicXML + MIDI export
-    score/three-fights.mxl      import this into Finale
+Bar lengths, chord-grid length, the dynamics rule (stabs strictly under the
+melody), that ornaments land on notes of a quarter or longer, that grace notes
+are within a tone of what they decorate, and that glissandi span a third or more.
+
+    cd tools && python3 threefights2.py && python3 export_threefights.py
