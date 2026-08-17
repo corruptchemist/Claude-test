@@ -130,16 +130,22 @@ Four variants of every groove, six fills, rotating so no pattern repeats bar to
 bar, and a fill every **four** bars rather than every eight. 22 distinct
 patterns across the piece; longest identical run is 3 bars (it was 7).
 
-## Ornaments
+## Sixteenths, not long notes
 
-The long-note sections carry **20 trills** on notes of a dotted half or longer,
-and **9 written-out glissandi** at phrase peaks. The glissandi are real
-chromatic runs, not notation symbols — a shortened head note plus sixteenths
-sliding into the target — so they sound in any player, which is what you want
-for a synth lead anyway.
+**94%** of sounding lead bars contain sixteenths. Only the eight-bar intro and
+the sixteen-bar coda are bare — everywhere else the melody is either fully
+figurated or *hybrid*: the quoted pitches still on the strong beats, with the
+bars between them broken open by sixteenth runs.
 
-Trills are notated as signs in the MusicXML and **expanded into alternating
-32nds in the MIDI**, so the preview renders them.
+`verify()` rejects the piece if that figure drops below 70%, or if the lead
+goes more than nine bars without a sixteenth.
+
+## Glissandi
+
+**23**, and no trills. Written OUT as real chromatic runs — a shortened head
+note plus sixteenths sliding into the target — rather than left as symbols,
+which are silent in MIDI and most playback. Placed automatically wherever two
+adjacent notes of a quarter or longer sit a third or more apart.
 
 ## Depth
 

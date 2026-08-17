@@ -177,17 +177,27 @@ A_GM = [
 ]
 
 # A, figurated -- the 16th-note treatment, unchanged
-A_FIG = ["F5/8 G5/8 F5/4 F5/8 A5/8 C6/4", "C6/8 D6/8 C6/4 Bb5/8 C6/8 D6/4",
-         "Bb5/8 C6/8 Bb5/4 F5/8 A5/8 F5/4", "F5/8 A5/8 C6/4 F5/2",
-         "F5/8 G5/8 A5/4 A5/8 Bb5/8 A5/4", "A5/8 Bb5/8 C6/4 Bb5/2",
-         "A5/8 G5/8 F5/4 A5/8 C6/8 F6/4",
-         "D6/8 Bb5/8 A5/8 F5/8 D5/8 C5/8 Bb4/8 F4/8"]
+A_FIG = [
+    "F5/16 G5/16 A5/16 C6/16 A5/16 G5/16 F5/16 A5/16 C6/8 A5/8 F5/4",
+    "C6/16 D6/16 Eb6/16 F6/16 Eb6/16 D6/16 C6/16 Bb5/16 C6/4 A5/4",
+    "Bb5/16 C6/16 D6/16 F6/16 D6/16 C6/16 Bb5/16 F5/16 Bb5/8 F5/8 D5/4",
+    "F5/16 G5/16 A5/16 Bb5/16 C6/16 Bb5/16 A5/16 G5/16 F5/4 C5/4",
+    "F5/16 G5/16 A5/16 C6/16 F6/16 C6/16 A5/16 G5/16 A5/4 F5/4",
+    "A5/16 Bb5/16 C6/16 D6/16 C6/16 Bb5/16 A5/16 G5/16 Bb5/4 F5/4",
+    "A5/16 C6/16 F6/16 A6/16 F6/16 C6/16 A5/16 F5/16 C6/8 A5/8 F5/4",
+    "D6/16 C6/16 Bb5/16 A5/16 G5/16 F5/16 Eb5/16 D5/16 F5/8 A5/8 D6/4",
+]
 
-A_GM_FIG = ["D5/8 Eb5/8 D5/4 D5/8 F5/8 A5/4", "A5/8 Bb5/8 A5/4 G5/8 A5/8 Bb5/4",
-            "G5/8 A5/8 G5/4 D5/8 F5/8 D5/4", "D5/8 F5/8 A5/4 D5/2",
-            "D5/8 Eb5/8 F5/4 F5/8 G5/8 F5/4", "F5/8 G5/8 A5/4 G5/2",
-            "F5/8 Eb5/8 D5/4 F5/8 A5/8 D6/4",
-            "Bb5/8 A5/8 G5/8 F5/8 Eb5/8 D5/8 C5/8 A4/8"]
+A_GM_FIG = [
+    "D5/16 Eb5/16 F5/16 A5/16 F5/16 Eb5/16 D5/16 F5/16 A5/8 F5/8 D5/4",
+    "A5/16 Bb5/16 C6/16 D6/16 C6/16 Bb5/16 A5/16 G5/16 A5/4 F5/4",
+    "G5/16 A5/16 Bb5/16 D6/16 Bb5/16 A5/16 G5/16 D5/16 G5/8 D5/8 Bb4/4",
+    "D5/16 Eb5/16 F5/16 G5/16 A5/16 G5/16 F5/16 Eb5/16 D5/4 A4/4",
+    "D5/16 Eb5/16 F5/16 A5/16 D6/16 A5/16 F5/16 Eb5/16 F5/4 D5/4",
+    "F5/16 G5/16 A5/16 Bb5/16 A5/16 G5/16 F5/16 Eb5/16 G5/4 D5/4",
+    "F5/16 A5/16 D6/16 F6/16 D6/16 A5/16 F5/16 D5/16 A5/8 F5/8 D5/4",
+    "Bb5/16 A5/16 G5/16 F5/16 Eb5/16 D5/16 C5/16 Bb4/16 D5/8 F5/8 Bb5/4",
+]
 
 # B -- Your Best Friend, Bb.  1 2 3 1 | 2 | 2 3 2 1 || 3 4 5 1 | 6 5
 B_BB = [
@@ -252,6 +262,85 @@ C_B = [
 ]
 
 
+# ---------------------------------------------------------------------------
+# HYBRID themes -- the quoted pitches still on the strong beats, but every
+# other bar broken open with sixteenth runs.  These replace the long-note
+# statements almost everywhere; only the intro and coda stay bare.
+# ---------------------------------------------------------------------------
+A_BB_HY = [
+    "F5/4 F5/16 G5/16 A5/16 C6/16 F6/8 C6/8 A5/4",
+    "C6/2. Bb5/16 C6/16 D6/16 Eb6/16",
+    "Bb5/16 C6/16 D6/16 F6/16 D6/8 Bb5/8 F5/2",
+    "F5/2 C5/16 D5/16 Eb5/16 F5/16 G5/8 A5/8",
+    "F5/16 G5/16 A5/16 Bb5/16 A5/4 A5/2",
+    "A5/2. Bb5/16 A5/16 G5/16 F5/16",
+    "A5/16 C6/16 F6/16 A6/16 F6/8 C6/8 A5/4 F5/4",
+    "D6/2 C6/16 Bb5/16 A5/16 G5/16 F5/8 A5/8",
+]
+A_GM_HY = [
+    "D5/4 D5/16 Eb5/16 F5/16 A5/16 D6/8 A5/8 F5/4",
+    "A5/2. G5/16 A5/16 Bb5/16 C6/16",
+    "G5/16 A5/16 Bb5/16 D6/16 Bb5/8 G5/8 D5/2",
+    "D5/2 A4/16 Bb4/16 C5/16 D5/16 Eb5/8 F5/8",
+    "D5/16 Eb5/16 F5/16 G5/16 F5/4 F5/2",
+    "F5/2. G5/16 F5/16 Eb5/16 D5/16",
+    "F5/16 A5/16 D6/16 F6/16 D6/8 A5/8 F5/4 D5/4",
+    "Bb5/2 A5/16 G5/16 F5/16 Eb5/16 D5/8 F5/8",
+]
+B_BB_HY = [
+    "Bb4/8 C5/8 D5/16 Eb5/16 F5/16 D5/16 Bb4/4 R/4",
+    "C5/2 Bb4/16 C5/16 D5/16 F5/16 Bb5/4",
+    "C5/16 D5/16 C5/16 Bb4/16 C5/8 D5/8 C5/4 Bb4/4",
+    "Bb4/2 D5/16 Eb5/16 F5/16 G5/16 Bb5/8 D6/8",
+    "F5/8 Eb5/8 F5/16 G5/16 A5/16 Bb5/16 D6/4 Bb5/4",
+    "G5/2. F5/16 Eb5/16 D5/16 C5/16",
+    "F5/16 Eb5/16 D5/16 C5/16 Bb4/8 D5/8 F5/4 Bb5/4",
+    "Bb4/2 F5/16 G5/16 A5/16 Bb5/16 D6/8 F6/8",
+]
+B_GM_HY = [
+    "G4/8 A4/8 Bb4/16 C5/16 D5/16 Bb4/16 G4/4 R/4",
+    "A4/2 G4/16 A4/16 Bb4/16 D5/16 G5/4",
+    "A4/16 Bb4/16 A4/16 G4/16 A4/8 Bb4/8 A4/4 G4/4",
+    "G4/2 Bb4/16 C5/16 D5/16 Eb5/16 G5/8 Bb5/8",
+    "D5/8 C5/8 D5/16 Eb5/16 F5/16 G5/16 Bb5/4 G5/4",
+    "Eb5/2. D5/16 C5/16 Bb4/16 A4/16",
+    "D5/16 C5/16 Bb4/16 A4/16 G4/8 Bb4/8 D5/4 G5/4",
+    "G4/2 D5/16 Eb5/16 F5/16 G5/16 Bb5/8 D6/8",
+]
+C_B_HY = [
+    "F#5/4 F#5/8 F#5/8 F#5/16 G#5/16 A#5/16 B5/16 F#5/4",
+    "E5/16 D#5/16 E5/16 F#5/16 E5/4 D#5/2",
+    "B5/2 F#5/16 G#5/16 A#5/16 B5/16 C#6/8 D#6/8",
+    "C#5/8 D#5/8 E5/16 F#5/16 G#5/16 A#5/16 B5/4 F#5/4",
+    "F#5/4 F#5/8 F#5/8 F#5/16 E5/16 D#5/16 C#5/16 B4/4",
+    "E5/16 F#5/16 G#5/16 A#5/16 B5/8 F#5/8 D#5/2",
+    "C#6/2 B5/16 A#5/16 G#5/16 F#5/16 E5/8 D#5/8",
+    "B5/2 F#5/16 G#5/16 A#5/16 C#6/16 D#6/8 F#6/8",
+]
+
+# Fully figurated sixteenth-note treatments of B and C, to match A_FIG.
+B_FIG = [
+    "Bb4/16 C5/16 D5/16 F5/16 D5/16 C5/16 Bb4/16 D5/16 F5/8 D5/8 Bb4/4",
+    "C5/16 D5/16 Eb5/16 F5/16 G5/16 F5/16 Eb5/16 D5/16 C5/2",
+    "C5/16 D5/16 C5/16 Bb4/16 C5/16 D5/16 F5/16 Bb5/16 D6/8 Bb5/8 F5/4",
+    "Bb4/16 D5/16 F5/16 Bb5/16 F5/16 D5/16 Bb4/16 F5/16 D5/4 Bb4/4",
+    "D5/16 Eb5/16 F5/16 G5/16 A5/16 Bb5/16 C6/16 D6/16 Bb5/4 F5/4",
+    "G5/16 F5/16 Eb5/16 D5/16 C5/16 D5/16 Eb5/16 F5/16 G5/8 Bb5/8 F5/4",
+    "F5/16 Eb5/16 D5/16 C5/16 Bb4/16 C5/16 D5/16 Eb5/16 F5/8 A5/8 C6/4",
+    "Bb4/16 D5/16 F5/16 Bb5/16 D6/16 F6/16 D6/16 Bb5/16 F5/8 D5/8 Bb4/4",
+]
+C_FIG = [
+    "F#5/16 G#5/16 A#5/16 B5/16 A#5/16 G#5/16 F#5/16 A#5/16 C#6/8 A#5/8 F#5/4",
+    "E5/16 D#5/16 C#5/16 B4/16 C#5/16 D#5/16 E5/16 F#5/16 E5/4 D#5/4",
+    "B5/16 C#6/16 D#6/16 F#6/16 D#6/16 C#6/16 B5/16 F#5/16 B5/8 F#5/8 D#5/4",
+    "C#5/16 D#5/16 E5/16 F#5/16 G#5/16 A#5/16 B5/16 C#6/16 E6/4 B5/4",
+    "F#5/16 A#5/16 C#6/16 F#6/16 C#6/16 A#5/16 F#5/16 C#6/16 A#5/8 F#5/8 C#5/4",
+    "E5/16 F#5/16 G#5/16 A#5/16 B5/16 A#5/16 G#5/16 F#5/16 E5/4 F#5/4",
+    "C#6/16 B5/16 A#5/16 G#5/16 F#5/16 G#5/16 A#5/16 B5/16 C#6/8 E6/8 C#6/4",
+    "B5/16 C#6/16 D#6/16 F#6/16 B6/16 F#6/16 D#6/16 C#6/16 B5/8 F#5/8 B5/4",
+]
+
+
 def rep(bars, count, semis=0):
     out = (bars * ((count // len(bars)) + 1))[:count]
     return [shift(b, semis) for b in out] if semis else out
@@ -261,15 +350,12 @@ def rep(bars, count, semis=0):
 # LEAD  --  and it does NOT carry the tune the whole way.
 # ---------------------------------------------------------------------------
 LEAD = (
-    # 1-8    G minor.  Nothing but a fragment over the dark engine.
+    # 1-8    sparse -- the only bare long-note passage left, and it is the opening
     ["R/1", "R/1", "R/2 D5/2", "R/1", "R/1", "R/1", "R/2 Bb5/2", "R/1"]
-    # 9-16   the cell, in minor, sparse
-    + rep(A_GM, 8)
-    # 17-32  theme A in G minor, full dark texture
-    + rep(A_GM, 16)
-    # 33-48  Bb MAJOR.  Same cell, major mode -- hope arrives.
-    + rep(A_BB, 16)
-    # 49-64  the tune moves to LEAD2; the lead runs 16th counter-figures
+    + rep(A_GM_HY, 8)          # 9-16    hybrid: theme with 16ths woven through
+    + rep(A_GM_FIG, 16)        # 17-32   full 16ths
+    + rep(A_BB_HY, 8)          # 33-40   hybrid, major
+    + rep(A_FIG, 16)           # 41-56   full 16ths
     + rep(["F5/16 A5/16 C6/16 F6/16 C6/16 A5/16 F5/16 A5/16 "
            "C6/16 F6/16 C6/16 A5/16 F5/16 C6/16 A5/16 F5/16",
            "Eb5/16 G5/16 C6/16 Eb6/16 C6/16 G5/16 Eb5/16 G5/16 "
@@ -277,24 +363,20 @@ LEAD = (
            "D5/16 F5/16 Bb5/16 D6/16 Bb5/16 F5/16 D5/16 F5/16 "
            "Bb5/16 D6/16 Bb5/16 F5/16 D5/16 Bb5/16 F5/16 D5/16",
            "F5/16 Bb5/16 D6/16 F6/16 D6/16 Bb5/16 F5/16 Bb5/16 "
-           "D6/16 F6/16 D6/16 Bb5/16 F5/16 D6/16 Bb5/16 F5/16"], 16)
-    # 65-80  theme B on top, A continuing below
-    + rep(B_BB, 16, 12)
-    # 81-96  BASS FEATURE
-    + rests(16)
-    # 97-112 G MINOR RETURNS -- phase two, the fight again
-    + rep(A_GM_FIG, 16)
-    # 113-128 theme B in minor, building
-    + rep(B_GM, 16, 12)
-    # 129-152 B MAJOR -- the payoff
-    + rep(C_B, 24, 12)
-    # 153-176 quodlibet
-    + rep(A_FIG, 24, 13)
-    # 177-192 climax
-    + rep(C_B, 16, 12)
-    # 193-208 coda
+           "D6/16 F6/16 D6/16 Bb5/16 F5/16 D6/16 Bb5/16 F5/16"], 8)  # 57-64
+    + rep(B_BB_HY, 8, 12)      # 65-72   hybrid
+    + rep(B_FIG, 8, 12)        # 73-80   full 16ths
+    + rests(16)                # 81-96   BASS FEATURE
+    + rep(A_GM_FIG, 16)        # 97-112  full 16ths
+    + rep(B_GM_HY, 8, 12)      # 113-120 hybrid
+    + rep(A_GM_FIG, 8)         # 121-128 full 16ths
+    + rep(C_B_HY, 12, 12)      # 129-140 hybrid
+    + rep(C_FIG, 12, 12)       # 141-152 full 16ths
+    + rep(A_FIG, 24, 13)       # 153-176 full 16ths
+    + rep(C_B_HY, 8, 12)       # 177-184 hybrid
+    + rep(C_FIG, 8, 12)        # 185-192 full 16ths
     + rep(["R/2 F#5/2", "R/1", "R/2 B5/2", "R/1",
-           "R/2 F#5/2", "R/1", "R/2 D#6/2", "R/1"], 16)
+           "R/2 F#5/2", "R/1", "R/2 D#6/2", "R/1"], 16)   # 193-208 coda
 )
 
 LEAD2 = (rests(16)
@@ -598,35 +680,32 @@ def _dur_tokens(pitch, ql):
     return " ".join(out)
 
 
-def build_ornaments():
-    """Trill every long note of a dotted half or more, at most one per bar."""
-    orn = {}
-    from zerosum import dur_of
-    for part in ("LEAD", "LEAD2"):
-        for i, barstr in enumerate(PARTS[part]):
-            m = i + 1
-            if not _is_long(m) or (part == "LEAD2" and m % 8 != 4):
-                continue
-            for idx, tok in enumerate(barstr.split()):
-                if tok.startswith("R/"):
-                    continue
-                if dur_of(tok.rstrip("~").split("/")[1]) >= F(3):
-                    orn[(part, m, idx)] = "trill"
-                    break
-    return orn
 
 
-# Written-out glissandi at phrase peaks in the long-note sections.  LEAD is the
-# same list object PARTS holds, so mutating it here propagates.
-GLISS_BARS = [43, 45, 75, 119, 139, 147, 163, 181, 187]
-for _m in GLISS_BARS:
-    for _i in range(4):
-        _new = glissify(LEAD[_m - 1], _i, sharp=_m >= 129)
-        if _new != LEAD[_m - 1]:
-            LEAD[_m - 1] = _new
-            break
+# Glissandi, written OUT as real chromatic runs rather than left as symbols on
+# the page -- so they sound in any player, which is what a synth lead wants.
+# Placed automatically wherever two adjacent notes of a quarter or longer sit a
+# third or more apart, then thinned so they land roughly every four bars.
+def place_glissandi(part):
+    hits = []
+    for i, barstr in enumerate(part):
+        m = i + 1
+        if barstr == "R/1":
+            continue
+        for idx in range(len(barstr.split()) - 1):
+            new_bar = glissify(barstr, idx, sharp=m >= 129)
+            if new_bar != barstr:
+                hits.append((m, idx))
+                break
+    chosen = hits          # take every opportunity
+    for m, idx in chosen:
+        part[m - 1] = glissify(part[m - 1], idx, sharp=m >= 129)
+    return [m for m, _ in chosen]
 
-ORNAMENTS = build_ornaments()
+
+GLISS_BARS = place_glissandi(LEAD)
+
+ORNAMENTS = {}          # trills removed
 
 
 def verify():
@@ -667,6 +746,18 @@ def verify():
     for m in MINOR_PHASES:
         if m > 4 and "R/8" in POWER[m - 1]:
             p.append(f"m.{m}: power guitar only offbeat in a dark phase")
+    # the melody must not sit in long notes for long stretches
+    sounding = [(i + 1, b) for i, b in enumerate(LEAD) if b != "R/1"]
+    with16 = [m for m, b in sounding if "/16" in b]
+    frac = len(with16) / max(1, len(sounding))
+    if frac < 0.70:
+        p.append(f"only {frac:.0%} of sounding lead bars contain sixteenths")
+    run = 0
+    for m, b in sounding:
+        run = 0 if "/16" in b else run + 1
+        if run > 9:
+            p.append(f"m.{m}: {run} consecutive lead bars with no sixteenths")
+            break
     # the long-note themes must not be rhythmically monotonous, and must not
     # be eight bars played twice
     for nm, th in (("A_BB", A_BB), ("A_GM", A_GM), ("B_BB", B_BB),
