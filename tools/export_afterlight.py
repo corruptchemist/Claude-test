@@ -14,6 +14,7 @@ from zerosum import dur_of
 PARTS = [
     ("LEAD",     "Lead 1 (pulse 25%)",   80, clef.TrebleClef),
     ("LEAD2",    "Lead 2 (pulse 12.5%)", 81, clef.TrebleClef),
+    ("CHOIR",    "Choir (counter-melody)", 52, clef.TrebleClef),
     ("BELL",     "Bell / Glock",          9, clef.TrebleClef),
     ("STRINGS",  "Chords (pad)",         50, clef.TrebleClef),
     ("GUITAR",   "Guitar (offbeat)",     27, clef.TrebleClef),
@@ -30,14 +31,14 @@ DRUM_MIDI = {"K": 36, "S": 38, "H": 42, "O": 46, "C": 49, "R": 51,
 
 TEMPO_AT = {1: A.BPM}
 KEY_AT = {1: -2, 129: 5}   # G minor / Bb major share 2 flats; B major at 129
-TEXT_AT = {33: "poco piu luminoso", 81: "bass alone",
-           97: "oscuro", 129: "up a semitone", 193: "back to the opening"}
-MARKS = {1: "G MINOR - the fight", 17: "theme, minor",
-         33: "Bb MAJOR - hope arrives", 49: "tune moves to Lead 2",
-         65: "+ Your Best Friend", 81: "BASS FEATURE",
-         97: "G MINOR - phase two", 113: "minor build",
-         129: "B MAJOR - the payoff", 153: "quodlibet", 177: "climax",
-         193: "coda"}
+TEXT_AT = {17: "counter-melody", 25: "poco piu luminoso", 57: "bass alone",
+           65: "oscuro", 81: "up a semitone", 145: "back to the opening"}
+MARKS = {1: "G MINOR", 9: "MAIN MELODY", 17: "+ counter-melody",
+         25: "Bb MAJOR - choir takes it", 33: "lead", 41: "lead 2",
+         49: "tutti", 57: "BASS FEATURE", 65: "G MINOR - phase two",
+         73: "choir", 81: "B MAJOR", 89: "lead + bells", 97: "choir",
+         105: "the strain", 113: "lead 2", 121: "climax", 129: "choir",
+         137: "coda - bells", 145: "coda"}
 
 
 def trill_notes(n):

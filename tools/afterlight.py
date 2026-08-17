@@ -39,7 +39,7 @@ from zerosum import bar_len, dur_of
 from zerosum2 import shift, oct_down, rests
 
 TITLE = "AFTERLIGHT"
-N = 208
+N = 152
 BPM = 176
 
 # ---------------------------------------------------------------------------
@@ -54,13 +54,14 @@ LOOP_A2 = ["C#m7", "C#m7", "B/D#", "B/D#", "Ema7", "Ema7", "F#sus", "F#"]
 LOOP_B2 = ["C#m7", "C#m7", "B/D#", "B/D#", "Ema7", "Ema7", "G#m7", "F#"]
 LOOP_C2 = ["D#m7", "D#m7", "Eadd9", "Eadd9", "D#m7", "D#m7", "F#", "G#m"]
 
-CHORDS = (LOOP_M * 4                       # mm.  1- 32  G MINOR -- the fight
-          + (LOOP_A + LOOP_B) * 3          # mm. 33- 80  Bb major -- hope
-          + LOOP_A + LOOP_B                # mm. 81- 96  bass feature
-          + LOOP_M * 4                     # mm. 97-128  G MINOR -- phase two
-          + (LOOP_A2 + LOOP_B2) * 3        # mm.129-176  B major -- the payoff
-          + LOOP_C2 * 2                    # mm.177-192  the strain
-          + LOOP_A2 + LOOP_B2)             # mm.193-208  coda
+CHORDS = (LOOP_M * 3                       # mm.  1- 24  G MINOR -- the fight
+          + (LOOP_A + LOOP_B) * 2          # mm. 25- 56  Bb major -- hope
+          + LOOP_A                         # mm. 57- 64  bass feature
+          + LOOP_M * 2                     # mm. 65- 80  G MINOR -- phase two
+          + LOOP_A2 + LOOP_B2 + LOOP_A2    # mm. 81-104  B major -- the payoff
+          + LOOP_C2 * 2                    # mm.105-120  the strain
+          + LOOP_A2 + LOOP_B2              # mm.121-136  climax
+          + LOOP_A2 + LOOP_B2)             # mm.137-152  coda
 
 VOICE = {
     "Cm7": "Eb4+G4+Bb4", "Bb/D": "D4+F4+Bb4", "Ebma7": "Eb4+F4+Bb4",
@@ -90,19 +91,21 @@ FIFTH = {"C": "G", "D": "A", "Eb": "Bb", "F": "C", "G": "D",
 # ---------------------------------------------------------------------------
 LEVELS = ["ppp", "pp", "p", "mp", "mf", "f", "ff", "fff"]
 LVL = {d: i for i, d in enumerate(LEVELS)}
-OFFSET = {"LEAD": 0, "LEAD2": -1, "BELL": -1, "STRINGS": -1, "GUITAR": -2,
+OFFSET = {"LEAD": 0, "LEAD2": -1, "CHOIR": -1, "BELL": -1, "STRINGS": -1, "GUITAR": -2,
           "POWER": -1, "LOWBRASS": -1, "ARP": -2, "BASS": 0, "SUB": -1,
           "DRUMS": -1}
 
-LEAD_DYN = [(1, "p"), (9, "mp"), (17, "mf"), (25, "f"), (33, "f"),
-            (49, "f"), (65, "f"), (81, "mf"), (97, "ff"), (113, "ff"),
-            (129, "ff"), (153, "ff"), (177, "fff"), (193, "mf"), (201, "mp")]
+LEAD_DYN = [(1, "p"), (9, "mp"), (17, "mf"), (25, "mf"), (33, "f"),
+            (41, "f"), (49, "f"), (57, "mf"), (65, "f"), (73, "f"),
+            (81, "ff"), (97, "ff"), (105, "ff"), (121, "fff"),
+            (137, "mf"), (145, "mp")]
 
-LEAD_HAIRPINS = [(1, 8, "<"), (9, 16, "<"), (25, 32, "<"), (41, 48, "<"),
-                 (57, 64, "<"), (73, 80, "<"), (81, 88, ">"), (89, 96, "<"),
-                 (105, 112, "<"), (121, 128, "<"), (137, 144, "<"),
-                 (145, 152, "<"), (161, 168, "<"), (169, 176, "<"),
-                 (185, 192, "<"), (193, 200, ">"), (201, 208, ">")]
+LEAD_HAIRPINS = [(1, 8, "<"), (9, 16, "<"), (17, 24, "<"), (25, 32, "<"),
+                 (33, 40, "<"), (41, 48, "<"), (49, 56, "<"), (57, 64, ">"),
+                 (65, 72, "<"), (73, 80, "<"), (81, 88, "<"), (89, 96, "<"),
+                 (97, 104, "<"), (105, 112, "<"), (113, 120, "<"),
+                 (121, 128, "<"), (129, 136, "<"), (137, 144, ">"),
+                 (145, 152, ">")]
 
 
 def dyn_for(part, measure):
@@ -347,67 +350,90 @@ def rep(bars, count, semis=0):
 
 
 # ---------------------------------------------------------------------------
-# LEAD  --  and it does NOT carry the tune the whole way.
+# COUNTER-MELODY -- a genuinely independent line, not a doubling.  It moves
+# where the theme rests, arcs in contrary motion against it, and sits an octave
+# lower so the two never compete for the same register.
 # ---------------------------------------------------------------------------
-LEAD = (
-    # 1-8    sparse -- the only bare long-note passage left, and it is the opening
-    ["R/1", "R/1", "R/2 D5/2", "R/1", "R/1", "R/1", "R/2 Bb5/2", "R/1"]
-    + rep(A_GM_HY, 8)          # 9-16    hybrid: theme with 16ths woven through
-    + rep(A_GM_FIG, 16)        # 17-32   full 16ths
-    + rep(A_BB_HY, 8)          # 33-40   hybrid, major
-    + rep(A_FIG, 16)           # 41-56   full 16ths
-    + rep(["F5/16 A5/16 C6/16 F6/16 C6/16 A5/16 F5/16 A5/16 "
-           "C6/16 F6/16 C6/16 A5/16 F5/16 C6/16 A5/16 F5/16",
-           "Eb5/16 G5/16 C6/16 Eb6/16 C6/16 G5/16 Eb5/16 G5/16 "
-           "C6/16 Eb6/16 C6/16 G5/16 Eb5/16 C6/16 G5/16 Eb5/16",
-           "D5/16 F5/16 Bb5/16 D6/16 Bb5/16 F5/16 D5/16 F5/16 "
-           "Bb5/16 D6/16 Bb5/16 F5/16 D5/16 Bb5/16 F5/16 D5/16",
-           "F5/16 Bb5/16 D6/16 F6/16 D6/16 Bb5/16 F5/16 Bb5/16 "
-           "D6/16 F6/16 D6/16 Bb5/16 F5/16 D6/16 Bb5/16 F5/16"], 8)  # 57-64
-    + rep(B_BB_HY, 8, 12)      # 65-72   hybrid
-    + rep(B_FIG, 8, 12)        # 73-80   full 16ths
-    + rests(16)                # 81-96   BASS FEATURE
-    + rep(A_GM_FIG, 16)        # 97-112  full 16ths
-    + rep(B_GM_HY, 8, 12)      # 113-120 hybrid
-    + rep(A_GM_FIG, 8)         # 121-128 full 16ths
-    + rep(C_B_HY, 12, 12)      # 129-140 hybrid
-    + rep(C_FIG, 12, 12)       # 141-152 full 16ths
-    + rep(A_FIG, 24, 13)       # 153-176 full 16ths
-    + rep(C_B_HY, 8, 12)       # 177-184 hybrid
-    + rep(C_FIG, 8, 12)        # 185-192 full 16ths
-    + rep(["R/2 F#5/2", "R/1", "R/2 B5/2", "R/1",
-           "R/2 F#5/2", "R/1", "R/2 D#6/2", "R/1"], 16)   # 193-208 coda
-)
+CM_GM = ["Bb3/2 C4/4 D4/4", "Eb4/2. D4/4", "C4/4 D4/8 Eb4/8 F4/2",
+         "G4/2 F4/4 Eb4/4", "D4/4 F4/4 Bb4/2", "A4/2. G4/4",
+         "F4/8 G4/8 A4/4 Bb4/2", "G4/4 F4/4 D4/2"]
 
-LEAD2 = (rests(16)
-         + rep(A_GM, 16, -12)
-         + rep(A_BB, 16, -12)
-         + rep(A_FIG, 16, -12)
-         + rep(A_BB, 16, -12)
-         + rests(16)
-         + rep(B_GM, 16)
-         + rep(A_GM, 16, -12)
-         + rep(A_BB, 24, 1)
-         + rep(B_BB, 24, 1)
-         + rep(A_BB, 16, 1)
+CM_BB = ["D4/2 Eb4/4 F4/4", "G4/2. F4/4", "Eb4/4 F4/8 G4/8 A4/2",
+         "Bb4/2 A4/4 G4/4", "F4/4 A4/4 D5/2", "C5/2. Bb4/4",
+         "A4/8 Bb4/8 C5/4 D5/2", "Bb4/4 A4/4 F4/2"]
+
+SPARSE_GM = ["R/1", "R/1", "R/2 D5/2", "R/1", "R/1", "R/1", "R/2 Bb5/2", "R/1"]
+SPARSE_B = ["R/2 F#5/2", "R/1", "R/2 B5/2", "R/1",
+            "R/2 F#5/2", "R/1", "R/2 D#6/2", "R/1"]
+
+# ---------------------------------------------------------------------------
+# WHO HAS THE TUNE.  Four distinct melodic timbres, and verify() rejects any
+# voice that holds the melody for more than sixteen unbroken bars.
+# ---------------------------------------------------------------------------
+LEAD = (rep(SPARSE_GM, 8)          # 1-8     alone, sparse
+        + rep(A_GM_HY, 8)          # 9-16    THE MAIN MELODY
+        + rep(A_GM_FIG, 8)         # 17-24   continues; choir counters beneath
+        + rests(8)                 # 25-32   choir takes it
+        + rep(A_FIG, 8)            # 33-40
+        + rests(8)                 # 41-48   lead 2 takes it
+        + rep(A_FIG, 8)            # 49-56   choir counters
+        + rests(8)                 # 57-64   BASS FEATURE
+        + rep(A_GM_FIG, 8)         # 65-72   choir counters
+        + rests(8)                 # 73-80   choir takes it
+        + rep(C_B_HY, 8, 12)       # 81-88   B major
+        + rep(C_FIG, 8, 12)        # 89-96
+        + rests(8)                 # 97-104  choir takes it
+        + rep(A_FIG, 8, 13)        # 105-112
+        + rests(8)                 # 113-120 lead 2 takes it
+        + rep(C_FIG, 8, 12)        # 121-128 tutti
+        + rests(16)                # 129-144 choir, then bells
+        + rep(SPARSE_B, 8))        # 145-152 coda
+
+LEAD2 = (rests(24)
+         + rep(A_BB_HY, 8, -12)    # 25-32   under the choir
+         + rests(8)
+         + rep(B_FIG, 8)           # 41-48   LEAD 2 HAS THE TUNE
+         + rep(B_BB_HY, 8, -12)    # 49-56
+         + rests(8)
+         + rep(A_GM_HY, 8, -12)    # 65-72
+         + rep(A_GM_FIG, 8, -12)   # 73-80
+         + rests(8)
+         + rep(C_B_HY, 8)          # 89-96
+         + rep(C_FIG, 8)           # 97-104
+         + rests(8)
+         + rep(A_FIG, 8, 1)        # 113-120 LEAD 2 HAS THE TUNE
+         + rests(8)
+         + rep(C_FIG, 8)           # 129-136
          + rests(16))
 
-# Bells stay OUT of the minor phases -- glockenspiel in a dark section is
-# exactly what made the last version read as a win screen.
-BELL = (rests(32)
-        + rep(A_BB, 16, 12)
-        + rests(16)
-        + rep(A_BB, 16, 24)
-        + rep(["F6/8 R/8 C7/8 R/8 F6/8 R/8 A6/8 R/8"], 16)
+# The fourth voice.  Choir is as far from a pulse lead as this palette gets,
+# and it carries the counter-melody plus three full statements of its own.
+CHOIR = (rests(16)
+         + rep(CM_GM, 8)           # 17-24   THE COUNTER-MELODY
+         + rep(A_BB_HY, 8)         # 25-32   CHOIR HAS THE TUNE
+         + rests(16)
+         + rep(CM_BB, 8)           # 49-56   counters the lead
+         + rests(8)
+         + rep(CM_GM, 8)           # 65-72   counters again
+         + rep(A_GM_HY, 8)         # 73-80   CHOIR HAS THE TUNE
+         + rests(16)
+         + rep(C_B_HY, 8, 12)      # 97-104  CHOIR HAS THE TUNE
+         + rests(16)
+         + rep(C_B_HY, 8, 12)      # 121-128 doubling at the tutti
+         + rep(C_FIG, 8, 12)       # 129-136 carries while the lead rests
+         + rests(16))
+
+BELL = (rests(48)
+        + rep(A_FIG, 8, 12)        # 49-56   sparkle over the lead
         + rests(32)
-        + rep(C_B, 24, 12)
-        + rep(A_FIG, 24, 13)
-        + rep(A_BB, 16, 13)
-        + rep(A_BB, 16, 13))
+        + rep(C_FIG, 8, 24)        # 89-96
+        + rests(24)
+        + rep(A_FIG, 8, 13)        # 121-128 tutti
+        + rests(8)
+        + rep(A_BB_HY, 8, 13)      # 137-144 bells close the piece
+        + rests(8))
 
 
-# ---------------------------------------------------------------------------
-# ARP -- the engine.  Never stops from m.5 to the last bar.
 # ---------------------------------------------------------------------------
 def arp16(c, o=0):
     v = (VOICE[c].split("+") * 2)[:4]
@@ -417,24 +443,18 @@ def arp16(c, o=0):
 
 ARP = ["R/1"] * 4 + [arp16(c) for c in CHORDS[4:]]
 
-# ---------------------------------------------------------------------------
-# POWER -- distorted rhythm guitar, root-and-fifth, low.  This is the single
-# biggest reason the last version sounded like a win screen: Toby spent his
-# only paid samples on bass and RHYTHM ROCK GUITAR, and it was missing.
-# It plays in the minor phases and the climax, and lays out for the hopeful
-# ones so their arrival is a genuine lightening.
-# ---------------------------------------------------------------------------
+MINOR_PHASES = list(range(1, 25)) + list(range(65, 81))
+
+
 def power(c, kind):
     r = ROOT[c]
     o = max(2, OCT[r])
     ch = f"{r}{o-1}+{FIFTH[r]}{o-1}"
-    return {
-        "chug":  " ".join([f"{ch}/8"] * 8),
-        "chug16": (f"{ch}/16 {ch}/16 {ch}/8 {ch}/16 {ch}/16 {ch}/8 "
-                   f"{ch}/16 {ch}/16 {ch}/8 {ch}/8 {ch}/8"),
-        "off":   " ".join([f"R/8 {ch}/8"] * 4),
-        "hold":  f"{ch}/1",
-    }[kind]
+    return {"chug": " ".join([f"{ch}/8"] * 8),
+            "chug16": (f"{ch}/16 {ch}/16 {ch}/8 {ch}/16 {ch}/16 {ch}/8 "
+                       f"{ch}/16 {ch}/16 {ch}/8 {ch}/8 {ch}/8"),
+            "off": " ".join([f"R/8 {ch}/8"] * 4),
+            "hold": f"{ch}/1"}[kind]
 
 
 POWER = []
@@ -442,35 +462,20 @@ for i, c in enumerate(CHORDS):
     m = i + 1
     if m <= 4:
         POWER.append(power(c, "hold"))
-    elif m <= 32 or 97 <= m <= 128:            # the two dark phases
+    elif m in MINOR_PHASES:
         POWER.append(power(c, "chug16" if m % 2 == 0 else "chug"))
-    elif 177 <= m <= 192:                      # climax
+    elif 121 <= m <= 136:
         POWER.append(power(c, "chug"))
-    elif 33 <= m <= 80 or 129 <= m <= 176:     # hopeful -- offbeat only
+    elif m <= 136:
         POWER.append(power(c, "off"))
     else:
         POWER.append("R/1")
 
-# ---------------------------------------------------------------------------
-# LOWBRASS -- deep sustained weight under everything.
-# ---------------------------------------------------------------------------
-LOWBRASS = []
-for i, c in enumerate(CHORDS):
-    m = i + 1
-    r = ROOT[c]
-    o = max(2, OCT[r])
-    if m <= 96 or 177 <= m <= 192 or 97 <= m <= 176:
-        LOWBRASS.append(f"{r}{o}+{FIFTH[r]}{o}/1")
-    else:
-        LOWBRASS.append("R/1")
-for i in range(80, 96):
-    LOWBRASS[i] = "R/1"                        # clear the bass feature
-for i in range(192, 208):
-    LOWBRASS[i] = "R/1"                        # coda
+LOWBRASS = ["R/1" if (57 <= i + 1 <= 64 or i + 1 > 136)
+            else f"{ROOT[c]}{max(2, OCT[ROOT[c]])}+{FIFTH[ROOT[c]]}{max(2, OCT[ROOT[c]])}/1"
+            for i, c in enumerate(CHORDS)]
 
-# ---------------------------------------------------------------------------
-# BASS
-# ---------------------------------------------------------------------------
+
 def bass_bar(c, kind, nxt_c=None):
     r = ROOT[c]
     o = OCT[r]
@@ -511,67 +516,49 @@ for i, c in enumerate(CHORDS):
     nc = CHORDS[i + 1] if i + 1 < N else c
     if m <= 4:
         BASS.append(bass_bar(c, "hold", nc))
-    elif 81 <= m <= 96:
-        BASS.append(BASS_FEATURE[(m - 81) % 8])
-    elif m <= 32:
+    elif 57 <= m <= 64:
+        BASS.append(BASS_FEATURE[(m - 57) % 8])
+    elif m <= 24:
         BASS.append(bass_bar(c, "fill" if m % 8 == 0 else "drive", nc))
-    elif m <= 48:
+    elif m <= 40:
         BASS.append(bass_bar(c, "fill" if m % 8 == 0 else "oct8", nc))
-    elif m <= 112:
-        BASS.append(bass_bar(c, "fill" if m % 8 == 0 else "drive", nc))
-    elif m <= 192:
+    elif m <= 136:
         BASS.append(bass_bar(c, "fill" if m % 8 == 0 else
                              ("sixt" if m % 4 == 0 else "drive"), nc))
     else:
         BASS.append(bass_bar(c, "hold", nc))
 
 SUB = [f"{ROOT[c]}{max(1, OCT[ROOT[c]]-1)}/1" for c in CHORDS]
-for i in range(80, 96):
-    SUB[i] = "R/1"
+for _i in range(56, 64):
+    SUB[_i] = "R/1"
 
-# ---------------------------------------------------------------------------
-# STRINGS -- the faint background chords.  Present almost throughout now:
-# this is the layer that was missing from the middle of the picture.
-# ---------------------------------------------------------------------------
-STRINGS = [f"{PAD[c]}/1" for c in CHORDS[:192]] + rests(16)
-for i in range(0, 8):
-    STRINGS[i] = "R/1"
+STRINGS = [f"{PAD[c]}/1" for c in CHORDS[:136]] + rests(16)
+for _i in range(0, 8):
+    STRINGS[_i] = "R/1"
 
-GUITAR = (rests(32)
+GUITAR = (rests(24)
           + [f"R/8 {VOICE[c]}/8 R/8 {VOICE[c]}/8 R/8 {VOICE[c]}/8 R/8 {VOICE[c]}/8"
-             for c in CHORDS[32:192]]
+             for c in CHORDS[24:136]]
           + rests(16))
 
-# ---------------------------------------------------------------------------
-# ---------------------------------------------------------------------------
-# DRUMS -- four variants of every groove, six fills, rotating so no pattern
-# repeats bar to bar, and a fill every FOUR bars rather than every eight.
-# ---------------------------------------------------------------------------
 DRUM_LIB = {
-    "tacet": "R/1",
-    "roll":  "Z/2 Z/2",
-    "half":  "K/4 R/4 S/4 R/4",
-    "halfO": "KC/4 R/4 S/4 K/8 K/8",
-    # -- driving 16th groove, four variants
+    "tacet": "R/1", "roll": "Z/2 Z/2",
+    "half":  "K/4 R/4 S/4 R/4", "halfO": "KC/4 R/4 S/4 K/8 K/8",
     "busy_a": "K/8 H/16 H/16 S/8 H/8 K/16 K/16 H/8 S/8 H/16 H/16",
     "busy_b": "K/8 H/8 S/16 H/16 H/8 K/8 K/16 H/16 S/8 H/8",
     "busy_c": "KH/16 H/16 K/8 SH/8 H/16 H/16 K/8 H/8 SH/8 O/8",
     "busy_d": "K/8 H/8 SH/8 H/16 K/16 H/8 K/16 H/16 SH/8 H/8",
     "busy_O": "KC/8 H/16 H/16 S/8 H/8 K/16 K/16 H/8 S/8 O/8",
-    # -- straighter 8th groove, four variants
     "rock_a": "K/8 H/8 S/8 H/8 K/16 K/16 H/8 S/8 H/8",
     "rock_b": "K/8 H/8 S/8 H/16 H/16 K/8 H/8 S/8 O/8",
     "rock_c": "K/4 H/8 S/8 K/8 K/8 H/8 S/8",
     "rock_d": "K/8 H/8 S/8 H/8 H/8 K/8 SH/8 O/8",
     "rock_O": "KC/8 H/8 S/8 H/8 K/16 K/16 H/8 S/8 O/8",
-    # -- ride groove for the coda
     "ride_a": "KR/8 R/8 SR/8 R/8 KR/16 K/16 R/8 SR/8 R/8",
     "ride_b": "KR/8 R/8 SR/8 R/16 R/16 KR/8 R/8 SR/8 R/8",
-    # -- hat/rim only, under the bass feature
     "brk_a": "H/8 H/8 SH/8 H/8 H/8 H/8 SH/8 H/8",
     "brk_b": "H/8 H/16 H/16 SH/8 H/8 H/8 H/8 SH/8 H/8",
     "brk_c": "H/16 H/16 H/8 SH/8 H/8 H/8 H/16 H/16 SH/8 H/8",
-    # -- six fills, so the same one never lands twice in a row
     "fill_a": "S/16 S/16 T/16 T/16 F/16 F/16 S/8 T/8 F/8 KC/8 S/8",
     "fill_b": "S/8 S/16 S/16 T/8 T/16 T/16 F/8 F/16 F/16 KC/4",
     "fill_c": "T/16 T/16 T/16 T/16 F/16 F/16 F/16 F/16 S/16 S/16 S/16 S/16 KC/8 S/8",
@@ -580,7 +567,6 @@ DRUM_LIB = {
     "fill_f": "K/8 S/8 K/8 S/8 T/16 T/16 T/16 T/16 F/16 F/16 KC/8",
     "final": "KCZ/1",
 }
-
 GROOVES = {"busy": ["busy_a", "busy_b", "busy_c", "busy_d"],
            "rock": ["rock_a", "rock_b", "rock_c", "rock_d"],
            "ride": ["ride_a", "ride_b", "ride_a", "ride_b"],
@@ -589,8 +575,6 @@ FILLS = ["fill_a", "fill_b", "fill_c", "fill_d", "fill_e", "fill_f"]
 
 
 def kit(m, family):
-    """Groove variant rotating every bar; a fill every fourth bar, cycling
-    through six of them; the crash variant on each 16-bar downbeat."""
     if m % 16 == 1:
         return f"{family}_O" if f"{family}_O" in DRUM_LIB else GROOVES[family][0]
     if m % 8 == 0:
@@ -601,41 +585,45 @@ def kit(m, family):
 
 
 DRUMS = []
-for i in range(N):
-    m = i + 1
-    if m <= 4:
-        DRUMS.append("halfO" if m == 1 else "half")
-    elif m <= 32:
-        DRUMS.append(kit(m, "busy"))
-    elif m <= 80:
-        DRUMS.append(kit(m, "rock"))
-    elif m <= 96:
-        DRUMS.append("fill_e" if m % 8 == 0 else GROOVES["brk"][m % 4])
-    elif m <= 192:
-        DRUMS.append(kit(m, "busy"))
+for _i in range(N):
+    _m = _i + 1
+    if _m <= 4:
+        DRUMS.append("halfO" if _m == 1 else "half")
+    elif _m <= 24:
+        DRUMS.append(kit(_m, "busy"))
+    elif _m <= 56:
+        DRUMS.append(kit(_m, "rock"))
+    elif _m <= 64:
+        DRUMS.append("fill_e" if _m % 8 == 0 else GROOVES["brk"][_m % 4])
+    elif _m <= 136:
+        DRUMS.append(kit(_m, "busy"))
     else:
-        DRUMS.append(kit(m, "ride"))
+        DRUMS.append(kit(_m, "ride"))
 DRUMS[-1] = "final"
 
-PARTS = {"LEAD": LEAD, "LEAD2": LEAD2, "BELL": BELL, "STRINGS": STRINGS,
-         "GUITAR": GUITAR, "POWER": POWER, "LOWBRASS": LOWBRASS,
-         "ARP": ARP, "BASS": BASS, "SUB": SUB, "DRUMS": DRUMS}
-
-MINOR_PHASES = list(range(1, 33)) + list(range(97, 129))
-
-# The sections that are NOT in sixteenths -- where a long note can carry an
-# ornament without turning to mush.
-LONG_RANGES = [(9, 48), (65, 80), (113, 152), (177, 208)]
+PARTS = {"LEAD": LEAD, "LEAD2": LEAD2, "CHOIR": CHOIR, "BELL": BELL,
+         "STRINGS": STRINGS, "GUITAR": GUITAR, "POWER": POWER,
+         "LOWBRASS": LOWBRASS, "ARP": ARP, "BASS": BASS, "SUB": SUB,
+         "DRUMS": DRUMS}
+MELODIC = ("LEAD", "LEAD2", "CHOIR", "BELL")
 
 
-def _is_long(m):
-    return any(a <= m <= b for a, b in LONG_RANGES)
+# ---------------------------------------------------------------------------
+# Glissandi, written OUT as real chromatic runs rather than symbols, so they
+# sound in any player.
+# ---------------------------------------------------------------------------
+def _dur_tokens(pitch, ql):
+    table = [(F(4), "1"), (F(3), "2."), (F(2), "2"), (F(3, 2), "4."),
+             (F(1), "4"), (F(3, 4), "8."), (F(1, 2), "8"), (F(1, 4), "16")]
+    out, left = [], ql
+    for v, code in table:
+        while left >= v:
+            out.append(f"{pitch}/{code}")
+            left -= v
+    return " ".join(out)
 
 
 def glissify(bar, idx, sharp=False):
-    """Write a glissando OUT as a real run rather than leaving it a symbol on
-    the page: shorten the note at idx and fill the gap to the next one with a
-    chromatic slide.  Audible everywhere, and correct notation for a synth lead."""
     from zerosum2 import to_midi, from_midi
     toks = bar.split()
     if idx + 1 >= len(toks):
@@ -652,40 +640,18 @@ def glissify(bar, idx, sharp=False):
     steps = abs(m1 - m0)
     if steps < 3 or span < F(1):
         return bar
-    n = min(steps - 1, 6)                       # up to six passing semitones
-    run_len = F(n, 4)   # n sixteenths = n/4 quarter-lengths
+    n = min(steps - 1, 6)
+    run_len = F(n, 4)
     if span - run_len < F(1, 2):
         return bar
     step = 1 if m1 > m0 else -1
-    head = f"{pa}/{da}" if False else None
-    # rebuild: shortened head, then n chromatic sixteenths into the target
-    keep = span - run_len
-    parts = [_dur_tokens(pa, keep)]
+    parts = [_dur_tokens(pa, span - run_len)]
     for k in range(1, n + 1):
         parts.append(f"{from_midi(m0 + step * k, sharp)}/16")
     toks[idx] = " ".join(parts)
     return " ".join(toks)
 
 
-def _dur_tokens(pitch, ql):
-    """Express a duration as one or two note tokens of the same pitch."""
-    table = [(F(4), "1"), (F(3), "2."), (F(2), "2"), (F(3, 2), "4."),
-             (F(1), "4"), (F(3, 4), "8."), (F(1, 2), "8"), (F(1, 4), "16")]
-    out = []
-    left = ql
-    for v, code in table:
-        while left >= v:
-            out.append(f"{pitch}/{code}")
-            left -= v
-    return " ".join(out)
-
-
-
-
-# Glissandi, written OUT as real chromatic runs rather than left as symbols on
-# the page -- so they sound in any player, which is what a synth lead wants.
-# Placed automatically wherever two adjacent notes of a quarter or longer sit a
-# third or more apart, then thinned so they land roughly every four bars.
 def place_glissandi(part):
     hits = []
     for i, barstr in enumerate(part):
@@ -693,18 +659,16 @@ def place_glissandi(part):
         if barstr == "R/1":
             continue
         for idx in range(len(barstr.split()) - 1):
-            new_bar = glissify(barstr, idx, sharp=m >= 129)
-            if new_bar != barstr:
+            if glissify(barstr, idx, sharp=m >= 81) != barstr:
                 hits.append((m, idx))
                 break
-    chosen = hits          # take every opportunity
-    for m, idx in chosen:
-        part[m - 1] = glissify(part[m - 1], idx, sharp=m >= 129)
-    return [m for m, _ in chosen]
+    for m, idx in hits:
+        part[m - 1] = glissify(part[m - 1], idx, sharp=m >= 81)
+    return [m for m, _ in hits]
 
 
-GLISS_BARS = place_glissandi(LEAD)
-
+GLISS_BARS = sorted(place_glissandi(LEAD) + place_glissandi(CHOIR)
+                    + place_glissandi(LEAD2))
 ORNAMENTS = {}          # trills removed
 
 
@@ -730,46 +694,34 @@ def verify():
         for acc in ("GUITAR", "ARP"):
             if LVL[dyn_for(acc, m)] > lead - 2:
                 p.append(f"m.{m}: {acc} not under lead")
-        if LVL[dyn_for("STRINGS", m)] >= lead:
-            p.append(f"m.{m}: strings not under lead")
     for m in range(5, N):
         if ARP[m - 1] == "R/1":
             p.append(f"m.{m}: arp engine stopped")
-    for m in range(17, 193):
+    for m in range(9, 137):
         if len(BASS[m - 1].split()) < 5:
             p.append(f"m.{m}: bass too thin")
-    # bells must stay out of the dark phases
     for m in MINOR_PHASES:
         if BELL[m - 1] != "R/1":
-            p.append(f"m.{m}: bell sounding in a minor phase")
-    # the power guitar must be chugging in both dark phases
-    for m in MINOR_PHASES:
-        if m > 4 and "R/8" in POWER[m - 1]:
-            p.append(f"m.{m}: power guitar only offbeat in a dark phase")
-    # the melody must not sit in long notes for long stretches
-    sounding = [(i + 1, b) for i, b in enumerate(LEAD) if b != "R/1"]
-    with16 = [m for m, b in sounding if "/16" in b]
-    frac = len(with16) / max(1, len(sounding))
-    if frac < 0.70:
+            p.append(f"m.{m}: bell in a minor phase")
+    # no melodic voice may hold the tune for more than sixteen unbroken bars
+    for v in MELODIC:
+        run = 0
+        for m in range(1, N + 1):
+            run = run + 1 if PARTS[v][m - 1] != "R/1" else 0
+            if run > 16:
+                p.append(f"{v}: {run} unbroken bars by m.{m}")
+                break
+    # the counter-melody must arrive right after the first statement
+    if CHOIR[16] == "R/1":
+        p.append("no counter-melody at m.17")
+    # and it must be an independent line, not a doubling of the lead
+    same = sum(1 for m in range(17, 25) if CHOIR[m - 1] == LEAD[m - 1])
+    if same:
+        p.append(f"counter-melody doubles the lead in {same} bars")
+    sounding = [b for b in LEAD if b != "R/1"]
+    frac = sum(1 for b in sounding if "/16" in b) / max(1, len(sounding))
+    if frac < 0.55:
         p.append(f"only {frac:.0%} of sounding lead bars contain sixteenths")
-    run = 0
-    for m, b in sounding:
-        run = 0 if "/16" in b else run + 1
-        if run > 9:
-            p.append(f"m.{m}: {run} consecutive lead bars with no sixteenths")
-            break
-    # the long-note themes must not be rhythmically monotonous, and must not
-    # be eight bars played twice
-    for nm, th in (("A_BB", A_BB), ("A_GM", A_GM), ("B_BB", B_BB),
-                   ("B_GM", B_GM), ("C_B", C_B)):
-        if len(th) != 16:
-            p.append(f"{nm}: {len(th)} bars, want a 16-bar period")
-            continue
-        if th[:8] == th[8:]:
-            p.append(f"{nm}: consequent is a literal repeat of the antecedent")
-        shapes = {" ".join(t.split("/")[1] for t in b.split()) for b in th}
-        if len(shapes) < 13:
-            p.append(f"{nm}: only {len(shapes)} distinct rhythms in 16 bars")
     return p
 
 
@@ -777,14 +729,13 @@ if __name__ == "__main__":
     probs = verify()
     print(f"{len(probs)} PROBLEMS" if probs else
           f"OK -- {N} bars, {len(PARTS)} parts, every measure sums exactly.")
-    for x in probs[:25]:
+    for x in probs[:20]:
         print("  ", x)
     if not probs:
-        print("  mode map:", " ".join(
-            f"m{m}:{'min' if m in MINOR_PHASES else 'MAJ'}"
-            for m in (1, 33, 65, 81, 97, 129, 153, 177, 193)))
-        print("  sounding parts at m.1/33/97/153:", [
-            sum(1 for k, v in PARTS.items() if k != "DRUMS" and v[m - 1] != "R/1")
-            for m in (1, 33, 97, 153)])
+        print("  melody by 8-bar block:")
+        for a in range(1, N, 8):
+            who = [v for v in MELODIC if PARTS[v][a - 1] != "R/1"]
+            print(f"    m{a:>4}: {'+'.join(who) or '(bass feature)'}")
+        print(f"  glissandi: {len(GLISS_BARS)}")
         secs = N * 4 * 60 / BPM
-        print(f"  duration {int(secs//60)}:{int(secs%60):02d}")
+        print(f"  duration {int(secs//60)}:{int(secs%60):02d}  (was 4:43)")

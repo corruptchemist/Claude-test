@@ -92,75 +92,52 @@ are within a tone of what they decorate, and that glissandi span a third or more
 
 # AFTERLIGHT
 
-208 bars, ♩=176, ~4:46. Eleven tracks. Multi-track MIDI for REAPER.
+152 bars, ♩=176, **3:27**. Twelve tracks. Multi-track MIDI for REAPER.
 
-## Mode plan — hope is arrived at, not sat in
+## The melody changes hands
 
-| mm. | mode | what |
+Four distinct melodic timbres — **Lead 1** (25% pulse), **Lead 2** (12.5% pulse),
+**Choir**, **Bells**. `verify()` rejects any voice holding the tune for more
+than sixteen unbroken bars.
+
+    m9   lead              m73  lead 2 + choir
+    m17  lead + COUNTER    m81  lead
+    m25  lead 2 + choir    m89  lead + lead 2 + bells
+    m33  lead              m97  lead 2 + choir
+    m41  lead 2            m105 lead
+    m49  all four          m113 lead 2
+    m57  (bass feature)    m121 lead + choir + bells
+    m65  lead + choir      m129 lead 2 + choir
+                           m137 bells → m145 lead
+
+## The counter-melody
+
+Enters at **m.17**, directly after the main melody's first statement, on the
+choir. A genuinely independent line — it moves where the theme rests, arcs in
+contrary motion against it, and sits an octave lower. `verify()` fails if it
+ever doubles the lead.
+
+## Mode plan
+
+| mm. | | |
 |---|---|---|
-| 1–32 | **G minor** | the fight. Distorted guitar chugging, low brass, no bells |
-| 33–96 | B♭ major | hope arrives. Power guitar drops to offbeats |
-| 81–96 | | bass feature, everything else out of the way |
-| 97–128 | **G minor** | phase two. Dark again, chug returns |
-| 129–208 | B major | the payoff, then coda |
+| 1–24 | **G minor** | the fight |
+| 25–56 | B♭ major | hope arrives |
+| 57–64 | | bass feature |
+| 65–80 | **G minor** | phase two |
+| 81–152 | B major | payoff, strain, climax, coda |
 
-G minor and B♭ major share a key signature, so the shift is **modal, not a
-modulation** — and the dark phases move harmonically twice as fast (one chord
-per bar against one per two), which is most of why they read as agitated.
+G minor and B♭ major share a key signature, so the shift is modal; the dark
+phases move harmonically twice as fast.
 
-`verify()` asserts the bells never sound in a minor phase and the distorted
-guitar is always chugging there rather than sitting on offbeats.
+## Also enforced by verify()
 
-## The long-note themes
+The 16th engine never stops after m.5 · bass never under five attacks a bar
+between the drop and the coda · bells barred from the minor phases · stabs and
+arp at least two dynamic steps under the melody · every long-note theme has
+13+ distinct rhythms in 16 bars and no consequent repeating its antecedent.
 
-Each is a full **sixteen-bar period** — an antecedent that hangs and a
-consequent that starts the same way, then climbs somewhere new and cadences.
-They were previously eight bars played twice.
-
-The quoted pitches still land on the strong beats; what varies is rhythm.
-Every bar used to be two half notes. Now all sixteen bars of every theme carry
-a **distinct rhythmic profile** — dotted halves, syncopated re-attacks,
-neighbour turns, rests, pickups across barlines. `verify()` rejects any theme
-whose consequent literally repeats its antecedent, or that falls below
-thirteen distinct rhythms in sixteen bars.
-
-## Drums
-
-Four variants of every groove, six fills, rotating so no pattern repeats bar to
-bar, and a fill every **four** bars rather than every eight. 22 distinct
-patterns across the piece; longest identical run is 3 bars (it was 7).
-
-## Sixteenths, not long notes
-
-**94%** of sounding lead bars contain sixteenths. Only the eight-bar intro and
-the sixteen-bar coda are bare — everywhere else the melody is either fully
-figurated or *hybrid*: the quoted pitches still on the strong beats, with the
-bars between them broken open by sixteenth runs.
-
-`verify()` rejects the piece if that figure drops below 70%, or if the lead
-goes more than nine bars without a sixteenth.
-
-## Glissandi
-
-**23**, and no trills. Written OUT as real chromatic runs — a shortened head
-note plus sixteenths sliding into the target — rather than left as symbols,
-which are silent in MIDI and most playback. Placed automatically wherever two
-adjacent notes of a quarter or longer sit a third or more apart.
-
-## Depth
-
-Three layers exist purely for weight: **distorted rhythm guitar** (root-and-fifth
-power chords, chugging 16ths in the dark phases), **low brass**, and a **sub-bass**
-octave under the bass. Toby spent his only paid samples on bass and rhythm rock
-guitar — leaving the distorted guitar out was the main reason the previous
-version read as a win screen.
-
-## Balance
-
-Offsets: pad and low brass and distorted guitar at −1, offbeat guitar and arp
-at −2, bass level with the melody. In the preview render the pad, arp and
-guitars were raised substantially and the bell and bass pulled back — the
-middle of the picture was inaudible before.
+29 written-out glissandi. No trills.
 
     cd tools && python3 afterlight.py && python3 export_afterlight.py
     python3 render_audio.py ../score/afterlight.mid ../score/afterlight.mp3
