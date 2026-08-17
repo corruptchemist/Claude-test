@@ -128,40 +128,128 @@ def dyn_changes(part):
 # ---------------------------------------------------------------------------
 # THE QUOTED THEMES, 8 bars each
 # ---------------------------------------------------------------------------
-# A -- Once Upon a Time.  Long notes with holes: this is the "nothing
-# happening" that the engine underneath makes exciting.
-A_BB = ["F5/2 F5/2", "C6/1", "Bb5/2 F5/2", "F5/2 R/2",
-        "F5/2 A5/2", "A5/2 Bb5/2", "A5/2 F5/2", "D6/2 R/2"]
+# Each long-note theme is now a full SIXTEEN-bar period: an antecedent that
+# hangs unresolved and a consequent that starts the same way, then climbs
+# somewhere new and cadences.  Previously these were eight bars played twice.
+#
+# The quoted pitches still land on the strong beats -- what varies is the
+# rhythm.  Every bar used to be two half notes; now there are dotted halves,
+# syncopated re-attacks, neighbour turns, rests, and pickups across barlines.
 
-# A, figurated -- same structural pitches on the strong beats
+# A -- Once Upon a Time, Bb major.  Cell: F F C | Bb F F | F A A Bb | A F D
+A_BB = [
+    "F5/4 F5/4 R/2",
+    "C6/2. Bb5/8 C6/8",
+    "Bb5/4 R/8 Bb5/8 F5/2",
+    "F5/2 R/4 C5/8 D5/8",
+    "F5/8 G5/8 A5/4 A5/2",
+    "A5/2. Bb5/4",
+    "A5/4. F5/8 A5/2",
+    "D6/2 R/8 A5/8 Bb5/8 C6/8",
+    "F5/4 R/2 F5/4",
+    "C6/8 D6/8 Eb6/8 D6/8 C6/2",
+    "F6/2 C6/2",
+    "D6/2 Bb5/4 C6/4",
+    "Bb5/4 C6/8 Bb5/8 A5/4 G5/4",
+    "A5/8 Bb5/4. G5/2",
+    "A5/4 G5/4 F5/4 D5/4",
+    "F5/1",
+]
+
+# A in G minor.  Cell: D D A | G D D | D F F G | F D Bb
+A_GM = [
+    "D5/4 D5/4 R/2",
+    "A5/2. G5/8 A5/8",
+    "G5/4 R/8 G5/8 D5/2",
+    "D5/2 R/4 A4/8 Bb4/8",
+    "D5/8 Eb5/8 F5/4 F5/2",
+    "F5/2. G5/4",
+    "F5/4. D5/8 F5/2",
+    "Bb5/2 R/8 F5/8 G5/8 A5/8",
+    "D5/4 R/2 D5/4",
+    "A5/8 Bb5/8 C6/8 Bb5/8 A5/2",
+    "D6/2 A5/2",
+    "Bb5/2 F5/4 G5/4",
+    "G5/4 A5/8 G5/8 F5/4 Eb5/4",
+    "F5/8 G5/4. Eb5/2",
+    "F5/4 Eb5/4 D5/4 C5/4",
+    "D5/1",
+]
+
+# A, figurated -- the 16th-note treatment, unchanged
 A_FIG = ["F5/8 G5/8 F5/4 F5/8 A5/8 C6/4", "C6/8 D6/8 C6/4 Bb5/8 C6/8 D6/4",
          "Bb5/8 C6/8 Bb5/4 F5/8 A5/8 F5/4", "F5/8 A5/8 C6/4 F5/2",
          "F5/8 G5/8 A5/4 A5/8 Bb5/8 A5/4", "A5/8 Bb5/8 C6/4 Bb5/2",
          "A5/8 G5/8 F5/4 A5/8 C6/8 F6/4",
          "D6/8 Bb5/8 A5/8 F5/8 D5/8 C5/8 Bb4/8 F4/8"]
 
-# B -- Your Best Friend
-B_BB = ["Bb4/4 C5/4 D5/4 Bb4/4", "C5/2 R/2", "C5/4 D5/4 C5/4 Bb4/4", "Bb4/2 R/2",
-        "D5/4 Eb5/4 F5/4 Bb5/4", "G5/2 F5/2", "F5/4 Eb5/4 D5/4 C5/4", "Bb4/2 R/2"]
-
-# C -- Snowdin pt.2 / the Last Goodbye strain, in B major
-C_B = ["F#5/4 F#5/4 F#5/4 F#5/8 F#5/8", "E5/4 D#5/4 E5/2",
-       "B5/4 F#5/4 C#5/4 D#5/4", "E5/2 D#5/2",
-       "F#5/4 F#5/4 F#5/4 F#5/8 F#5/8", "E5/4 D#5/4 F#5/2",
-       "C#6/4 A#5/4 B5/4 D#5/4", "C#5/2 B4/2"]
-
-
-# The same two cells in G minor.  Identical scale degrees, dark mode -- so
-# hope in this piece is something the music ARRIVES at, not where it sits.
-A_GM = ["D5/2 D5/2", "A5/1", "G5/2 D5/2", "D5/2 R/2",
-        "D5/2 F5/2", "F5/2 G5/2", "F5/2 D5/2", "Bb5/2 R/2"]
 A_GM_FIG = ["D5/8 Eb5/8 D5/4 D5/8 F5/8 A5/4", "A5/8 Bb5/8 A5/4 G5/8 A5/8 Bb5/4",
             "G5/8 A5/8 G5/4 D5/8 F5/8 D5/4", "D5/8 F5/8 A5/4 D5/2",
             "D5/8 Eb5/8 F5/4 F5/8 G5/8 F5/4", "F5/8 G5/8 A5/4 G5/2",
             "F5/8 Eb5/8 D5/4 F5/8 A5/8 D6/4",
             "Bb5/8 A5/8 G5/8 F5/8 Eb5/8 D5/8 C5/8 A4/8"]
-B_GM = ["G4/4 A4/4 Bb4/4 G4/4", "A4/2 R/2", "A4/4 Bb4/4 A4/4 G4/4", "G4/2 R/2",
-        "Bb4/4 C5/4 D5/4 G5/4", "Eb5/2 D5/2", "D5/4 C5/4 Bb4/4 A4/4", "G4/2 R/2"]
+
+# B -- Your Best Friend, Bb.  1 2 3 1 | 2 | 2 3 2 1 || 3 4 5 1 | 6 5
+B_BB = [
+    "Bb4/4 C5/4 D5/4 Bb4/4",
+    "C5/2 R/2",
+    "C5/8 D5/8 C5/4 Bb4/2",
+    "Bb4/2 R/4 D5/8 Eb5/8",
+    "F5/4 Eb5/8 F5/8 Bb5/2",
+    "G5/8 F5/4. Bb5/2",
+    "F5/4. Eb5/8 D5/4 C5/4",
+    "Bb4/2 R/8 F5/8 G5/8 A5/8",
+    "Bb5/2 C6/4 D6/4",
+    "C6/8 D6/8 C6/8 Bb5/8 C6/2",
+    "D6/4 Eb6/2 C6/4",
+    "Bb5/2. F5/4",
+    "A5/4 Bb5/4 C6/8 D6/8 F6/4",
+    "D6/2. C6/8 Bb5/8",
+    "Bb5/4 A5/8 G5/8 F5/4 D5/4",
+    "Bb5/1",
+]
+
+# B in G minor
+B_GM = [
+    "G4/4 A4/4 Bb4/4 G4/4",
+    "A4/2 R/2",
+    "A4/8 Bb4/8 A4/4 G4/2",
+    "G4/2 R/4 Bb4/8 C5/8",
+    "D5/4 C5/8 D5/8 G5/2",
+    "Eb5/8 D5/4. G5/2",
+    "D5/4. C5/8 Bb4/4 A4/4",
+    "G4/2 R/8 D5/8 Eb5/8 F5/8",
+    "G5/2 A5/4 Bb5/4",
+    "A5/8 Bb5/8 A5/8 G5/8 A5/2",
+    "Bb5/4 C6/2 A5/4",
+    "G5/2. D5/4",
+    "Eb5/4 F5/4 G5/8 A5/8 D6/4",
+    "Bb5/2. A5/8 G5/8",
+    "G5/4 F5/8 Eb5/8 D5/4 Bb4/4",
+    "G5/1",
+]
+
+# C -- Snowdin pt.2 / the Last Goodbye strain, B major.
+# 5 5 5 5 5 4 3 4 | 1 5 2 3.  The hammered 5-hat is the quote; the consequent
+# lifts the whole shape to 1-hat so it is not eight identical F sharps twice.
+C_B = [
+    "F#5/4 F#5/4 F#5/8 F#5/8 F#5/4",
+    "E5/4 D#5/4 E5/2",
+    "B5/2. F#5/4",
+    "C#5/2 D#5/4 E5/4",
+    "F#5/4 F#5/8 F#5/8 F#5/4 F#5/4",
+    "E5/8 D#5/8 F#5/2 R/4",
+    "C#6/2 A#5/2",
+    "B5/2 R/8 F#5/8 G#5/8 A#5/8",
+    "B5/8 B5/8 B5/4 B5/4 B5/4",
+    "A#5/8 G#5/8 A#5/8 B5/8 A#5/2",
+    "E6/4 B5/2 F#5/4",
+    "F#5/4. G#5/8 A#5/2",
+    "B5/4 C#6/8 D#6/8 F#6/2",
+    "E6/2. D#6/8 C#6/8",
+    "C#6/4 B5/4 A#5/4 F#5/4",
+    "B5/1",
+]
 
 
 def rep(bars, count, semis=0):
@@ -452,6 +540,18 @@ def verify():
     for m in MINOR_PHASES:
         if m > 4 and "R/8" in POWER[m - 1]:
             p.append(f"m.{m}: power guitar only offbeat in a dark phase")
+    # the long-note themes must not be rhythmically monotonous, and must not
+    # be eight bars played twice
+    for nm, th in (("A_BB", A_BB), ("A_GM", A_GM), ("B_BB", B_BB),
+                   ("B_GM", B_GM), ("C_B", C_B)):
+        if len(th) != 16:
+            p.append(f"{nm}: {len(th)} bars, want a 16-bar period")
+            continue
+        if th[:8] == th[8:]:
+            p.append(f"{nm}: consequent is a literal repeat of the antecedent")
+        shapes = {" ".join(t.split("/")[1] for t in b.split()) for b in th}
+        if len(shapes) < 13:
+            p.append(f"{nm}: only {len(shapes)} distinct rhythms in 16 bars")
     return p
 
 

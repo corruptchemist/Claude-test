@@ -111,6 +111,19 @@ per bar against one per two), which is most of why they read as agitated.
 `verify()` asserts the bells never sound in a minor phase and the distorted
 guitar is always chugging there rather than sitting on offbeats.
 
+## The long-note themes
+
+Each is a full **sixteen-bar period** — an antecedent that hangs and a
+consequent that starts the same way, then climbs somewhere new and cadences.
+They were previously eight bars played twice.
+
+The quoted pitches still land on the strong beats; what varies is rhythm.
+Every bar used to be two half notes. Now all sixteen bars of every theme carry
+a **distinct rhythmic profile** — dotted halves, syncopated re-attacks,
+neighbour turns, rests, pickups across barlines. `verify()` rejects any theme
+whose consequent literally repeats its antecedent, or that falls below
+thirteen distinct rhythms in sixteen bars.
+
 ## Depth
 
 Three layers exist purely for weight: **distorted rhythm guitar** (root-and-fifth
