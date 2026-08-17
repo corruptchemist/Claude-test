@@ -124,6 +124,23 @@ neighbour turns, rests, pickups across barlines. `verify()` rejects any theme
 whose consequent literally repeats its antecedent, or that falls below
 thirteen distinct rhythms in sixteen bars.
 
+## Drums
+
+Four variants of every groove, six fills, rotating so no pattern repeats bar to
+bar, and a fill every **four** bars rather than every eight. 22 distinct
+patterns across the piece; longest identical run is 3 bars (it was 7).
+
+## Ornaments
+
+The long-note sections carry **20 trills** on notes of a dotted half or longer,
+and **9 written-out glissandi** at phrase peaks. The glissandi are real
+chromatic runs, not notation symbols — a shortened head note plus sixteenths
+sliding into the target — so they sound in any player, which is what you want
+for a synth lead anyway.
+
+Trills are notated as signs in the MusicXML and **expanded into alternating
+32nds in the MIDI**, so the preview renders them.
+
 ## Depth
 
 Three layers exist purely for weight: **distorted rhythm guitar** (root-and-fifth

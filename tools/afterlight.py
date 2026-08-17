@@ -35,7 +35,7 @@ carries the tune for more than sixteen bars.
 """
 
 from fractions import Fraction as F
-from zerosum import bar_len
+from zerosum import bar_len, dur_of
 from zerosum2 import shift, oct_down, rests
 
 TITLE = "AFTERLIGHT"
@@ -461,38 +461,78 @@ GUITAR = (rests(32)
           + rests(16))
 
 # ---------------------------------------------------------------------------
+# ---------------------------------------------------------------------------
+# DRUMS -- four variants of every groove, six fills, rotating so no pattern
+# repeats bar to bar, and a fill every FOUR bars rather than every eight.
+# ---------------------------------------------------------------------------
 DRUM_LIB = {
     "tacet": "R/1",
     "roll":  "Z/2 Z/2",
-    "hatonly": "H/8 H/8 H/8 H/8 H/8 H/8 H/8 H/8",
     "half":  "K/4 R/4 S/4 R/4",
-    "rock":  "K/8 H/8 S/8 H/8 K/16 K/16 H/8 S/8 H/8",
-    "rockO": "KC/8 H/8 S/8 H/8 K/16 K/16 H/8 S/8 O/8",
-    "busy":  "K/8 H/16 H/16 S/8 H/8 K/16 K/16 H/8 S/8 H/16 H/16",
-    "busyO": "KC/8 H/16 H/16 S/8 H/8 K/16 K/16 H/8 S/8 O/8",
-    "ride":  "KR/8 R/8 SR/8 R/8 KR/16 K/16 R/8 SR/8 R/8",
-    "brk":   "H/8 H/8 SH/8 H/8 H/8 H/8 SH/8 H/8",
-    "fill":  "S/16 S/16 T/16 T/16 F/16 F/16 S/8 T/8 F/8 KC/8 S/8",
-    "bigfill": "S/16 S/16 S/16 S/16 T/16 T/16 T/16 T/16 F/16 F/16 F/16 F/16 KC/8 S/8",
+    "halfO": "KC/4 R/4 S/4 K/8 K/8",
+    # -- driving 16th groove, four variants
+    "busy_a": "K/8 H/16 H/16 S/8 H/8 K/16 K/16 H/8 S/8 H/16 H/16",
+    "busy_b": "K/8 H/8 S/16 H/16 H/8 K/8 K/16 H/16 S/8 H/8",
+    "busy_c": "KH/16 H/16 K/8 SH/8 H/16 H/16 K/8 H/8 SH/8 O/8",
+    "busy_d": "K/8 H/8 SH/8 H/16 K/16 H/8 K/16 H/16 SH/8 H/8",
+    "busy_O": "KC/8 H/16 H/16 S/8 H/8 K/16 K/16 H/8 S/8 O/8",
+    # -- straighter 8th groove, four variants
+    "rock_a": "K/8 H/8 S/8 H/8 K/16 K/16 H/8 S/8 H/8",
+    "rock_b": "K/8 H/8 S/8 H/16 H/16 K/8 H/8 S/8 O/8",
+    "rock_c": "K/4 H/8 S/8 K/8 K/8 H/8 S/8",
+    "rock_d": "K/8 H/8 S/8 H/8 H/8 K/8 SH/8 O/8",
+    "rock_O": "KC/8 H/8 S/8 H/8 K/16 K/16 H/8 S/8 O/8",
+    # -- ride groove for the coda
+    "ride_a": "KR/8 R/8 SR/8 R/8 KR/16 K/16 R/8 SR/8 R/8",
+    "ride_b": "KR/8 R/8 SR/8 R/16 R/16 KR/8 R/8 SR/8 R/8",
+    # -- hat/rim only, under the bass feature
+    "brk_a": "H/8 H/8 SH/8 H/8 H/8 H/8 SH/8 H/8",
+    "brk_b": "H/8 H/16 H/16 SH/8 H/8 H/8 H/8 SH/8 H/8",
+    "brk_c": "H/16 H/16 H/8 SH/8 H/8 H/8 H/16 H/16 SH/8 H/8",
+    # -- six fills, so the same one never lands twice in a row
+    "fill_a": "S/16 S/16 T/16 T/16 F/16 F/16 S/8 T/8 F/8 KC/8 S/8",
+    "fill_b": "S/8 S/16 S/16 T/8 T/16 T/16 F/8 F/16 F/16 KC/4",
+    "fill_c": "T/16 T/16 T/16 T/16 F/16 F/16 F/16 F/16 S/16 S/16 S/16 S/16 KC/8 S/8",
+    "fill_d": "S/32 S/32 S/32 S/32 S/16 S/16 T/8 T/8 F/8 F/8 KC/4",
+    "fill_e": "K/8 H/8 S/8 S/16 S/16 S/16 S/16 T/8 F/8 KC/8",
+    "fill_f": "K/8 S/8 K/8 S/8 T/16 T/16 T/16 T/16 F/16 F/16 KC/8",
     "final": "KCZ/1",
 }
+
+GROOVES = {"busy": ["busy_a", "busy_b", "busy_c", "busy_d"],
+           "rock": ["rock_a", "rock_b", "rock_c", "rock_d"],
+           "ride": ["ride_a", "ride_b", "ride_a", "ride_b"],
+           "brk":  ["brk_a", "brk_b", "brk_c", "brk_b"]}
+FILLS = ["fill_a", "fill_b", "fill_c", "fill_d", "fill_e", "fill_f"]
+
+
+def kit(m, family):
+    """Groove variant rotating every bar; a fill every fourth bar, cycling
+    through six of them; the crash variant on each 16-bar downbeat."""
+    if m % 16 == 1:
+        return f"{family}_O" if f"{family}_O" in DRUM_LIB else GROOVES[family][0]
+    if m % 8 == 0:
+        return FILLS[(m // 8) % len(FILLS)]
+    if m % 4 == 0:
+        return FILLS[((m // 4) + 3) % len(FILLS)]
+    return GROOVES[family][m % 4]
+
 
 DRUMS = []
 for i in range(N):
     m = i + 1
     if m <= 4:
-        DRUMS.append("half")
+        DRUMS.append("halfO" if m == 1 else "half")
     elif m <= 32:
-        DRUMS.append("busyO" if m % 16 == 1 else ("fill" if m % 8 == 0 else "busy"))
+        DRUMS.append(kit(m, "busy"))
     elif m <= 80:
-        DRUMS.append("rockO" if m % 16 == 1 else ("fill" if m % 8 == 0 else "rock"))
+        DRUMS.append(kit(m, "rock"))
     elif m <= 96:
-        DRUMS.append("brk" if m % 8 else "fill")
+        DRUMS.append("fill_e" if m % 8 == 0 else GROOVES["brk"][m % 4])
     elif m <= 192:
-        DRUMS.append("busyO" if m % 16 == 1 else
-                     ("bigfill" if m % 16 == 0 else ("fill" if m % 8 == 0 else "busy")))
+        DRUMS.append(kit(m, "busy"))
     else:
-        DRUMS.append("ride" if m % 8 else "fill")
+        DRUMS.append(kit(m, "ride"))
 DRUMS[-1] = "final"
 
 PARTS = {"LEAD": LEAD, "LEAD2": LEAD2, "BELL": BELL, "STRINGS": STRINGS,
@@ -500,6 +540,93 @@ PARTS = {"LEAD": LEAD, "LEAD2": LEAD2, "BELL": BELL, "STRINGS": STRINGS,
          "ARP": ARP, "BASS": BASS, "SUB": SUB, "DRUMS": DRUMS}
 
 MINOR_PHASES = list(range(1, 33)) + list(range(97, 129))
+
+# The sections that are NOT in sixteenths -- where a long note can carry an
+# ornament without turning to mush.
+LONG_RANGES = [(9, 48), (65, 80), (113, 152), (177, 208)]
+
+
+def _is_long(m):
+    return any(a <= m <= b for a, b in LONG_RANGES)
+
+
+def glissify(bar, idx, sharp=False):
+    """Write a glissando OUT as a real run rather than leaving it a symbol on
+    the page: shorten the note at idx and fill the gap to the next one with a
+    chromatic slide.  Audible everywhere, and correct notation for a synth lead."""
+    from zerosum2 import to_midi, from_midi
+    toks = bar.split()
+    if idx + 1 >= len(toks):
+        return bar
+    a, b = toks[idx].rstrip("~"), toks[idx + 1].rstrip("~")
+    if a.startswith("R/") or b.startswith("R/"):
+        return bar
+    pa, da = a.split("/")
+    pb = b.split("/")[0]
+    if "+" in pa or "+" in pb:
+        return bar
+    span = dur_of(da)
+    m0, m1 = to_midi(pa), to_midi(pb)
+    steps = abs(m1 - m0)
+    if steps < 3 or span < F(1):
+        return bar
+    n = min(steps - 1, 6)                       # up to six passing semitones
+    run_len = F(n, 4)   # n sixteenths = n/4 quarter-lengths
+    if span - run_len < F(1, 2):
+        return bar
+    step = 1 if m1 > m0 else -1
+    head = f"{pa}/{da}" if False else None
+    # rebuild: shortened head, then n chromatic sixteenths into the target
+    keep = span - run_len
+    parts = [_dur_tokens(pa, keep)]
+    for k in range(1, n + 1):
+        parts.append(f"{from_midi(m0 + step * k, sharp)}/16")
+    toks[idx] = " ".join(parts)
+    return " ".join(toks)
+
+
+def _dur_tokens(pitch, ql):
+    """Express a duration as one or two note tokens of the same pitch."""
+    table = [(F(4), "1"), (F(3), "2."), (F(2), "2"), (F(3, 2), "4."),
+             (F(1), "4"), (F(3, 4), "8."), (F(1, 2), "8"), (F(1, 4), "16")]
+    out = []
+    left = ql
+    for v, code in table:
+        while left >= v:
+            out.append(f"{pitch}/{code}")
+            left -= v
+    return " ".join(out)
+
+
+def build_ornaments():
+    """Trill every long note of a dotted half or more, at most one per bar."""
+    orn = {}
+    from zerosum import dur_of
+    for part in ("LEAD", "LEAD2"):
+        for i, barstr in enumerate(PARTS[part]):
+            m = i + 1
+            if not _is_long(m) or (part == "LEAD2" and m % 8 != 4):
+                continue
+            for idx, tok in enumerate(barstr.split()):
+                if tok.startswith("R/"):
+                    continue
+                if dur_of(tok.rstrip("~").split("/")[1]) >= F(3):
+                    orn[(part, m, idx)] = "trill"
+                    break
+    return orn
+
+
+# Written-out glissandi at phrase peaks in the long-note sections.  LEAD is the
+# same list object PARTS holds, so mutating it here propagates.
+GLISS_BARS = [43, 45, 75, 119, 139, 147, 163, 181, 187]
+for _m in GLISS_BARS:
+    for _i in range(4):
+        _new = glissify(LEAD[_m - 1], _i, sharp=_m >= 129)
+        if _new != LEAD[_m - 1]:
+            LEAD[_m - 1] = _new
+            break
+
+ORNAMENTS = build_ornaments()
 
 
 def verify():

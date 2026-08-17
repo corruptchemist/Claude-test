@@ -40,6 +40,25 @@ MARKS = {1: "G MINOR - the fight", 17: "theme, minor",
          193: "coda"}
 
 
+def trill_notes(n):
+    """Expand a trill into alternating 32nds so it is audible in the MIDI.
+    The score keeps the trill SIGN; only the MIDI gets the realisation."""
+    total = n.duration.quarterLength
+    step = 0.125
+    count = max(2, int(total / step))
+    out = []
+    for k in range(count):
+        x = note.Note(n.pitch) if k % 2 == 0 else note.Note(n.pitch.midi + 2)
+        x.duration = duration.Duration(step)
+        out.append(x)
+    used = step * count
+    if total - used > 1e-6:
+        x = note.Note(n.pitch)
+        x.duration = duration.Duration(total - used)
+        out.append(x)
+    return out
+
+
 def parse_bar(s, is_drums):
     for tok in s.split():
         tied = tok.endswith("~")
@@ -61,7 +80,7 @@ def parse_bar(s, is_drums):
         yield n, tied
 
 
-def build():
+def build(realize_trills=False):
     sc = stream.Score()
     sc.metadata = metadata.Metadata()
     sc.metadata.title = "AFTERLIGHT"
@@ -104,7 +123,18 @@ def build():
                 meas.insert(0, dynamics.Dynamic(dyn_map[m]))
 
             src = A.DRUM_LIB[raw] if pkey == "DRUMS" else raw
+            idx = 0
             for obj, tied in parse_bar(src, pkey == "DRUMS"):
+                orn = A.ORNAMENTS.get((pkey, m, idx))
+                idx += 1
+                if orn == "trill" and isinstance(obj, note.Note):
+                    if realize_trills:
+                        for x in trill_notes(obj):
+                            meas.append(x)
+                            first_note.setdefault(m, x)
+                            last_note[m] = x
+                        continue
+                    obj.expressions.append(expressions.Trill())
                 if pending_tie and isinstance(obj, (note.Note, chord.Chord)):
                     obj.tie = tie.Tie("stop")
                     pending_tie = False
@@ -132,10 +162,9 @@ def build():
 
 
 if __name__ == "__main__":
-    sc = build()
     mid = sys.argv[1] if len(sys.argv) > 1 else "../score/afterlight.mid"
     xml = sys.argv[2] if len(sys.argv) > 2 else "../score/afterlight.musicxml"
-    sc.write("midi", fp=mid)
+    build(realize_trills=True).write("midi", fp=mid)
     print("wrote", mid)
-    sc.write("musicxml", fp=xml)
+    build(realize_trills=False).write("musicxml", fp=xml)
     print("wrote", xml)
