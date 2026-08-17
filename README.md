@@ -141,3 +141,122 @@ arp at least two dynamic steps under the melody · every long-note theme has
 
     cd tools && python3 afterlight.py && python3 export_afterlight.py
     python3 render_audio.py ../score/afterlight.mid ../score/afterlight.mp3
+
+---
+
+# SHADOW OF THE FUTURE
+
+208 bars, ♩=182, **4:37**. Twelve tracks. A last-boss theme built on
+*Hopes and Dreams* — and on the one theorem that says it cannot end well.
+
+A fan arrangement: it quotes Toby Fox directly, so commercial release would
+need clearance.
+
+## The game
+
+**"The shadow of the future"** is Axelrod's term for the only reason
+cooperation is ever rational: the game continues, so defecting today costs you
+tomorrow. Lengthen the shadow and nice strategies win.
+
+`tournament()` reproduces his round robin honestly — six real strategies, the
+standard payoffs (T=5, R=3, P=1, S=0), every pairing — and TIT FOR TAT wins it.
+`verify()` fails the build if it ever stops winning.
+
+| | | |
+|---|---|---|
+| 1 | TIT FOR TAT | 1138 |
+| 2 | PAVLOV | 1054 |
+| 3 | GRIM TRIGGER | 1026 |
+| 4 | ALWAYS COOPERATE | 906 |
+| 5 | PROBER | 842 |
+| 6 | ALWAYS DEFECT | 796 |
+
+But a *finitely* repeated game with a known last round unravels. In the final
+round there is no tomorrow, so defect. Knowing that, defect in the second to
+last. Induct backwards and cooperation dies all the way to round one.
+
+**This piece is the last encounter ever. The shadow is zero.** The mathematics
+says despair, and it says so as a proof.
+
+So the form is a real match — TIT FOR TAT against PROBER, played out move by
+move — and the last three rounds are handed to backward induction, which
+collapses them. Then, in the final sixteen bars, the piece refuses its own
+theorem and cooperates anyway. That refusal is one line in `form()`:
+
+    a[-1] = b[-1] = "C"            # <-- THE REFUSAL.  the only unearned bar.
+
+## The argument is one pitch: F versus E
+
+COOPERATE is the real *Hopes and Dreams* engine, ii7 – I6 – IV – V:
+
+    || Cm7 | Bb/D | Ebma7 | F ||
+
+bass ascending C–D–E♭–F, tonic never in root position. DEFECT keeps that
+ascending bass and rots the dominant into ♭V:
+
+    || C°7 | D°7 | Eb°7 | E7 ||
+
+E is the tritone above B♭ — the dominant that cannot go home. Every round is
+decided by whether its last bar lands on F or on E, and `verify()` checks that
+only mutual cooperation is ever allowed to earn the F. The last chord of the
+piece is an F chord, and it is F because the music chose it, not the game.
+
+## Round by round
+
+| | mm. | moves | key | cad. | canon | attacks | |
+|---|---|---|---|---|---|---|---|
+| R0 | 1 | CD | B♭ | E | — | 247 | the first move |
+| R1 | 17 | DC | B♭ | E | — | 693 | retaliation |
+| R2 | 33 | CC | B♭ | F | — | 843 | cooperation holds |
+| R3 | 49 | CC | B♭ | F | — | 860 | and pays |
+| R4 | 65 | CC | B♭ | F | 8 | 878 | canon at eight |
+| R5 | 81 | CC | B♭ | F | 4 | 1263 | canon at four |
+| R6 | 97 | CC | B | F | 4 | 1291 | B major |
+| R7 | 113 | CC | B | F | 2 | 1322 | canon at two |
+| R8 | 129 | CC | B | F | 2 | 1423 | inversion |
+| R9 | 145 | CC | B | F | 1 | 1767 | stretto at one |
+| R10 | 161 | **DD** | B | **E** | 1 | 1901 | the shadow is zero |
+| R11 | 177 | **DD** | B | **E** | 1 | 1909 | backward induction |
+| R12 | 193 | CC | C | F | 2 | 2186 | **HOPE** |
+
+## It gets more complicated, and that is enforced
+
+The ladder runs plain half notes → eighths → sixteenths → continuous sixteenth
+runs → canon at eight bars → four → two → stretto at one → the subject against
+its own inversion → thirty-seconds. The pad and the offbeat guitar subdivide
+further every few rounds and never thin out.
+
+`verify()` counts every attack in every part and **fails the build if any round
+is less busy than the one before it** — the attacks column above is that count,
+and it is strictly increasing from 247 to 2186.
+
+Complexity rises monotonically the whole way; *consonance* is what oscillates
+with the game. So the collapse at R10–R11 is the busiest music yet and also the
+bleakest, and the finale states the tune plainly on top while everything
+underneath blazes in thirty-seconds.
+
+## Quoted material
+
+*Hopes and Dreams* / *Once Upon a Time* — the family cell, in B♭:
+
+    5 5 2 | 1 5 5 | 5 7 7 1 | 7 5 3
+    F F C | Bb F F | F A A Bb | A F D
+
+Verified against the published letter notes (`f f c A f f f a a A a f d ...`,
+uppercase = black key, so `A` = B♭). B♭ major, ~170 bpm, 4/4 — which is also
+why the two semitone lifts land where they do: B♭ → B is *Hopes and Dreams*'
+own modulation, and B → C is the one it never gets to make.
+
+## Also enforced by verify()
+
+Every bar sums exactly to 4/4 · no melodic voice holds the subject for more
+than sixteen unbroken bars · the canon never collapses into unison · the arp
+engine never stops after round 0 · stabs and arp at least two dynamic steps
+under the melody · backward induction really does collapse R10–R11 · the piece
+really does choose hope in R12.
+
+27 written-out glissandi.
+
+    cd tools && python3 shadowfuture.py && python3 export_shadowfuture.py
+    python3 render_audio.py ../score/shadow-of-the-future.mid \
+                            ../score/shadow-of-the-future.mp3
