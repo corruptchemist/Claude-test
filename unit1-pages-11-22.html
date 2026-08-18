@@ -1,0 +1,757 @@
+<title>Unit 1 Homework Walkthrough</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Newsreader:ital,opsz,wght@0,6..72,400;0,6..72,600;1,6..72,400&family=IBM+Plex+Sans:ital,wght@0,400;0,500;0,600;1,400&family=STIX+Two+Text:ital,wght@0,400;0,600;1,400;1,600&display=swap">
+<style>
+  :root{
+    --ground:#F5F6F8;
+    --card:#FFFFFF;
+    --ink:#171B21;
+    --ink-soft:#4C545F;
+    --ink-faint:#7A828D;
+    --rule:#DCE0E6;
+    --rule-soft:#E9ECF0;
+    --blue:#1F4E79;
+    --blue-soft:#E4EDF5;
+    --pen:#A81E32;
+    --pen-soft:#FAECEE;
+    --grid:#DDE3EA;
+  }
+  @media (prefers-color-scheme: dark){
+    :root:not([data-theme="light"]){
+      --ground:#101319;
+      --card:#171B22;
+      --ink:#E8EAEF;
+      --ink-soft:#AEB6C2;
+      --ink-faint:#7E8794;
+      --rule:#2A303A;
+      --rule-soft:#232932;
+      --blue:#8CBBE3;
+      --blue-soft:#1B2833;
+      --pen:#EE8A99;
+      --pen-soft:#2A1B20;
+      --grid:#232A33;
+    }
+  }
+  :root[data-theme="dark"]{
+    --ground:#101319;
+    --card:#171B22;
+    --ink:#E8EAEF;
+    --ink-soft:#AEB6C2;
+    --ink-faint:#7E8794;
+    --rule:#2A303A;
+    --rule-soft:#232932;
+    --blue:#8CBBE3;
+    --blue-soft:#1B2833;
+    --pen:#EE8A99;
+    --pen-soft:#2A1B20;
+    --grid:#232A33;
+  }
+
+  *{box-sizing:border-box}
+  body{
+    margin:0;
+    background:var(--ground);
+    color:var(--ink);
+    font-family:"IBM Plex Sans","Helvetica Neue",Arial,sans-serif;
+    font-size:16px;
+    line-height:1.6;
+    -webkit-font-smoothing:antialiased;
+  }
+  .wrap{max-width:1140px;margin:0 auto;padding:0 20px 96px}
+
+  /* ---------- masthead ---------- */
+  .masthead{
+    position:relative;
+    padding:56px 0 28px;
+    border-bottom:2px solid var(--ink);
+    margin-bottom:8px;
+    overflow:hidden;
+  }
+  .masthead::before{
+    content:"";
+    position:absolute;inset:0;
+    background-image:linear-gradient(var(--grid) 1px,transparent 1px),linear-gradient(90deg,var(--grid) 1px,transparent 1px);
+    background-size:26px 26px;
+    -webkit-mask-image:linear-gradient(to bottom,rgba(0,0,0,.55),transparent 78%);
+    mask-image:linear-gradient(to bottom,rgba(0,0,0,.55),transparent 78%);
+    pointer-events:none;
+  }
+  .masthead > *{position:relative}
+  .eyebrow{
+    font-size:12px;letter-spacing:.14em;text-transform:uppercase;
+    color:var(--blue);font-weight:600;margin:0 0 10px;
+  }
+  h1{
+    font-family:"Newsreader",Georgia,serif;
+    font-weight:600;font-size:clamp(34px,5.2vw,54px);
+    line-height:1.06;letter-spacing:-.015em;margin:0 0 14px;
+    text-wrap:balance;
+  }
+  .standfirst{
+    font-size:17px;color:var(--ink-soft);max-width:62ch;margin:0 0 22px;
+  }
+  .legend{display:flex;flex-wrap:wrap;gap:10px 18px;font-size:13.5px;color:var(--ink-faint)}
+  .legend b{color:var(--pen);font-weight:600}
+
+  /* ---------- section nav ---------- */
+  .toc{
+    position:sticky;top:0;z-index:5;
+    display:flex;flex-wrap:wrap;gap:6px;
+    padding:10px 0;margin-bottom:34px;
+    background:color-mix(in srgb,var(--ground) 92%,transparent);
+    backdrop-filter:blur(6px);
+    border-bottom:1px solid var(--rule);
+  }
+  .toc a{
+    font-size:13px;text-decoration:none;color:var(--ink-soft);
+    padding:5px 11px;border:1px solid var(--rule);border-radius:2px;
+    white-space:nowrap;
+  }
+  .toc a:hover,.toc a:focus-visible{border-color:var(--blue);color:var(--blue);background:var(--blue-soft)}
+
+  /* ---------- sections ---------- */
+  section{margin:0 0 52px;scroll-margin-top:64px}
+  .sec-head{display:flex;align-items:baseline;gap:14px;flex-wrap:wrap;margin-bottom:6px}
+  .pagetag{
+    font-size:12px;font-weight:600;letter-spacing:.08em;text-transform:uppercase;
+    color:var(--card);background:var(--blue);padding:3px 9px;border-radius:2px;
+  }
+  h2{
+    font-family:"Newsreader",Georgia,serif;font-weight:600;
+    font-size:clamp(23px,2.6vw,30px);line-height:1.15;margin:0;letter-spacing:-.01em;
+  }
+  .sec-note{color:var(--ink-faint);font-size:14.5px;margin:2px 0 20px;max-width:70ch}
+
+  .cards{display:grid;gap:14px}
+  @media (min-width:860px){ .cards.two{grid-template-columns:1fr 1fr} }
+
+  .p{
+    background:var(--card);
+    border:1px solid var(--rule);
+    border-left:3px solid var(--blue);
+    border-radius:3px;
+    padding:16px 18px 15px;
+    display:flex;flex-direction:column;gap:9px;
+  }
+  .p h3{
+    margin:0;font-family:"IBM Plex Sans",sans-serif;font-size:14px;font-weight:600;
+    letter-spacing:.02em;color:var(--ink);
+    display:flex;align-items:baseline;gap:9px;
+  }
+  .num{
+    font-family:"Newsreader",Georgia,serif;font-size:19px;font-weight:600;
+    color:var(--blue);min-width:1.6em;
+  }
+  .q{color:var(--ink-soft);font-size:14.5px;margin:0}
+  .ans{
+    font-size:15.5px;color:var(--pen);background:var(--pen-soft);
+    border-radius:2px;padding:7px 10px;margin:0;
+  }
+  .ans .lbl{
+    font-size:11px;letter-spacing:.12em;text-transform:uppercase;
+    display:block;color:var(--pen);opacity:.75;margin-bottom:1px;font-weight:600;
+  }
+  .why{margin:0;font-size:14.5px;color:var(--ink-soft)}
+  .why b{color:var(--ink);font-weight:600}
+  ul.steps{margin:0;padding-left:18px;font-size:14.5px;color:var(--ink-soft)}
+  ul.steps li{margin:3px 0}
+  ol.parts{margin:0;padding-left:20px;font-size:14.5px;color:var(--ink-soft)}
+  ol.parts li{margin:5px 0}
+
+  /* math */
+  .m{font-family:"STIX Two Text",Cambria,Georgia,serif;font-style:italic;font-size:1.06em;white-space:nowrap}
+  .m .up{font-style:normal}
+  .frac{display:inline-flex;flex-direction:column;vertical-align:-.48em;text-align:center;font-size:.94em}
+  .frac span:first-child{border-bottom:1px solid currentColor;padding:0 .3em}
+  .frac span:last-child{padding:0 .3em}
+
+  table{border-collapse:collapse;font-size:14px;font-variant-numeric:tabular-nums;width:100%}
+  .scroll{overflow-x:auto;-webkit-overflow-scrolling:touch}
+  th,td{border:1px solid var(--rule);padding:5px 9px;text-align:center;font-family:"STIX Two Text",Georgia,serif}
+  th{background:var(--blue-soft);color:var(--ink);font-weight:600;font-style:normal}
+
+  figure{margin:6px 0 0}
+  figcaption{font-size:12.5px;color:var(--ink-faint);margin-top:6px}
+  svg{max-width:100%;height:auto;display:block}
+  .plot{stroke:var(--blue);stroke-width:2.4;fill:none;stroke-linejoin:round;stroke-linecap:round}
+  .axis{stroke:var(--ink-soft);stroke-width:1.2}
+  .tick{stroke:var(--rule);stroke-width:1}
+  .lab{font-family:"IBM Plex Sans",sans-serif;font-size:11px;fill:var(--ink-faint)}
+  .dot{fill:var(--pen)}
+
+  .callout{
+    border:1px dashed var(--rule);border-radius:3px;padding:13px 16px;
+    font-size:14.5px;color:var(--ink-soft);background:var(--card);
+  }
+  .callout b{color:var(--ink)}
+  footer{
+    margin-top:56px;padding-top:18px;border-top:1px solid var(--rule);
+    font-size:13.5px;color:var(--ink-faint);
+  }
+  a{color:var(--blue)}
+  :focus-visible{outline:2px solid var(--blue);outline-offset:2px}
+  @media (prefers-reduced-motion:reduce){*{animation:none!important;transition:none!important}}
+</style>
+<div class="wrap">
+
+<header class="masthead">
+  <p class="eyebrow">AP Precalculus &middot; Unit 1 packet &middot; pages 11&ndash;22</p>
+  <h1>Unit 1 Homework Walkthrough</h1>
+  <p class="standfirst">Every problem on pages 11&ndash;22, with the answer and the reasoning that gets you there. Work the problem first, then check &mdash; the &ldquo;why&rdquo; line is the part that shows up on the test.</p>
+  <div class="legend">
+    <span><b>Red</b> = the answer to write down</span>
+    <span>Grey = how it&rsquo;s found</span>
+    <span>Graph readings are estimates from the printed picture, marked &ldquo;&asymp;&rdquo;</span>
+  </div>
+</header>
+
+<nav class="toc" aria-label="Sections">
+  <a href="#s-a">p.11 &middot; Evaluating functions</a>
+  <a href="#s-b">p.12 &middot; Reading g</a>
+  <a href="#s-c">p.13 &middot; Concavity &amp; inflection</a>
+  <a href="#s-d">p.14 &middot; f vs g</a>
+  <a href="#s-e">p.15 &middot; Sketching scenarios</a>
+  <a href="#s-f">p.17&ndash;19 &middot; Continuity &amp; end behavior</a>
+  <a href="#s-g">p.21&ndash;22 &middot; Zeros &amp; parameters</a>
+</nav>
+
+<!-- ============ PAGE 11 ============ -->
+<section id="s-a">
+  <div class="sec-head"><span class="pagetag">Page 11</span><h2>Evaluating and building functions &middot; #9&ndash;16</h2></div>
+  <p class="sec-note">The whole idea in #9&ndash;12: the input is a placeholder. Wherever you see <span class="m">x</span> in the rule, drop the new input in &mdash; parentheses included &mdash; then simplify. <span class="m">&minus;f(x)</span> is different: evaluate first, then negate the <em>whole</em> output.</p>
+
+  <div class="cards two">
+    <article class="p">
+      <h3><span class="num">9</span><span class="m">f(x) = 2x<span class="up">&sup2;</span> + 3x &minus; 5</span></h3>
+      <p class="ans"><span class="lbl">Answers</span>
+        A. <span class="m">f(&minus;1) = &minus;6</span><br>
+        B. <span class="m">&minus;f(x) = &minus;2x<span class="up">&sup2;</span> &minus; 3x + 5</span><br>
+        C. <span class="m">f(2x) = 8x<span class="up">&sup2;</span> + 6x &minus; 5</span></p>
+      <ul class="steps">
+        <li>A: <span class="m">2(&minus;1)<span class="up">&sup2;</span> + 3(&minus;1) &minus; 5 = 2 &minus; 3 &minus; 5</span></li>
+        <li>B: distribute the negative to <b>all three</b> terms.</li>
+        <li>C: <span class="m">2(2x)<span class="up">&sup2;</span> = 2&middot;4x<span class="up">&sup2;</span> = 8x<span class="up">&sup2;</span></span> &mdash; the square hits the 2 as well.</li>
+      </ul>
+    </article>
+
+    <article class="p">
+      <h3><span class="num">10</span><span class="m">f(x) = |x| &minus; 3</span></h3>
+      <p class="ans"><span class="lbl">Answers</span>
+        A. <span class="m">f(&minus;x) = |x| &minus; 3</span><br>
+        B. <span class="m">f(x &minus; 1) = |x &minus; 1| &minus; 3</span><br>
+        C. <span class="m">f(3x) = 3|x| &minus; 3</span></p>
+      <ul class="steps">
+        <li>A: <span class="m">|&minus;x| = |x|</span>, so nothing changes &mdash; this function is even.</li>
+        <li>B: keep the whole binomial inside the bars.</li>
+        <li>C: <span class="m">|3x| = |3|&middot;|x| = 3|x|</span>; a positive factor comes out.</li>
+      </ul>
+    </article>
+
+    <article class="p">
+      <h3><span class="num">11</span><span class="m">f(x) = &radic;<span style="text-decoration:overline">x<span class="up">&sup2;</span> &minus; x</span></span></h3>
+      <p class="ans"><span class="lbl">Answers</span>
+        A. <span class="m">f(&minus;1) = &radic;2</span><br>
+        B. <span class="m">f(&minus;x) = &radic;<span style="text-decoration:overline">x<span class="up">&sup2;</span> + x</span></span><br>
+        C. <span class="m">&minus;f(x) = &minus;&radic;<span style="text-decoration:overline">x<span class="up">&sup2;</span> &minus; x</span></span></p>
+      <ul class="steps">
+        <li>A: <span class="m">(&minus;1)<span class="up">&sup2;</span> &minus; (&minus;1) = 1 + 1 = 2</span>.</li>
+        <li>B: <span class="m">(&minus;x)<span class="up">&sup2;</span> = x<span class="up">&sup2;</span></span> but <span class="m">&minus;(&minus;x) = +x</span>. Only the linear term flips.</li>
+        <li>C: the negative sits outside the radical &mdash; you are not allowed to move it in.</li>
+      </ul>
+    </article>
+
+    <article class="p">
+      <h3><span class="num">12</span><span class="m">f(x) = <span class="frac"><span>x</span><span>x<span class="up">&sup2;</span> &minus; 1</span></span></span></h3>
+      <p class="ans"><span class="lbl">Answers</span>
+        A. <span class="m">&minus;f(x) = <span class="frac"><span>&minus;x</span><span>x<span class="up">&sup2;</span> &minus; 1</span></span></span><br>
+        B. <span class="m">f(x + 1) = <span class="frac"><span>x + 1</span><span>x<span class="up">&sup2;</span> + 2x</span></span> = <span class="frac"><span>x + 1</span><span>x(x + 2)</span></span></span><br>
+        C. <span class="m">f(x + h) = <span class="frac"><span>x + h</span><span>(x + h)<span class="up">&sup2;</span> &minus; 1</span></span></span></p>
+      <ul class="steps">
+        <li>B: <span class="m">(x + 1)<span class="up">&sup2;</span> &minus; 1 = x<span class="up">&sup2;</span> + 2x + 1 &minus; 1 = x<span class="up">&sup2;</span> + 2x</span>. Expanding is what makes the &ldquo;&minus;1&rdquo; cancel.</li>
+        <li>C: leave it unexpanded unless the problem asks for a difference quotient.</li>
+      </ul>
+    </article>
+
+    <article class="p">
+      <h3><span class="num">13</span>Find <span class="m">A</span> if <span class="m">f(2) = 13</span></h3>
+      <p class="q"><span class="m">f(x) = 2x<span class="up">&sup3;</span> + Ax<span class="up">&sup2;</span> + 4x &minus; 3</span></p>
+      <p class="ans"><span class="lbl">Answer</span><span class="m">A = &minus;2</span></p>
+      <p class="why">Substitute <span class="m">x = 2</span> and set the result equal to 13:<br>
+      <span class="m">2(8) + A(4) + 8 &minus; 3 = 13 &rarr; 4A + 21 = 13 &rarr; 4A = &minus;8</span>.</p>
+    </article>
+
+    <article class="p">
+      <h3><span class="num">14</span>Find <span class="m">B</span> if <span class="m">f(&minus;2) = <span class="frac"><span>5</span><span>2</span></span></span></h3>
+      <p class="q"><span class="m">f(x) = <span class="frac"><span>2x &minus; B</span><span>3x + 4</span></span></span></p>
+      <p class="ans"><span class="lbl">Answer</span><span class="m">B = 1</span></p>
+      <p class="why"><span class="m"><span class="frac"><span>&minus;4 &minus; B</span><span>&minus;2</span></span> = <span class="frac"><span>5</span><span>2</span></span></span>. Cross-multiply: <span class="m">2(&minus;4 &minus; B) = &minus;10</span>, so <span class="m">&minus;4 &minus; B = &minus;5</span> and <span class="m">B = 1</span>. Check: <span class="m">(&minus;5)/(&minus;2) = 5/2</span>. &#10003;</p>
+    </article>
+
+    <article class="p">
+      <h3><span class="num">15</span>Area of a square as a function of perimeter</h3>
+      <p class="ans"><span class="lbl">Answer</span><span class="m">A(P) = <span class="frac"><span>P<span class="up">&sup2;</span></span><span>16</span></span></span></p>
+      <p class="why">Link the two through the side length: <span class="m">P = 4s</span> so <span class="m">s = P/4</span>. Then <span class="m">A = s<span class="up">&sup2;</span> = (P/4)<span class="up">&sup2;</span></span>. The side length is the bridge &mdash; write it, then eliminate it.</p>
+    </article>
+
+    <article class="p">
+      <h3><span class="num">16</span>Gross salary at $18/hour</h3>
+      <p class="ans"><span class="lbl">Answer</span><span class="m">S(h) = 18h</span></p>
+      <p class="why">Rate &times; hours. Reasonable domain: <span class="m">h &ge; 0</span>.</p>
+    </article>
+  </div>
+</section>
+
+<!-- ============ PAGE 12 ============ -->
+<section id="s-b">
+  <div class="sec-head"><span class="pagetag">Page 12</span><h2>Change in Tandem &middot; reading the graph of g &middot; #17&ndash;21</h2></div>
+  <p class="sec-note">Read the four labeled points as two different kinds of landmark. <span class="m">(&minus;1.2, 1.5)</span> and <span class="m">(2.6, &minus;8.6)</span> are turning points &mdash; where the graph switches between increasing and decreasing. <span class="m">(&minus;2.2, 0.7)</span> and <span class="m">(1.2, &minus;4.3)</span> are <b>points of inflection</b> &mdash; the graph keeps going the same direction there, but the bend flips.</p>
+
+  <div class="callout" style="margin-bottom:14px">
+    <b>The shape, in words:</b> falls from the upper left to a low point at <span class="m">x &asymp; &minus;3</span> (it just touches the <span class="m">x</span>-axis) &middot; rises through <span class="m">(&minus;2.2, 0.7)</span> to the local max <span class="m">(&minus;1.2, 1.5)</span> &middot; falls through <span class="m">(1.2, &minus;4.3)</span> to the local min <span class="m">(2.6, &minus;8.6)</span> &middot; then rises steeply off the top of the window.
+  </div>
+
+  <div class="cards">
+    <article class="p">
+      <h3><span class="num">17</span>Is <span class="m">g</span> increasing or decreasing at <span class="m">x = 1</span>?</h3>
+      <p class="ans"><span class="lbl">Answer</span><b>Decreasing.</b></p>
+      <p class="why"><span class="m">x = 1</span> sits between the local max at <span class="m">x = &minus;1.2</span> and the local min at <span class="m">x = 2.6</span>. On that whole stretch, as the input increases the output falls &mdash; e.g. the graph drops from <span class="m">1.5</span> down past <span class="m">&minus;4.3</span> at <span class="m">x = 1.2</span>.</p>
+    </article>
+
+    <article class="p">
+      <h3><span class="num">18</span>Is the <em>rate of change</em> increasing or decreasing at <span class="m">x = 1</span>?</h3>
+      <p class="ans"><span class="lbl">Answer</span><b>Decreasing</b> (the slopes are getting more negative).</p>
+      <p class="why">At <span class="m">x = 1</span> the graph is <b>concave down</b> &mdash; it lies below its tangent line, and the inflection point isn&rsquo;t reached until <span class="m">x = 1.2</span>. Concave down means the slope values are decreasing, so the function is falling <em>faster and faster</em> there. Careful: &ldquo;decreasing function&rdquo; (#17) and &ldquo;decreasing rate of change&rdquo; (#18) are separate questions &mdash; here they happen to agree.</p>
+    </article>
+
+    <article class="p">
+      <h3><span class="num">19</span>Where is <span class="m">g</span> concave up?</h3>
+      <p class="ans"><span class="lbl">Answer</span><span class="m">(&minus;&infin;, &minus;2.2) &cup; (1.2, &infin;)</span> &mdash; on the picture, roughly <span class="m">(&minus;3.6, &minus;2.2) &cup; (1.2, 4.3)</span>.</p>
+      <p class="why">Concave up = cupped upward, holding water, slopes increasing. That&rsquo;s the valley on the far left and the whole valley containing <span class="m">(2.6, &minus;8.6)</span>. The endpoints are the two inflection points &mdash; always give concavity in <b>open</b> intervals of <span class="m">x</span>.</p>
+    </article>
+
+    <article class="p">
+      <h3><span class="num">20</span>Where is <span class="m">g</span> concave down?</h3>
+      <p class="ans"><span class="lbl">Answer</span><span class="m">(&minus;2.2, 1.2)</span></p>
+      <p class="why">The arch containing the local max at <span class="m">(&minus;1.2, 1.5)</span>. It runs from one inflection point to the next.</p>
+    </article>
+
+    <article class="p">
+      <h3><span class="num">21</span>Where does <span class="m">g</span> change from decreasing to increasing?</h3>
+      <p class="ans"><span class="lbl">Answer</span><span class="m">x &asymp; &minus;3</span> and <span class="m">x = 2.6</span></p>
+      <p class="why">Those are the two local <em>minimums</em> &mdash; the bottom of a valley is exactly where falling turns into rising. (The one at <span class="m">x &asymp; &minus;3</span> isn&rsquo;t labeled with a coordinate; read it off the axis where the curve dips to touch it.) The local <em>max</em> at <span class="m">x = &minus;1.2</span> is the reverse change, so it doesn&rsquo;t belong here.</p>
+    </article>
+  </div>
+</section>
+
+<!-- ============ PAGE 13 ============ -->
+<section id="s-c">
+  <div class="sec-head"><span class="pagetag">Page 13</span><h2>Behavior, inflection points, concavity &middot; #22&ndash;26</h2></div>
+  <p class="sec-note">Two rules that decide most of these: intervals of increasing/decreasing/constant are always given in <span class="m">x</span>-values and always open; a point of inflection is where <em>concavity</em> changes, not where direction changes.</p>
+
+  <div class="cards">
+    <article class="p">
+      <h3><span class="num">22</span>Reading <span class="m">y = F(x)</span></h3>
+      <p class="q">Landmarks on the picture: a sharp low point at <span class="m">(&minus;8, &minus;3)</span>, a smooth peak at <span class="m">(&minus;3, 5)</span>, a sharp low point at <span class="m">(2, &minus;3)</span>, then a straight climb that levels off at <span class="m">(8, 3)</span> and stays there.</p>
+      <p class="ans"><span class="lbl">Answers</span>
+        A. increasing on <span class="m">(&minus;8, &minus;3) &cup; (2, 8)</span><br>
+        B. decreasing on <span class="m">(&minus;&infin;, &minus;8) &cup; (&minus;3, 2)</span><br>
+        C. constant on <span class="m">(8, &infin;)</span><br>
+        D. <span class="m">x</span>-intercepts <span class="m">&asymp; &minus;7, 1.5, 5</span>&nbsp;&nbsp;&middot;&nbsp;&nbsp;<span class="m">y</span>-intercept <span class="m">&asymp; 2.5</span><br>
+        E. relative max <span class="m">5</span> at <span class="m">x = &minus;3</span> &middot; relative min <span class="m">&minus;3</span> at <span class="m">x = &minus;8</span> and <span class="m">x = 2</span>; <span class="m">&minus;3</span> is the <b>absolute</b> min, and there is <b>no absolute max</b></p>
+      <ul class="steps">
+        <li>Direction changes happen at the turning points <span class="m">x = &minus;8, &minus;3, 2</span>; the flat part starts at <span class="m">x = 8</span>.</li>
+        <li>No absolute maximum: the arrow on the left keeps rising without bound, so no output is ever the largest.</li>
+        <li>The last piece is a line through <span class="m">(2, &minus;3)</span> and <span class="m">(8, 3)</span> &mdash; slope <span class="m">1</span> &mdash; so its zero is exactly <span class="m">x = 5</span>.</li>
+      </ul>
+    </article>
+
+    <article class="p">
+      <h3><span class="num">23</span>How many inflection points?</h3>
+      <p class="ans"><span class="lbl">Answers</span>A. <b>2</b>&nbsp;&nbsp;&middot;&nbsp;&nbsp;B. <b>3</b></p>
+      <p class="why">Count the <b>turning points</b> first, then mark one inflection between each consecutive pair &mdash; the curve has to change its bend to get from a hilltop to a valley floor.</p>
+      <ul class="steps">
+        <li><b>A</b> has three turning points (small hill &rarr; shallow dip &rarr; tall peak), so mark inflections in two places: on the drop between the small hill and the dip, and on the steep rise just before the tall peak (near the origin). After the tall peak it stays concave down all the way to the arrow.</li>
+        <li><b>B</b> has four turning points (peak &rarr; deep valley &rarr; small peak &rarr; small valley), so mark three inflections: one between each neighboring pair.</li>
+      </ul>
+    </article>
+
+    <article class="p">
+      <h3><span class="num">24</span>Points of inflection on <span class="m">y = f(x)</span></h3>
+      <p class="ans"><span class="lbl">Answer</span><span class="m">(&minus;2, 0)</span>, <span class="m">(2, &minus;1)</span>, and <span class="m">(5, 0.5)</span></p>
+      <p class="why">These are exactly the labeled points that sit <em>between</em> two turning points. The turning points themselves &mdash; <span class="m">(&minus;4, 5)</span>, <span class="m">(&minus;0.5, &minus;5)</span>, <span class="m">(4, 2)</span>, <span class="m">(6, &minus;1)</span> &mdash; are maxima and minima, and <span class="m">(&minus;6, &minus;4)</span>, <span class="m">(8, 4)</span> are just points on the steep end pieces. An inflection point needs <b>both coordinates</b> in your answer.</p>
+    </article>
+
+    <article class="p">
+      <h3><span class="num">25 &amp; 26</span>Concavity of <span class="m">f</span></h3>
+      <p class="ans"><span class="lbl">Answers</span>
+        25. concave up on <span class="m">(&minus;2, 2) &cup; (5, &infin;)</span><br>
+        26. concave down on <span class="m">(&minus;&infin;, &minus;2) &cup; (2, 5)</span></p>
+      <p class="why">Start at the far left and flip the answer at each inflection <span class="m">x</span>-value from #24 &mdash; <span class="m">&minus;2</span>, then <span class="m">2</span>, then <span class="m">5</span>. The far left is an arch coming down into the peak at <span class="m">(&minus;4, 5)</span>, so it starts concave <em>down</em>, and the concavity alternates from there. Every valley floor lives in a concave-up interval; every hilltop lives in a concave-down one &mdash; use that to check yourself.</p>
+    </article>
+  </div>
+</section>
+
+<!-- ============ PAGE 14 ============ -->
+<section id="s-d">
+  <div class="sec-head"><span class="pagetag">Page 14</span><h2>Comparing two graphs &middot; #27</h2></div>
+  <p class="sec-note">Write down each function&rsquo;s corner points before you answer anything &mdash; every one of the fourteen parts is then just a lookup.</p>
+
+  <div class="callout" style="margin-bottom:14px">
+    <b><span class="m">f</span></b> (the one arrowing down on the lower left): rises through <span class="m">(&minus;9, 0)</span> and <span class="m">(&minus;8, 2)</span> to a corner at <span class="m">(&minus;7, 4)</span> &middot; eases down to <span class="m">(&minus;4, 3)</span> &middot; climbs to the peak <span class="m">(0, 7)</span> &middot; falls to <span class="m">(4, 1)</span> &middot; then rises off to the right.<br><br>
+    <b><span class="m">g</span></b> (labeled at the upper left): falls along a line to <span class="m">(&minus;6, 0)</span> &middot; dips through the valley with vertex <span class="m">(&minus;4, &minus;4)</span> back up to <span class="m">(&minus;2, 0)</span> &middot; jumps steeply to <span class="m">(&minus;1, 5)</span> &middot; stays flat at <span class="m">5</span> until <span class="m">x = 3</span> &middot; then falls with slope <span class="m">&minus;&frac12;</span>. The two graphs cross at <span class="m">(&minus;8, 2)</span>, at <span class="m">x &asymp; 1.3</span>, and at <span class="m">x &asymp; 7</span>.
+  </div>
+
+  <div class="cards two">
+    <article class="p">
+      <h3><span class="num">A</span><span class="m">g(x) = &minus;3</span></h3>
+      <p class="ans"><span class="lbl">Answer</span><span class="m">x = &minus;5</span> and <span class="m">x = &minus;3</span></p>
+      <p class="why">Draw the horizontal line <span class="m">y = &minus;3</span>; it cuts the valley on both sides, one unit either side of the vertex at <span class="m">x = &minus;4</span>.</p>
+    </article>
+    <article class="p">
+      <h3><span class="num">B</span><span class="m">f(&minus;7) + g(9)</span></h3>
+      <p class="ans"><span class="lbl">Answer</span><span class="m">4 + 2 = 6</span></p>
+      <p class="why"><span class="m">f(&minus;7) = 4</span> is the corner point. For <span class="m">g(9)</span>, ride the closing line down from <span class="m">(3, 5)</span> at <span class="m">&minus;&frac12;</span> per unit: <span class="m">5 &minus; &frac12;(6) = 2</span>.</p>
+    </article>
+    <article class="p">
+      <h3><span class="num">C</span><span class="m">f(x) = g(x)</span></h3>
+      <p class="ans"><span class="lbl">Answer</span><span class="m">x = &minus;8</span>, <span class="m">x &asymp; 1.3</span>, <span class="m">x &asymp; 7</span></p>
+      <p class="why">Where the curves actually touch. The middle one is where <span class="m">f</span>&rsquo;s descent from <span class="m">(0, 7)</span> meets the flat <span class="m">g = 5</span>.</p>
+    </article>
+    <article class="p">
+      <h3><span class="num">D</span><span class="m">f(x) &gt; g(x)</span></h3>
+      <p class="ans"><span class="lbl">Answer</span><span class="m">(&minus;8, 1.3) &cup; (7, &infin;)</span></p>
+      <p class="why">Where <span class="m">f</span>&rsquo;s graph sits <em>above</em> <span class="m">g</span>&rsquo;s. Answer in <span class="m">x</span>-intervals whose endpoints are the crossings from part C.</p>
+    </article>
+    <article class="p">
+      <h3><span class="num">E</span><span class="m">f(x) &lt; g(x)</span></h3>
+      <p class="ans"><span class="lbl">Answer</span><span class="m">(&minus;&infin;, &minus;8) &cup; (1.3, 7)</span></p>
+      <p class="why">The complement of D, minus the crossing points themselves.</p>
+    </article>
+    <article class="p">
+      <h3><span class="num">F</span><span class="m">g(x) &gt; 0</span></h3>
+      <p class="ans"><span class="lbl">Answer</span><span class="m">(&minus;&infin;, &minus;6) &cup; (&minus;2, &infin;)</span></p>
+      <p class="why">Above the <span class="m">x</span>-axis. <span class="m">g</span> is below it only inside the valley between its two zeros.</p>
+    </article>
+    <article class="p">
+      <h3><span class="num">G</span><span class="m">f(x) &lt; 0</span></h3>
+      <p class="ans"><span class="lbl">Answer</span><span class="m">(&minus;&infin;, &minus;9)</span></p>
+      <p class="why"><span class="m">f</span> crosses the axis once, at <span class="m">x = &minus;9</span>, and is above it forever after.</p>
+    </article>
+    <article class="p">
+      <h3><span class="num">H</span><span class="m">f</span> increasing</h3>
+      <p class="ans"><span class="lbl">Answer</span><span class="m">(&minus;&infin;, &minus;7) &cup; (&minus;4, 0) &cup; (4, &infin;)</span></p>
+      <p class="why">The three uphill runs, split at the corners <span class="m">x = &minus;7, &minus;4, 0, 4</span>.</p>
+    </article>
+    <article class="p">
+      <h3><span class="num">I</span><span class="m">g</span> constant</h3>
+      <p class="ans"><span class="lbl">Answer</span><span class="m">(&minus;1, 3)</span></p>
+      <p class="why">The flat segment at height <span class="m">5</span>.</p>
+    </article>
+    <article class="p">
+      <h3><span class="num">J</span><span class="m">g</span> decreasing</h3>
+      <p class="ans"><span class="lbl">Answer</span><span class="m">(&minus;&infin;, &minus;4) &cup; (3, &infin;)</span></p>
+      <p class="why">The opening line and the left half of the valley run downhill without a break, so they merge into one interval ending at the vertex <span class="m">x = &minus;4</span>.</p>
+    </article>
+    <article class="p">
+      <h3><span class="num">K</span><span class="m">f(x) &gt; 0</span></h3>
+      <p class="ans"><span class="lbl">Answer</span><span class="m">(&minus;9, &infin;)</span></p>
+      <p class="why">Everything to the right of its only zero.</p>
+    </article>
+    <article class="p">
+      <h3><span class="num">L</span><span class="m">f</span> decreasing</h3>
+      <p class="ans"><span class="lbl">Answer</span><span class="m">(&minus;7, &minus;4) &cup; (0, 4)</span></p>
+      <p class="why">The gentle slide from <span class="m">(&minus;7, 4)</span> to <span class="m">(&minus;4, 3)</span>, and the drop from the peak to <span class="m">(4, 1)</span>.</p>
+    </article>
+    <article class="p">
+      <h3><span class="num">M</span><span class="m">g(x) = 0</span></h3>
+      <p class="ans"><span class="lbl">Answer</span><span class="m">x = &minus;6</span> and <span class="m">x = &minus;2</span></p>
+      <p class="why">Where <span class="m">g</span> meets the <span class="m">x</span>-axis &mdash; the two ends of the valley.</p>
+    </article>
+    <article class="p">
+      <h3><span class="num">N</span><span class="m">f(x) = 0</span></h3>
+      <p class="ans"><span class="lbl">Answer</span><span class="m">x = &minus;9</span></p>
+      <p class="why">The single axis crossing on the steep left piece.</p>
+    </article>
+  </div>
+</section>
+
+<!-- ============ PAGE 15 ============ -->
+<section id="s-e">
+  <div class="sec-head"><span class="pagetag">Page 15</span><h2>Sketching a scenario &middot; #28&ndash;29</h2></div>
+  <p class="sec-note">Turn each sentence into a time interval and a starting/ending height, then connect them in order. The clock never resets: each phase begins where the last one ended.</p>
+
+  <div class="cards">
+    <article class="p">
+      <h3><span class="num">28</span>Car: 45 mph &rarr; 60 mph, cruise, then stop</h3>
+      <p class="q">Accelerates 45&rarr;60 mph over the first 8 s &middot; holds 60 mph for 5 s &middot; slows to a stop over the next 7 s. The <span class="m">y</span>-axis is <b>speed</b>, not distance.</p>
+      <figure>
+        <svg viewBox="0 0 440 272" role="img" aria-label="Speed versus time: starts at 45 mph, rises to 60 mph at 8 seconds, constant until 13 seconds, falls to 0 at 20 seconds">
+          <g class="tick">
+            <line x1="55" y1="176" x2="410" y2="176"></line>
+            <line x1="55" y1="122" x2="410" y2="122"></line>
+            <line x1="55" y1="68" x2="410" y2="68"></line>
+          </g>
+          <g class="axis">
+            <line x1="55" y1="25" x2="55" y2="240"></line>
+            <line x1="45" y1="230" x2="415" y2="230"></line>
+          </g>
+          <g class="lab" text-anchor="middle">
+            <text x="55" y="248">0</text><text x="115" y="248">4</text><text x="175" y="248">8</text>
+            <text x="235" y="248">12</text><text x="295" y="248">16</text><text x="355" y="248">20</text>
+            <text x="235" y="266">time (seconds)</text>
+          </g>
+          <g class="lab" text-anchor="end">
+            <text x="48" y="234">0</text><text x="48" y="180">20</text><text x="48" y="126">40</text><text x="48" y="72">60</text>
+          </g>
+          <text class="lab" x="16" y="130" transform="rotate(-90 16 130)" text-anchor="middle">speed (mph)</text>
+          <polyline class="plot" points="55,108.5 175,68 250,68 355,230"></polyline>
+          <g class="dot">
+            <circle cx="55" cy="108.5" r="3.6"></circle><circle cx="175" cy="68" r="3.6"></circle>
+            <circle cx="250" cy="68" r="3.6"></circle><circle cx="355" cy="230" r="3.6"></circle>
+          </g>
+        </svg>
+        <figcaption>Corner points: <span class="m">(0, 45) &rarr; (8, 60) &rarr; (13, 60) &rarr; (20, 0)</span>. Straight segments are fine unless the problem describes the acceleration changing.</figcaption>
+      </figure>
+      <p class="ans"><span class="lbl">Answers</span>
+        B. domain <span class="m">[0, 20]</span> seconds &middot; range <span class="m">[0, 60]</span> mph<br>
+        C. <span class="m">v = 60</span> for <span class="m">8 &le; t &le; 13</span></p>
+      <p class="why">C is a horizontal line: the speed doesn&rsquo;t change over that interval, so the slope is <span class="m">0</span> and the equation is just <span class="m">y = 60</span>. Range starts at 0 because the car really does reach a stop; it never exceeds 60.</p>
+    </article>
+
+    <article class="p">
+      <h3><span class="num">29</span>Ethan&rsquo;s distance from home</h3>
+      <p class="q">Walks 2 blocks in 4 min &middot; runs home in 3 min &middot; hunts for lunch 2 min &middot; walks 5 blocks to school in 12 min &middot; talks to Matt 4 min. The <span class="m">y</span>-axis is <b>distance from home</b>, so going home means coming back down to 0.</p>
+      <figure>
+        <svg viewBox="0 0 440 272" role="img" aria-label="Distance from home versus time: up to 2 blocks at 4 minutes, back to 0 at 7 minutes, flat until 9 minutes, up to 5 blocks at 21 minutes, flat until 25 minutes">
+          <g class="tick">
+            <line x1="55" y1="196" x2="410" y2="196"></line>
+            <line x1="55" y1="162" x2="410" y2="162"></line>
+            <line x1="55" y1="128" x2="410" y2="128"></line>
+            <line x1="55" y1="94" x2="410" y2="94"></line>
+            <line x1="55" y1="60" x2="410" y2="60"></line>
+          </g>
+          <g class="axis">
+            <line x1="55" y1="35" x2="55" y2="240"></line>
+            <line x1="45" y1="230" x2="415" y2="230"></line>
+          </g>
+          <g class="lab" text-anchor="middle">
+            <text x="55" y="248">0</text><text x="110" y="248">5</text><text x="165" y="248">10</text>
+            <text x="220" y="248">15</text><text x="275" y="248">20</text><text x="330" y="248">25</text>
+            <text x="235" y="266">time (minutes)</text>
+          </g>
+          <g class="lab" text-anchor="end">
+            <text x="48" y="234">0</text><text x="48" y="200">1</text><text x="48" y="166">2</text>
+            <text x="48" y="132">3</text><text x="48" y="98">4</text><text x="48" y="64">5</text>
+          </g>
+          <text class="lab" x="16" y="130" transform="rotate(-90 16 130)" text-anchor="middle">blocks from home</text>
+          <polyline class="plot" points="55,230 99,162 132,230 154,230 286,60 330,60"></polyline>
+          <g class="dot">
+            <circle cx="55" cy="230" r="3.6"></circle><circle cx="99" cy="162" r="3.6"></circle>
+            <circle cx="132" cy="230" r="3.6"></circle><circle cx="154" cy="230" r="3.6"></circle>
+            <circle cx="286" cy="60" r="3.6"></circle><circle cx="330" cy="60" r="3.6"></circle>
+          </g>
+        </svg>
+        <figcaption>Corner points: <span class="m">(0, 0) &rarr; (4, 2) &rarr; (7, 0) &rarr; (9, 0) &rarr; (21, 5) &rarr; (25, 5)</span> &mdash; the last segment is flat at 5 blocks.</figcaption>
+      </figure>
+      <p class="ans"><span class="lbl">Answers</span>
+        B. domain <span class="m">[0, 25]</span> minutes &middot; range <span class="m">[0, 5]</span> blocks<br>
+        C. increasing <span class="m">(0, 4) &cup; (9, 21)</span> &middot; decreasing <span class="m">(4, 7)</span> &middot; constant <span class="m">(7, 9) &cup; (21, 25)</span></p>
+      <p class="why">Add the times as you go: <span class="m">4</span>, then <span class="m">4+3 = 7</span>, then <span class="m">7+2 = 9</span>, then <span class="m">9+12 = 21</span>, then <span class="m">21+4 = 25</span>. The run home is steeper than the walk out &mdash; same 2 blocks in less time &mdash; and that steepness is worth showing.</p>
+    </article>
+  </div>
+</section>
+
+<!-- ============ PAGES 17-19 ============ -->
+<section id="s-f">
+  <div class="sec-head"><span class="pagetag">Pages 17&ndash;19</span><h2>Continuity, end behavior, IVT &middot; #1&ndash;22</h2></div>
+  <p class="sec-note">The answer key is printed on page 20 of your packet, so what follows is the <em>work</em> behind it. Continuity test at <span class="m">x = c</span>: the left piece and the right piece must approach the same value, and <span class="m">f(c)</span> must equal it. For rational functions, factor first &mdash; a factor that cancels is a <b>hole</b> (removable), a factor that survives in the denominator is a <b>vertical asymptote</b> (infinite).</p>
+
+  <div class="cards two">
+    <article class="p">
+      <h3><span class="num">1</span><span class="m">f(x) = x<span class="up">&sup3;</span> &minus; 4x<span class="up">&sup2;</span> + 3</span> at <span class="m">x = 4</span></h3>
+      <p class="ans"><span class="lbl">Answer</span>Continuous at <span class="m">x = 4</span></p>
+      <p class="why">Polynomials are continuous everywhere &mdash; no denominators, no radicals, no pieces. <span class="m">f(4) = 64 &minus; 64 + 3 = 3</span>.</p>
+    </article>
+    <article class="p">
+      <h3><span class="num">2</span>Piecewise at <span class="m">x = &minus;2</span></h3>
+      <p class="ans"><span class="lbl">Answer</span>Jump discontinuity at <span class="m">x = &minus;2</span></p>
+      <p class="why">From the left: <span class="m">(&minus;2)<span class="up">&sup2;</span> + 8(&minus;2) + 15 = 4 &minus; 16 + 15 = 3</span>.<br>From the right: <span class="m">&minus;2(&minus;2) &minus; 10 = &minus;6</span>. Two different heights &rArr; jump.</p>
+    </article>
+    <article class="p">
+      <h3><span class="num">3</span>Piecewise at <span class="m">x = &minus;4</span></h3>
+      <p class="ans"><span class="lbl">Answer</span>Continuous at <span class="m">x = &minus;4</span></p>
+      <p class="why">Left: <span class="m">&minus;(&minus;4) &minus; 1 = 3</span>. Right: <span class="m">&minus;4 + 7 = 3</span>. They match, and the rule with the <span class="m">&le;</span> assigns <span class="m">f(&minus;4) = 3</span>.</p>
+    </article>
+    <article class="p">
+      <h3><span class="num">4</span><span class="m">f(x) = <span class="frac"><span>x<span class="up">&sup2;</span></span><span>4x &minus; 16</span></span></span> at <span class="m">x = 4</span> and <span class="m">x = 0</span></h3>
+      <p class="ans"><span class="lbl">Answer</span>Infinite discontinuity at <span class="m">x = 4</span>; continuous at <span class="m">x = 0</span></p>
+      <p class="why"><span class="m">4x &minus; 16 = 4(x &minus; 4)</span> is zero at <span class="m">x = 4</span> while the numerator is <span class="m">16 &ne; 0</span> &mdash; nothing cancels, so it&rsquo;s a vertical asymptote. At <span class="m">x = 0</span> the denominator is <span class="m">&minus;16</span>, so <span class="m">f(0) = 0</span> exists.</p>
+    </article>
+    <article class="p">
+      <h3><span class="num">5</span>Piecewise at <span class="m">x = 0</span></h3>
+      <p class="ans"><span class="lbl">Answer</span>Jump discontinuity at <span class="m">x = 0</span></p>
+      <p class="why">Left: <span class="m">0/2 &minus; 3/2 = &minus;1.5</span>. Right: <span class="m">&minus;2(0) &minus; 4 = &minus;4</span>.</p>
+    </article>
+    <article class="p">
+      <h3><span class="num">6</span><span class="m">f(x) = <span class="frac"><span>x &minus; 5</span><span>x<span class="up">&sup2;</span> &minus; 8x + 15</span></span></span></h3>
+      <p class="ans"><span class="lbl">Answer</span>Removable at <span class="m">x = 5</span> &middot; infinite at <span class="m">x = 3</span></p>
+      <p class="why">Factor: <span class="m"><span class="frac"><span>x &minus; 5</span><span>(x &minus; 3)(x &minus; 5)</span></span> = <span class="frac"><span>1</span><span>x &minus; 3</span></span></span>, <span class="m">x &ne; 5</span>. The cancelled factor leaves a hole at <span class="m">x = 5</span> (height <span class="m">&frac12;</span>); <span class="m">x &minus; 3</span> stays downstairs, so it&rsquo;s an asymptote.</p>
+    </article>
+    <article class="p">
+      <h3><span class="num">7</span><span class="m">f(x) = &minus;<span class="frac"><span>x + 4</span><span>x<span class="up">&sup2;</span> + 9x + 20</span></span></span></h3>
+      <p class="ans"><span class="lbl">Answer</span>Removable at <span class="m">x = &minus;4</span> &middot; infinite at <span class="m">x = &minus;5</span><br>Domain: <span class="m">(&minus;&infin;, &minus;5) &cup; (&minus;5, &minus;4) &cup; (&minus;4, &infin;)</span></p>
+      <p class="why"><span class="m">x<span class="up">&sup2;</span> + 9x + 20 = (x + 4)(x + 5)</span>, so the function reduces to <span class="m">&minus;1/(x + 5)</span> with a hole at <span class="m">x = &minus;4</span>. Both bad <span class="m">x</span>-values still leave the domain, hole included.</p>
+    </article>
+    <article class="p">
+      <h3><span class="num">8</span>Piecewise, split at <span class="m">x = 3</span></h3>
+      <p class="ans"><span class="lbl">Answer</span>Jump discontinuity at <span class="m">x = 3</span> &middot; domain <span class="m">(&minus;&infin;, &infin;)</span></p>
+      <p class="why">Left: <span class="m">2(3) &minus; 4 = 2</span>. Right: <span class="m">&minus;3/2 &minus; 3/2 = &minus;3</span>. Both pieces are lines, so every real number still gets exactly one output &mdash; a jump costs you continuity, not domain.</p>
+    </article>
+    <article class="p">
+      <h3><span class="num">9</span><span class="m">f(x) = <span class="frac"><span>&minus;x &minus; 1</span><span>x<span class="up">&sup2;</span> + 2x + 2</span></span></span></h3>
+      <p class="ans"><span class="lbl">Answer</span>Continuous everywhere &middot; domain <span class="m">(&minus;&infin;, &infin;)</span></p>
+      <p class="why">Discriminant of the denominator: <span class="m">2<span class="up">&sup2;</span> &minus; 4(1)(2) = &minus;4 &lt; 0</span>, so it never equals zero. No real <span class="m">x</span> is excluded.</p>
+    </article>
+    <article class="p">
+      <h3><span class="num">10</span><span class="m">f(x) = <span class="frac"><span>x &minus; 2</span><span>x<span class="up">&sup2;</span> &minus; 6x + 5</span></span></span></h3>
+      <p class="ans"><span class="lbl">Answer</span>Infinite discontinuities at <span class="m">x = 1</span> and <span class="m">x = 5</span><br>Domain: <span class="m">(&minus;&infin;, 1) &cup; (1, 5) &cup; (5, &infin;)</span></p>
+      <p class="why"><span class="m">(x &minus; 1)(x &minus; 5)</span> in the denominator, nothing cancels with <span class="m">x &minus; 2</span>.</p>
+    </article>
+  </div>
+
+  <p class="sec-note" style="margin-top:22px"><b>End behavior (#11&ndash;14, 17&ndash;20).</b> For a polynomial, only the leading term matters: even degree sends both ends the same way, odd degree sends them opposite ways, and a negative leading coefficient flips both. For a rational function compare degrees &mdash; bottom-heavy &rarr; limit <span class="m">0</span>; equal degrees &rarr; ratio of leading coefficients; top-heavy &rarr; <span class="m">&plusmn;&infin;</span>.</p>
+
+  <div class="cards two">
+    <article class="p">
+      <h3><span class="num">11</span><span class="m">f(x) = x<span class="up">&#8309;</span> &minus; 4x<span class="up">&sup3;</span> + x + 1</span></h3>
+      <p class="ans"><span class="lbl">Answer</span><span class="m">x &rarr; &minus;&infin;: f(x) &rarr; &minus;&infin;</span><br><span class="m">x &rarr; &infin;: f(x) &rarr; &infin;</span></p>
+      <p class="why">Odd degree, positive lead &mdash; down on the left, up on the right.</p>
+    </article>
+    <article class="p">
+      <h3><span class="num">12</span><span class="m">f(x) = &minus;x<span class="up">&#8308;</span> &minus; 4x<span class="up">&sup3;</span> &minus; 3x<span class="up">&sup2;</span> + 1</span></h3>
+      <p class="ans"><span class="lbl">Answer</span>Both ends <span class="m">&rarr; &minus;&infin;</span></p>
+      <p class="why">Even degree keeps the ends together; the negative lead points them both down.</p>
+    </article>
+    <article class="p">
+      <h3><span class="num">13</span><span class="m">m(x) = <span class="frac"><span>4 + x</span><span>2x + 6</span></span></span></h3>
+      <p class="ans"><span class="lbl">Answer</span>Both ends <span class="m">&rarr; &frac12;</span> &nbsp;(horizontal asymptote <span class="m">y = &frac12;</span>)</p>
+      <p class="why">Equal degrees (both 1), so take <span class="m">1/2</span> from the leading coefficients.</p>
+    </article>
+    <article class="p">
+      <h3><span class="num">14</span><span class="m">k(x) = <span class="frac"><span>4x<span class="up">&sup2;</span> + 3x &minus; 1</span><span>2x<span class="up">&#8309;</span> + 3x<span class="up">&sup2;</span></span></span></span></h3>
+      <p class="ans"><span class="lbl">Answer</span>Both ends <span class="m">&rarr; 0</span></p>
+      <p class="why">Degree 2 over degree 5 &mdash; the denominator grows far faster, so the fraction is squeezed to zero.</p>
+    </article>
+    <article class="p">
+      <h3><span class="num">17</span><span class="m">f(x) = <span class="frac"><span>x<span class="up">&sup2;</span> &minus; 16</span><span>3x &minus; 9</span></span></span></h3>
+      <p class="ans"><span class="lbl">Answer</span><span class="m">lim<sub class="up">x&rarr;&minus;&infin;</sub> f(x) = &minus;&infin;</span> &nbsp;&middot;&nbsp; <span class="m">lim<sub class="up">x&rarr;&infin;</sub> f(x) = &infin;</span></p>
+      <p class="why">Top-heavy by one degree, so it behaves like the line <span class="m">x/3</span> far out &mdash; matching the graph&rsquo;s arms.</p>
+    </article>
+    <article class="p">
+      <h3><span class="num">18</span><span class="m">f(x) = <span class="frac"><span>&minus;3x<span class="up">&sup2;</span> + 12x</span><span>x<span class="up">&sup2;</span> &minus; 2x &minus; 3</span></span></span></h3>
+      <p class="ans"><span class="lbl">Answer</span>Both limits <span class="m">= &minus;3</span></p>
+      <p class="why">Equal degrees: <span class="m">&minus;3/1</span>. That&rsquo;s the dashed horizontal asymptote at <span class="m">y = &minus;3</span> in the picture, which the graph approaches from both directions.</p>
+    </article>
+    <article class="p">
+      <h3><span class="num">19</span><span class="m">f(x) = &minus;<span class="frac"><span>4</span><span>x<span class="up">&sup2;</span> &minus; x &minus; 6</span></span></span></h3>
+      <p class="ans"><span class="lbl">Answer</span>Both limits <span class="m">= 0</span></p>
+      <p class="why">Constant over quadratic. The graph flattens onto <span class="m">y = 0</span> at both ends.</p>
+    </article>
+    <article class="p">
+      <h3><span class="num">20</span>From the graph</h3>
+      <p class="ans"><span class="lbl">Answer</span><span class="m">lim<sub class="up">x&rarr;&minus;&infin;</sub> f(x) = &minus;5</span> &nbsp;&middot;&nbsp; <span class="m">lim<sub class="up">x&rarr;&infin;</sub> f(x) = &infin;</span></p>
+      <p class="why">The left arm levels off along the horizontal line <span class="m">y = &minus;5</span>; the right arm climbs without bound.</p>
+    </article>
+  </div>
+
+  <p class="sec-note" style="margin-top:22px"><b>Intermediate Value Theorem (#21&ndash;22).</b> These are continuous, so a <em>sign change</em> between two inputs guarantees a zero in between. Build the table, then read off consecutive rows where the sign flips.</p>
+
+  <div class="cards two">
+    <article class="p">
+      <h3><span class="num">21</span><span class="m">f(x) = x<span class="up">&sup2;</span> &minus; 5x + 3</span> on <span class="m">0 &le; x &le; 6</span></h3>
+      <div class="scroll">
+        <table>
+          <tr><th>x</th><td>0</td><td>1</td><td>2</td><td>3</td><td>4</td><td>5</td><td>6</td></tr>
+          <tr><th>f(x)</th><td>3</td><td>&minus;1</td><td>&minus;3</td><td>&minus;3</td><td>&minus;1</td><td>3</td><td>9</td></tr>
+        </table>
+      </div>
+      <p class="ans"><span class="lbl">Answer</span>A zero between <span class="m">x = 0</span> and <span class="m">x = 1</span>, and another between <span class="m">x = 4</span> and <span class="m">x = 5</span></p>
+      <p class="why">Positive&rarr;negative from 0 to 1; negative&rarr;positive from 4 to 5. Nothing flips in between.</p>
+    </article>
+    <article class="p">
+      <h3><span class="num">22</span><span class="m">f(x) = 2x<span class="up">&sup3;</span> + 15x<span class="up">&sup2;</span> &minus; 4x &minus; 33</span></h3>
+      <div class="scroll">
+        <table>
+          <tr><th>x</th><td>&minus;8</td><td>&minus;7</td><td>&minus;2</td><td>&minus;1</td><td>1</td><td>2</td></tr>
+          <tr><th>f(x)</th><td>&minus;65</td><td>44</td><td>19</td><td>&minus;16</td><td>&minus;20</td><td>35</td></tr>
+        </table>
+      </div>
+      <p class="ans"><span class="lbl">Answer</span>Zeros between <span class="m">&minus;8</span> and <span class="m">&minus;7</span>, between <span class="m">&minus;2</span> and <span class="m">&minus;1</span>, and between <span class="m">1</span> and <span class="m">2</span></p>
+      <p class="why">A cubic has at most three real zeros, and you&rsquo;ve now bracketed three &mdash; so you&rsquo;re done. Sample every integer from about <span class="m">&minus;9</span> to <span class="m">3</span>; those are the only rows where the sign changes.</p>
+    </article>
+  </div>
+</section>
+
+<!-- ============ PAGES 21-22 ============ -->
+<section id="s-g">
+  <div class="sec-head"><span class="pagetag">Pages 21&ndash;22</span><h2>Continuity, end behavior, and zeros &middot; #1&ndash;5</h2></div>
+  <p class="sec-note">Same three questions each time. Factor top and bottom first &mdash; the factorization answers all three at once: leftover denominator factors give asymptotes, cancelled factors give holes, and leftover numerator factors give zeros.</p>
+
+  <div class="cards">
+    <article class="p">
+      <h3><span class="num">1</span><span class="m">g(x) = <span class="frac"><span>2x &minus; 1</span><span>x<span class="up">&sup2;</span> &minus; 4x &minus; 32</span></span></span></h3>
+      <p class="why"><b>Factored:</b> <span class="m"><span class="frac"><span>2x &minus; 1</span><span>(x &minus; 8)(x + 4)</span></span></span> &mdash; nothing cancels.</p>
+      <p class="ans"><span class="lbl">Answers</span>
+        <b>Continuity:</b> continuous on its domain <span class="m">(&minus;&infin;, &minus;4) &cup; (&minus;4, 8) &cup; (8, &infin;)</span>; infinite discontinuities (vertical asymptotes) at <span class="m">x = &minus;4</span> and <span class="m">x = 8</span>.<br>
+        <b>End behavior:</b> both limits <span class="m">= 0</span>, horizontal asymptote <span class="m">y = 0</span>.<br>
+        <b>Zero:</b> <span class="m">x = &frac12;</span></p>
+      <p class="why">Degree 1 over degree 2 is bottom-heavy, so the ends flatten to zero. A rational function is zero exactly where its numerator is: <span class="m">2x &minus; 1 = 0</span>.</p>
+    </article>
+
+    <article class="p">
+      <h3><span class="num">2</span><span class="m">h(x) = <span class="frac"><span>x<span class="up">&sup3;</span> &minus; 3x<span class="up">&sup2;</span> + 2x &minus; 6</span><span>x<span class="up">&sup2;</span> + 2x &minus; 15</span></span></span></h3>
+      <p class="why"><b>Factored:</b> group the top &mdash; <span class="m">x<span class="up">&sup2;</span>(x &minus; 3) + 2(x &minus; 3) = (x &minus; 3)(x<span class="up">&sup2;</span> + 2)</span>; bottom is <span class="m">(x + 5)(x &minus; 3)</span>. So <span class="m">h(x) = <span class="frac"><span>x<span class="up">&sup2;</span> + 2</span><span>x + 5</span></span></span> with <span class="m">x &ne; 3</span>.</p>
+      <p class="ans"><span class="lbl">Answers</span>
+        <b>Continuity:</b> removable discontinuity (hole) at <span class="m">x = 3</span>, at height <span class="m">11/8</span>; infinite discontinuity at <span class="m">x = &minus;5</span>. Domain <span class="m">(&minus;&infin;, &minus;5) &cup; (&minus;5, 3) &cup; (3, &infin;)</span>.<br>
+        <b>End behavior:</b> <span class="m">x &rarr; &minus;&infin;: h(x) &rarr; &minus;&infin;</span>; <span class="m">x &rarr; &infin;: h(x) &rarr; &infin;</span> (top-heavy by one degree &mdash; there&rsquo;s a slant asymptote, no horizontal one).<br>
+        <b>Zeros:</b> none &mdash; <span class="m">x<span class="up">&sup2;</span> + 2 = 0</span> has no real solution.</p>
+      <p class="why">Grouping is the move whenever a cubic has four terms. Hole height comes from the <em>reduced</em> form at <span class="m">x = 3</span>: <span class="m">(9 + 2)/(3 + 5) = 11/8</span>.</p>
+    </article>
+
+    <article class="p">
+      <h3><span class="num">3</span><span class="m">f(x) = <span class="frac"><span>x<span class="up">&sup2;</span> + 5x &minus; 14</span><span>2x<span class="up">&sup2;</span> + x &minus; 10</span></span></span></h3>
+      <p class="why"><b>Factored:</b> <span class="m"><span class="frac"><span>(x + 7)(x &minus; 2)</span><span>(2x + 5)(x &minus; 2)</span></span> = <span class="frac"><span>x + 7</span><span>2x + 5</span></span></span>, <span class="m">x &ne; 2</span>.</p>
+      <p class="ans"><span class="lbl">Answers</span>
+        <b>Continuity:</b> hole at <span class="m">x = 2</span> (height <span class="m">1</span>); vertical asymptote at <span class="m">x = &minus;5/2</span>. Domain <span class="m">(&minus;&infin;, &minus;5/2) &cup; (&minus;5/2, 2) &cup; (2, &infin;)</span>.<br>
+        <b>End behavior:</b> both limits <span class="m">= &frac12;</span>, horizontal asymptote <span class="m">y = &frac12;</span>.<br>
+        <b>Zero:</b> <span class="m">x = &minus;7</span></p>
+      <p class="why">Note what the cancelled factor costs you: <span class="m">x = 2</span> is <em>not</em> a zero even though <span class="m">x &minus; 2</span> was in the numerator &mdash; it&rsquo;s a hole, and the function has no value there at all. Hole height: <span class="m">(2 + 7)/(4 + 5) = 1</span>.</p>
+    </article>
+
+    <article class="p">
+      <h3><span class="num">4</span>Find <span class="m">a</span> and <span class="m">b</span> so <span class="m">f</span> is continuous</h3>
+      <p class="q"><span class="m">f(x) = x<span class="up">&sup2;</span> + a</span> for <span class="m">x &ge; 3</span>; <span class="m">bx + a</span> for <span class="m">&minus;3 &lt; x &lt; 3</span>; <span class="m">&radic;<span style="text-decoration:overline">&minus;b &minus; x</span></span> for <span class="m">x &le; &minus;3</span>.</p>
+      <p class="ans"><span class="lbl">Answer</span><span class="m">a = 9</span>, <span class="m">b = 3</span></p>
+      <ul class="steps">
+        <li><b>Match at <span class="m">x = 3</span>:</b> <span class="m">3<span class="up">&sup2;</span> + a = 3b + a</span> &rarr; the <span class="m">a</span>&rsquo;s cancel &rarr; <span class="m">9 = 3b</span> &rarr; <span class="m">b = 3</span>.</li>
+        <li><b>Match at <span class="m">x = &minus;3</span>:</b> <span class="m">&radic;<span style="text-decoration:overline">&minus;b + 3</span> = &minus;3b + a</span>. With <span class="m">b = 3</span> the radical is <span class="m">&radic;0 = 0</span>, so <span class="m">&minus;9 + a = 0</span> &rarr; <span class="m">a = 9</span>.</li>
+        <li><b>Check:</b> at <span class="m">x = 3</span> both give <span class="m">18</span>; at <span class="m">x = &minus;3</span> both give <span class="m">0</span>. &#10003;</li>
+      </ul>
+      <p class="why">Do the <span class="m">x = 3</span> equation first &mdash; it&rsquo;s the one where a variable cancels, which turns a two-unknown system into a single step.</p>
+    </article>
+
+    <article class="p">
+      <h3><span class="num">5</span>Why isn&rsquo;t this relation a function?</h3>
+      <p class="q"><span class="m">y = 2x</span> for <span class="m">x &le; 1</span>, and <span class="m">y = 3</span> for <span class="m">x &ge; 1</span>.</p>
+      <p class="ans"><span class="lbl">Answer</span>Because <span class="m">x = 1</span> satisfies <em>both</em> conditions, it produces two outputs: <span class="m">y = 2(1) = 2</span> and <span class="m">y = 3</span>. One input, two outputs &mdash; that fails the definition of a function (and the vertical line test at <span class="m">x = 1</span>).</p>
+      <p class="why">Look at the inequality symbols, not the formulas. Both pieces use a closed endpoint at <span class="m">1</span>; the fix would be making one of them strict, e.g. <span class="m">x &gt; 1</span>.</p>
+    </article>
+  </div>
+</section>
+
+<footer>
+  <p>Page 16 of the packet is blank, and page 20 is the printed answer key for the continuity worksheet &mdash; the work above matches it. Graph-based answers are read off printed pictures, so treat any value marked &ldquo;&asymp;&rdquo; as an estimate and give your teacher the nearest half-unit.</p>
+</footer>
+
+</div>
