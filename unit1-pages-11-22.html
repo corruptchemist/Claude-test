@@ -58,7 +58,7 @@
     line-height:1.6;
     -webkit-font-smoothing:antialiased;
   }
-  .wrap{max-width:1140px;margin:0 auto;padding:0 20px 96px}
+  .wrap{width:min(1140px,100vw);max-width:100%;margin:0 auto;padding:0 20px 96px}
 
   /* ---------- masthead ---------- */
   .masthead{
@@ -136,12 +136,11 @@
   }
   .p h3{
     margin:0;font-family:"IBM Plex Sans",sans-serif;font-size:14px;font-weight:600;
-    letter-spacing:.02em;color:var(--ink);
-    display:flex;align-items:baseline;gap:9px;
+    letter-spacing:.02em;color:var(--ink);display:block;
   }
   .num{
     font-family:"Newsreader",Georgia,serif;font-size:19px;font-weight:600;
-    color:var(--blue);min-width:1.6em;
+    color:var(--blue);display:inline-block;margin-right:7px;
   }
   .q{color:var(--ink-soft);font-size:14.5px;margin:0}
   .ans{
@@ -193,10 +192,13 @@
   :focus-visible{outline:2px solid var(--blue);outline-offset:2px}
   @media (prefers-reduced-motion:reduce){*{animation:none!important;transition:none!important}}
 
-  /* narrow-screen fixes: nothing may refuse to shrink */
-  body{overflow-wrap:break-word}
+  /* wide tables scroll in their own box instead of squeezing to unreadable columns */
+  .scroll table{min-width:480px}
+  /* layout guards: never let an ancestor size this page to its content */
+  html{width:100%}
+  body{display:block;width:100%;min-width:0;overflow-wrap:break-word}
   .sec-head>*,.prob-head>*,.p h3>*,.legend>*{min-width:0}
-  .prob-head,.p h3{flex-wrap:wrap}
+  .prob-head{flex-wrap:wrap}
   .prob-head .stem,.p h3 .stem{flex:0 1 auto}
   .cards>*,.prob,.rule-box,.example,.warn,.final,details{min-width:0}
   ol.st>li{grid-template-columns:26px minmax(0,1fr)}

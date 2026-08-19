@@ -26,7 +26,7 @@
   *{box-sizing:border-box}
   body{margin:0;background:var(--ground);color:var(--ink);
     font-family:"IBM Plex Sans","Helvetica Neue",Arial,sans-serif;font-size:16px;line-height:1.62;-webkit-font-smoothing:antialiased}
-  .wrap{max-width:880px;margin:0 auto;padding:0 20px 96px}
+  .wrap{width:min(880px,100vw);max-width:100%;margin:0 auto;padding:0 20px 96px}
 
   .masthead{position:relative;padding:54px 0 24px;border-bottom:2px solid var(--ink);overflow:hidden}
   .masthead::before{content:"";position:absolute;inset:0;
@@ -60,13 +60,13 @@
   .kind{font-size:12.5px;color:var(--ink-faint);letter-spacing:.02em;margin:0 0 12px}
 
   ol.st{list-style:none;counter-reset:s;padding:0;margin:0 0 12px}
-  ol.st>li{counter-increment:s;display:grid;grid-template-columns:26px 1fr;gap:11px;margin:0 0 9px;
-    font-size:15px;color:var(--ink-soft);align-items:start}
+  ol.st>li{counter-increment:s;position:relative;padding-left:38px;margin:0 0 9px;
+    font-size:15px;color:var(--ink-soft)}
   ol.st>li::before{
-    content:counter(s);
+    content:counter(s);position:absolute;left:0;top:3px;
     font-family:"IBM Plex Sans",sans-serif;font-size:11.5px;font-weight:600;
     color:var(--blue);background:var(--blue-soft);border-radius:2px;
-    width:26px;height:20px;display:flex;align-items:center;justify-content:center;margin-top:3px}
+    width:26px;height:20px;display:flex;align-items:center;justify-content:center}
   ol.st>li b{color:var(--ink);font-weight:600}
   ol.st ul{margin:5px 0 0;padding-left:17px}
   ol.st li li{margin:2px 0}
@@ -88,13 +88,15 @@
   a{color:var(--blue)}
   :focus-visible{outline:2px solid var(--blue);outline-offset:2px}
 
-  /* narrow-screen fixes: nothing may refuse to shrink */
-  body{overflow-wrap:break-word}
+  /* wide tables scroll in their own box instead of squeezing to unreadable columns */
+  .scroll table{min-width:480px}
+  /* layout guards: never let an ancestor size this page to its content */
+  html{width:100%}
+  body{display:block;width:100%;min-width:0;overflow-wrap:break-word}
   .sec-head>*,.prob-head>*,.p h3>*,.legend>*{min-width:0}
   .prob-head,.p h3{flex-wrap:wrap}
   .prob-head .stem,.p h3 .stem{flex:0 1 auto}
   .cards>*,.prob,.rule-box,.example,.warn,.final,details{min-width:0}
-  ol.st>li{grid-template-columns:26px minmax(0,1fr)}
   .frac{max-width:100%}
 </style>
 

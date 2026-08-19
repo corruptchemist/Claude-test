@@ -33,7 +33,7 @@
     font-family:"IBM Plex Sans","Helvetica Neue",Arial,sans-serif;
     font-size:16.5px;line-height:1.65;-webkit-font-smoothing:antialiased;
   }
-  .wrap{max-width:860px;margin:0 auto;padding:0 20px 96px}
+  .wrap{width:min(860px,100vw);max-width:100%;margin:0 auto;padding:0 20px 96px}
 
   .masthead{position:relative;padding:56px 0 26px;border-bottom:2px solid var(--ink);overflow:hidden}
   .masthead::before{
@@ -124,8 +124,11 @@
   :focus-visible{outline:2px solid var(--blue);outline-offset:2px}
   @media (prefers-reduced-motion:reduce){*{animation:none!important;transition:none!important}}
 
-  /* narrow-screen fixes: nothing may refuse to shrink */
-  body{overflow-wrap:break-word}
+  /* wide tables scroll in their own box instead of squeezing to unreadable columns */
+  .scroll table{min-width:480px}
+  /* layout guards: never let an ancestor size this page to its content */
+  html{width:100%}
+  body{display:block;width:100%;min-width:0;overflow-wrap:break-word}
   .sec-head>*,.prob-head>*,.p h3>*,.legend>*{min-width:0}
   .prob-head,.p h3{flex-wrap:wrap}
   .prob-head .stem,.p h3 .stem{flex:0 1 auto}
@@ -492,7 +495,7 @@
   <h2>One-page cheat sheet</h2>
   <div class="scroll">
     <table>
-      <tr><th style="width:26%">If the question is&hellip;</th><th>Do this</th></tr>
+      <tr><th style="min-width:200px">If the question is&hellip;</th><th>Do this</th></tr>
       <tr><td>"Is it continuous at <span class="m">x = c</span>?" &mdash; piecewise</td><td>Plug <span class="m">c</span> into <strong>both</strong> rules. Equal &rarr; continuous. Different &rarr; jump discontinuity.</td></tr>
       <tr><td>"Is it continuous?" &mdash; rational</td><td>Factor. Bad <span class="m">x</span> = zeros of the original denominator. Cancels &rarr; hole (removable); doesn't cancel &rarr; vertical asymptote (infinite).</td></tr>
       <tr><td>"Is it continuous?" &mdash; polynomial</td><td>Yes. Everywhere. Say "polynomial."</td></tr>
