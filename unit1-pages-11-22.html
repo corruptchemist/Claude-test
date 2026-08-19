@@ -160,7 +160,7 @@
   ol.parts li{margin:5px 0}
 
   /* math */
-  .m{font-family:"STIX Two Text",Cambria,Georgia,serif;font-style:italic;font-size:1.06em;white-space:nowrap}
+  .m{font-family:"STIX Two Text",Cambria,Georgia,serif;font-style:italic;font-size:1.06em;white-space:normal;overflow-wrap:break-word}
   .m .up{font-style:normal}
   .frac{display:inline-flex;flex-direction:column;vertical-align:-.48em;text-align:center;font-size:.94em}
   .frac span:first-child{border-bottom:1px solid currentColor;padding:0 .3em}
@@ -192,6 +192,15 @@
   a{color:var(--blue)}
   :focus-visible{outline:2px solid var(--blue);outline-offset:2px}
   @media (prefers-reduced-motion:reduce){*{animation:none!important;transition:none!important}}
+
+  /* narrow-screen fixes: nothing may refuse to shrink */
+  body{overflow-wrap:break-word}
+  .sec-head>*,.prob-head>*,.p h3>*,.legend>*{min-width:0}
+  .prob-head,.p h3{flex-wrap:wrap}
+  .prob-head .stem,.p h3 .stem{flex:0 1 auto}
+  .cards>*,.prob,.rule-box,.example,.warn,.final,details{min-width:0}
+  ol.st>li{grid-template-columns:26px minmax(0,1fr)}
+  .frac{max-width:100%}
 </style>
 <div class="wrap">
 
