@@ -1,0 +1,512 @@
+<title>Every Step, Pages 17&ndash;22</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Newsreader:ital,opsz,wght@0,6..72,400;0,6..72,600;1,6..72,400&family=IBM+Plex+Sans:ital,wght@0,400;0,500;0,600;1,400&family=STIX+Two+Text:ital,wght@0,400;0,600;1,400;1,600&display=swap">
+<style>
+  :root{
+    --ground:#F5F6F8; --card:#FFFFFF;
+    --ink:#171B21; --ink-soft:#4C545F; --ink-faint:#7A828D;
+    --rule:#DCE0E6; --blue:#1F4E79; --blue-soft:#E4EDF5;
+    --pen:#A81E32; --pen-soft:#FAECEE; --grid:#DDE3EA; --note:#F0F3F6;
+  }
+  @media (prefers-color-scheme: dark){
+    :root:not([data-theme="light"]){
+      --ground:#101319; --card:#171B22;
+      --ink:#E8EAEF; --ink-soft:#AEB6C2; --ink-faint:#7E8794;
+      --rule:#2A303A; --blue:#8CBBE3; --blue-soft:#1B2833;
+      --pen:#EE8A99; --pen-soft:#2A1B20; --grid:#232A33; --note:#1C212A;
+    }
+  }
+  :root[data-theme="dark"]{
+    --ground:#101319; --card:#171B22;
+    --ink:#E8EAEF; --ink-soft:#AEB6C2; --ink-faint:#7E8794;
+    --rule:#2A303A; --blue:#8CBBE3; --blue-soft:#1B2833;
+    --pen:#EE8A99; --pen-soft:#2A1B20; --grid:#232A33; --note:#1C212A;
+  }
+  *{box-sizing:border-box}
+  body{margin:0;background:var(--ground);color:var(--ink);
+    font-family:"IBM Plex Sans","Helvetica Neue",Arial,sans-serif;font-size:16px;line-height:1.62;-webkit-font-smoothing:antialiased}
+  .wrap{max-width:880px;margin:0 auto;padding:0 20px 96px}
+
+  .masthead{position:relative;padding:54px 0 24px;border-bottom:2px solid var(--ink);overflow:hidden}
+  .masthead::before{content:"";position:absolute;inset:0;
+    background-image:linear-gradient(var(--grid) 1px,transparent 1px),linear-gradient(90deg,var(--grid) 1px,transparent 1px);
+    background-size:26px 26px;
+    -webkit-mask-image:linear-gradient(to bottom,rgba(0,0,0,.5),transparent 78%);
+    mask-image:linear-gradient(to bottom,rgba(0,0,0,.5),transparent 78%)}
+  .masthead>*{position:relative}
+  .eyebrow{font-size:12px;letter-spacing:.14em;text-transform:uppercase;color:var(--blue);font-weight:600;margin:0 0 10px}
+  h1{font-family:"Newsreader",Georgia,serif;font-weight:600;font-size:clamp(33px,5.2vw,50px);line-height:1.06;
+     letter-spacing:-.015em;margin:0 0 14px;text-wrap:balance}
+  .standfirst{font-size:17px;color:var(--ink-soft);max-width:62ch;margin:0}
+
+  .toc{position:sticky;top:0;z-index:5;display:flex;flex-wrap:wrap;gap:6px;padding:10px 0;margin-bottom:34px;
+    background:color-mix(in srgb,var(--ground) 92%,transparent);backdrop-filter:blur(6px);border-bottom:1px solid var(--rule)}
+  .toc a{font-size:13px;text-decoration:none;color:var(--ink-soft);padding:5px 11px;border:1px solid var(--rule);border-radius:2px;white-space:nowrap}
+  .toc a:hover,.toc a:focus-visible{border-color:var(--blue);color:var(--blue);background:var(--blue-soft)}
+
+  section{margin:0 0 46px;scroll-margin-top:64px}
+  .sec-head{display:flex;align-items:baseline;gap:13px;flex-wrap:wrap;margin-bottom:8px}
+  .pagetag{font-size:12px;font-weight:600;letter-spacing:.08em;text-transform:uppercase;
+    color:var(--card);background:var(--blue);padding:3px 9px;border-radius:2px}
+  h2{font-family:"Newsreader",Georgia,serif;font-weight:600;font-size:clamp(23px,2.7vw,31px);line-height:1.14;margin:0;letter-spacing:-.01em}
+  .sec-note{color:var(--ink-faint);font-size:14.5px;margin:0 0 22px;max-width:70ch}
+
+  .prob{background:var(--card);border:1px solid var(--rule);border-left:3px solid var(--blue);
+    border-radius:3px;padding:16px 20px 18px;margin:0 0 16px}
+  .prob-head{display:flex;align-items:baseline;gap:11px;flex-wrap:wrap;margin-bottom:4px}
+  .pnum{font-family:"Newsreader",Georgia,serif;font-size:21px;font-weight:600;color:var(--blue);line-height:1}
+  .stem{font-size:16px}
+  .kind{font-size:12.5px;color:var(--ink-faint);letter-spacing:.02em;margin:0 0 12px}
+
+  ol.st{list-style:none;counter-reset:s;padding:0;margin:0 0 12px}
+  ol.st>li{counter-increment:s;display:grid;grid-template-columns:26px 1fr;gap:11px;margin:0 0 9px;
+    font-size:15px;color:var(--ink-soft);align-items:start}
+  ol.st>li::before{
+    content:counter(s);
+    font-family:"IBM Plex Sans",sans-serif;font-size:11.5px;font-weight:600;
+    color:var(--blue);background:var(--blue-soft);border-radius:2px;
+    width:26px;height:20px;display:flex;align-items:center;justify-content:center;margin-top:3px}
+  ol.st>li b{color:var(--ink);font-weight:600}
+  ol.st ul{margin:5px 0 0;padding-left:17px}
+  ol.st li li{margin:2px 0}
+
+  .final{background:var(--pen-soft);color:var(--pen);border-radius:2px;padding:9px 12px;font-size:15.5px;margin:0}
+  .final .lbl{display:block;font-size:11px;letter-spacing:.12em;text-transform:uppercase;font-weight:600;opacity:.75;margin-bottom:1px}
+  .aside{font-size:14px;color:var(--ink-faint);margin:10px 0 0;border-left:2px solid var(--rule);padding-left:12px}
+
+  .m{font-family:"STIX Two Text",Cambria,Georgia,serif;font-style:italic;font-size:1.06em;white-space:nowrap}
+  .m .up{font-style:normal}
+  .frac{display:inline-flex;flex-direction:column;vertical-align:-.48em;text-align:center;font-size:.94em}
+  .frac span:first-child{border-bottom:1px solid currentColor;padding:0 .3em}
+  .frac span:last-child{padding:0 .3em}
+  .scroll{overflow-x:auto;margin:8px 0}
+  table{border-collapse:collapse;font-size:14px;width:100%;font-variant-numeric:tabular-nums}
+  th,td{border:1px solid var(--rule);padding:5px 9px;text-align:center;font-family:"STIX Two Text",Georgia,serif}
+  th{background:var(--blue-soft);font-weight:600;font-style:normal}
+  footer{margin-top:52px;padding-top:18px;border-top:1px solid var(--rule);font-size:13.5px;color:var(--ink-faint)}
+  a{color:var(--blue)}
+  :focus-visible{outline:2px solid var(--blue);outline-offset:2px}
+</style>
+
+<div class="wrap">
+<header class="masthead">
+  <p class="eyebrow">AP Precalculus &middot; full solutions &middot; packet pages 17&ndash;22</p>
+  <h1>Every Step, Pages 17&ndash;22</h1>
+  <p class="standfirst">Both worksheets, all twenty-five problems, each one broken into the individual steps you'd write on your own paper. Nothing is skipped &mdash; if a line of algebra happens, it's shown.</p>
+</header>
+
+<nav class="toc" aria-label="Contents">
+  <a href="#p17">p.17 &middot; #1&ndash;6</a>
+  <a href="#p18a">p.18 &middot; #7&ndash;10</a>
+  <a href="#p18b">p.18 &middot; #11&ndash;14</a>
+  <a href="#p18c">p.18&ndash;19 &middot; #17&ndash;20</a>
+  <a href="#p19">p.19 &middot; #21&ndash;22</a>
+  <a href="#p21">p.21 &middot; #1&ndash;3</a>
+  <a href="#p22">p.22 &middot; #4&ndash;5</a>
+</nav>
+
+<!-- ===================== PAGE 17 ===================== -->
+<section id="p17">
+  <div class="sec-head"><span class="pagetag">Page 17</span><h2>Continuity at a given <span class="m">x</span>-value &middot; #1&ndash;6</h2></div>
+  <p class="sec-note">Every one of these follows the same three-part test: is <span class="m">f(c)</span> defined, do the left and right sides approach the same height, and do those two match?</p>
+
+  <article class="prob">
+    <div class="prob-head"><span class="pnum">1</span><span class="stem m">f(x) = x<span class="up">&sup3;</span> &minus; 4x<span class="up">&sup2;</span> + 3</span><span class="stem">at <span class="m">x = 4</span></span></div>
+    <p class="kind">Type: polynomial</p>
+    <ol class="st">
+      <li><b>Identify the function type.</b> No denominator, no radical, no pieces &mdash; it's a polynomial.</li>
+      <li><b>Find <span class="m">f(4)</span>.</b> <span class="m">f(4) = (4)<span class="up">&sup3;</span> &minus; 4(4)<span class="up">&sup2;</span> + 3 = 64 &minus; 4(16) + 3 = 64 &minus; 64 + 3 = 3</span>. It's defined. &#10003;</li>
+      <li><b>Find the limit.</b> Polynomials allow direct substitution, so <span class="m">lim<sub class="up">x&rarr;4</sub> f(x) = 3</span> from both sides. &#10003;</li>
+      <li><b>Compare.</b> <span class="m">lim<sub class="up">x&rarr;4</sub> f(x) = 3 = f(4)</span>. All three conditions pass.</li>
+    </ol>
+    <p class="final"><span class="lbl">Answer</span>Continuous at <span class="m">x = 4</span> (polynomials are continuous everywhere).</p>
+  </article>
+
+  <article class="prob">
+    <div class="prob-head"><span class="pnum">2</span><span class="stem"><span class="m">f(x) = x<span class="up">&sup2;</span> + 8x + 15</span> if <span class="m">x &lt; &minus;2</span>; <span class="m">&minus;2x &minus; 10</span> if <span class="m">x &ge; &minus;2</span>, at <span class="m">x = &minus;2</span></span></div>
+    <p class="kind">Type: piecewise &mdash; test the split point</p>
+    <ol class="st">
+      <li><b>Note which rule owns each side.</b> Left side (<span class="m">x &lt; &minus;2</span>): the quadratic. Right side (<span class="m">x &ge; &minus;2</span>): the line.</li>
+      <li><b>Left-hand limit &mdash; plug <span class="m">&minus;2</span> into the quadratic.</b><br>
+        <span class="m">(&minus;2)<span class="up">&sup2;</span> + 8(&minus;2) + 15 = 4 &minus; 16 + 15 = 3</span><br>
+        So <span class="m">lim<sub class="up">x&rarr;&minus;2<span style="font-size:.8em">&minus;</span></sub> f(x) = 3</span>.</li>
+      <li><b>Right-hand limit &mdash; plug <span class="m">&minus;2</span> into the line.</b><br>
+        <span class="m">&minus;2(&minus;2) &minus; 10 = 4 &minus; 10 = &minus;6</span><br>
+        So <span class="m">lim<sub class="up">x&rarr;&minus;2<span style="font-size:.8em">+</span></sub> f(x) = &minus;6</span>.</li>
+      <li><b>Find <span class="m">f(&minus;2)</span>.</b> The <span class="m">&ge;</span> belongs to the line, so <span class="m">f(&minus;2) = &minus;6</span>.</li>
+      <li><b>Compare and classify.</b> <span class="m">3 &ne; &minus;6</span>, so the two-sided limit does not exist. Both one-sided limits are finite numbers that simply disagree &rarr; jump.</li>
+    </ol>
+    <p class="final"><span class="lbl">Answer</span>Jump discontinuity at <span class="m">x = &minus;2</span>.</p>
+  </article>
+
+  <article class="prob">
+    <div class="prob-head"><span class="pnum">3</span><span class="stem"><span class="m">f(x) = &minus;x &minus; 1</span> if <span class="m">x &le; &minus;4</span>; <span class="m">x + 7</span> if <span class="m">x &gt; &minus;4</span>, at <span class="m">x = &minus;4</span></span></div>
+    <p class="kind">Type: piecewise &mdash; test the split point</p>
+    <ol class="st">
+      <li><b>Left-hand limit</b> (rule for <span class="m">x &le; &minus;4</span>): <span class="m">&minus;(&minus;4) &minus; 1 = 4 &minus; 1 = 3</span>.</li>
+      <li><b>Right-hand limit</b> (rule for <span class="m">x &gt; &minus;4</span>): <span class="m">(&minus;4) + 7 = 3</span>.</li>
+      <li><b>The sides agree</b>, so <span class="m">lim<sub class="up">x&rarr;&minus;4</sub> f(x) = 3</span>. &#10003;</li>
+      <li><b>Find <span class="m">f(&minus;4)</span>.</b> The <span class="m">&le;</span> gives it to the first rule: <span class="m">f(&minus;4) = 3</span>. &#10003;</li>
+      <li><b>Compare.</b> Limit <span class="m">= 3 =</span> function value. All three conditions pass.</li>
+    </ol>
+    <p class="final"><span class="lbl">Answer</span>Continuous at <span class="m">x = &minus;4</span>.</p>
+  </article>
+
+  <article class="prob">
+    <div class="prob-head"><span class="pnum">4</span><span class="stem m">f(x) = <span class="frac"><span>x<span class="up">&sup2;</span></span><span>4x &minus; 16</span></span></span><span class="stem">at <span class="m">x = 4</span> and <span class="m">x = 0</span></span></div>
+    <p class="kind">Type: rational &mdash; factor and check the denominator</p>
+    <ol class="st">
+      <li><b>Factor the denominator.</b> <span class="m">4x &minus; 16 = 4(x &minus; 4)</span>, so the only bad value is <span class="m">x = 4</span>.</li>
+      <li><b>Can anything cancel?</b> Numerator is <span class="m">x<span class="up">&sup2;</span> = x&middot;x</span>. There is no <span class="m">(x &minus; 4)</span> upstairs &mdash; nothing cancels.</li>
+      <li><b>Test <span class="m">x = 4</span>.</b> Denominator <span class="m">= 4(4) &minus; 16 = 0</span> while numerator <span class="m">= 16 &ne; 0</span>. Dividing a nonzero number by something shrinking to zero blows up, so the outputs run to <span class="m">&plusmn;&infin;</span>.
+        <ul><li>from the left (<span class="m">x = 3.9</span>): <span class="m">15.2/(&minus;0.4) &rarr; &minus;&infin;</span></li>
+        <li>from the right (<span class="m">x = 4.1</span>): <span class="m">16.8/(0.4) &rarr; +&infin;</span></li></ul></li>
+      <li><b>Test <span class="m">x = 0</span>.</b> Denominator <span class="m">= &minus;16 &ne; 0</span>, so <span class="m">f(0) = 0/(&minus;16) = 0</span>. A rational function is continuous everywhere its denominator isn't zero.</li>
+    </ol>
+    <p class="final"><span class="lbl">Answer</span>Infinite discontinuity (vertical asymptote) at <span class="m">x = 4</span>; continuous at <span class="m">x = 0</span>.</p>
+  </article>
+
+  <article class="prob">
+    <div class="prob-head"><span class="pnum">5</span><span class="stem"><span class="m">f(x) = <span class="frac"><span>x</span><span>2</span></span> &minus; <span class="frac"><span>3</span><span>2</span></span></span> if <span class="m">x &le; 0</span>; <span class="m">&minus;2x &minus; 4</span> if <span class="m">x &gt; 0</span>, at <span class="m">x = 0</span></span></div>
+    <p class="kind">Type: piecewise &mdash; test the split point</p>
+    <ol class="st">
+      <li><b>Left-hand limit</b> (first rule): <span class="m"><span class="frac"><span>0</span><span>2</span></span> &minus; <span class="frac"><span>3</span><span>2</span></span> = &minus;<span class="frac"><span>3</span><span>2</span></span> = &minus;1.5</span>.</li>
+      <li><b>Right-hand limit</b> (second rule): <span class="m">&minus;2(0) &minus; 4 = &minus;4</span>.</li>
+      <li><b>Find <span class="m">f(0)</span>.</b> The <span class="m">&le;</span> gives it to the first rule: <span class="m">f(0) = &minus;1.5</span>.</li>
+      <li><b>Compare and classify.</b> <span class="m">&minus;1.5 &ne; &minus;4</span>, two finite values that disagree &rarr; jump.</li>
+    </ol>
+    <p class="final"><span class="lbl">Answer</span>Jump discontinuity at <span class="m">x = 0</span>.</p>
+  </article>
+
+  <article class="prob">
+    <div class="prob-head"><span class="pnum">6</span><span class="stem m">f(x) = <span class="frac"><span>x &minus; 5</span><span>x<span class="up">&sup2;</span> &minus; 8x + 15</span></span></span><span class="stem">at <span class="m">x = 3</span> and <span class="m">x = 5</span></span></div>
+    <p class="kind">Type: rational &mdash; factor, list bad values, then cancel</p>
+    <ol class="st">
+      <li><b>Factor the denominator.</b> Find two numbers that multiply to <span class="m">15</span> and add to <span class="m">&minus;8</span>: that's <span class="m">&minus;3</span> and <span class="m">&minus;5</span>.<br>
+        <span class="m">x<span class="up">&sup2;</span> &minus; 8x + 15 = (x &minus; 3)(x &minus; 5)</span></li>
+      <li><b>List the bad values first.</b> <span class="m">x = 3</span> and <span class="m">x = 5</span>. Write these down <em>before</em> cancelling &mdash; both leave the domain permanently.</li>
+      <li><b>Cancel.</b> <span class="m"><span class="frac"><span>x &minus; 5</span><span>(x &minus; 3)(x &minus; 5)</span></span> = <span class="frac"><span>1</span><span>x &minus; 3</span></span></span>, valid for <span class="m">x &ne; 5</span>.</li>
+      <li><b>Classify <span class="m">x = 5</span>.</b> Its factor cancelled, so the graph is a normal curve there with one point punched out &rarr; removable. Hole height: <span class="m">1/(5 &minus; 3) = &frac12;</span>, so the hole is at <span class="m">(5, &frac12;)</span>.</li>
+      <li><b>Classify <span class="m">x = 3</span>.</b> Its factor survived in the denominator &rarr; infinite discontinuity, vertical asymptote <span class="m">x = 3</span>.</li>
+    </ol>
+    <p class="final"><span class="lbl">Answer</span>Removable discontinuity at <span class="m">x = 5</span>; infinite discontinuity at <span class="m">x = 3</span>.</p>
+  </article>
+</section>
+
+<!-- ===================== PAGE 18 top ===================== -->
+<section id="p18a">
+  <div class="sec-head"><span class="pagetag">Page 18</span><h2>Continuity + domain &middot; #7&ndash;10</h2></div>
+  <p class="sec-note">Same routine as #6, with one extra line at the end: write the domain by cutting the number line at every bad <span class="m">x</span> &mdash; holes included.</p>
+
+  <article class="prob">
+    <div class="prob-head"><span class="pnum">7</span><span class="stem m">f(x) = &minus;<span class="frac"><span>x + 4</span><span>x<span class="up">&sup2;</span> + 9x + 20</span></span></span></div>
+    <ol class="st">
+      <li><b>Factor the denominator.</b> Two numbers multiplying to <span class="m">20</span>, adding to <span class="m">9</span>: <span class="m">4</span> and <span class="m">5</span>.<br>
+        <span class="m">x<span class="up">&sup2;</span> + 9x + 20 = (x + 4)(x + 5)</span></li>
+      <li><b>Bad values.</b> <span class="m">x + 4 = 0 &rarr; x = &minus;4</span>; <span class="m">x + 5 = 0 &rarr; x = &minus;5</span>.</li>
+      <li><b>Cancel.</b> <span class="m">&minus;<span class="frac"><span>x + 4</span><span>(x + 4)(x + 5)</span></span> = &minus;<span class="frac"><span>1</span><span>x + 5</span></span></span>, for <span class="m">x &ne; &minus;4</span>.</li>
+      <li><b>Classify each.</b> <span class="m">x = &minus;4</span> cancelled &rarr; removable (hole at height <span class="m">&minus;1/(&minus;4 + 5) = &minus;1</span>). <span class="m">x = &minus;5</span> survived &rarr; infinite.</li>
+      <li><b>Write the domain.</b> Cut the number line at <span class="m">&minus;5</span> and <span class="m">&minus;4</span>, smallest first.</li>
+    </ol>
+    <p class="final"><span class="lbl">Answer</span>Removable at <span class="m">x = &minus;4</span>, infinite at <span class="m">x = &minus;5</span>.<br>Domain: <span class="m">(&minus;&infin;, &minus;5) &cup; (&minus;5, &minus;4) &cup; (&minus;4, &infin;)</span></p>
+  </article>
+
+  <article class="prob">
+    <div class="prob-head"><span class="pnum">8</span><span class="stem"><span class="m">f(x) = 2x &minus; 4</span> if <span class="m">x &lt; 3</span>; <span class="m">&minus;<span class="frac"><span>x</span><span>2</span></span> &minus; <span class="frac"><span>3</span><span>2</span></span></span> if <span class="m">x &ge; 3</span></span></div>
+    <ol class="st">
+      <li><b>Find the only suspect.</b> Both pieces are lines (continuous on their own), so the only place a break can happen is the split, <span class="m">x = 3</span>.</li>
+      <li><b>Left-hand limit.</b> <span class="m">2(3) &minus; 4 = 2</span>.</li>
+      <li><b>Right-hand limit.</b> <span class="m">&minus;<span class="frac"><span>3</span><span>2</span></span> &minus; <span class="frac"><span>3</span><span>2</span></span> = &minus;3</span>.</li>
+      <li><b>Compare.</b> <span class="m">2 &ne; &minus;3</span> &rarr; jump discontinuity at <span class="m">x = 3</span>.</li>
+      <li><b>Domain.</b> Ask a different question here: is every real number assigned exactly one output? Yes &mdash; <span class="m">x &lt; 3</span> uses the first rule, <span class="m">x &ge; 3</span> the second, and together they cover the whole line. A jump costs continuity, not domain.</li>
+    </ol>
+    <p class="final"><span class="lbl">Answer</span>Jump discontinuity at <span class="m">x = 3</span>. Domain: <span class="m">(&minus;&infin;, &infin;)</span></p>
+  </article>
+
+  <article class="prob">
+    <div class="prob-head"><span class="pnum">9</span><span class="stem m">f(x) = <span class="frac"><span>&minus;x &minus; 1</span><span>x<span class="up">&sup2;</span> + 2x + 2</span></span></span></div>
+    <ol class="st">
+      <li><b>Try to factor the denominator.</b> You need two numbers multiplying to <span class="m">2</span> and adding to <span class="m">2</span> &mdash; there aren't any whole numbers that work.</li>
+      <li><b>Use the discriminant to prove it never equals zero.</b><br>
+        <span class="m">b<span class="up">&sup2;</span> &minus; 4ac = (2)<span class="up">&sup2;</span> &minus; 4(1)(2) = 4 &minus; 8 = &minus;4</span><br>
+        Negative discriminant &rarr; no real solutions to <span class="m">x<span class="up">&sup2;</span> + 2x + 2 = 0</span>.</li>
+      <li><b>Conclude.</b> The denominator is never zero, so there are no suspects at all.</li>
+      <li><b>Domain.</b> Nothing is excluded.</li>
+    </ol>
+    <p class="final"><span class="lbl">Answer</span>Continuous for all real numbers &mdash; no discontinuities. Domain: <span class="m">(&minus;&infin;, &infin;)</span></p>
+    <p class="aside">Alternate proof: complete the square. <span class="m">x<span class="up">&sup2;</span> + 2x + 2 = (x + 1)<span class="up">&sup2;</span> + 1</span>, which is at least 1 &mdash; always positive.</p>
+  </article>
+
+  <article class="prob">
+    <div class="prob-head"><span class="pnum">10</span><span class="stem m">f(x) = <span class="frac"><span>x &minus; 2</span><span>x<span class="up">&sup2;</span> &minus; 6x + 5</span></span></span></div>
+    <ol class="st">
+      <li><b>Factor.</b> Two numbers multiplying to <span class="m">5</span>, adding to <span class="m">&minus;6</span>: <span class="m">&minus;1</span> and <span class="m">&minus;5</span> &rarr; <span class="m">(x &minus; 1)(x &minus; 5)</span>.</li>
+      <li><b>Bad values.</b> <span class="m">x = 1</span> and <span class="m">x = 5</span>.</li>
+      <li><b>Check for cancelling.</b> The numerator is <span class="m">x &minus; 2</span> &mdash; it matches neither factor, so nothing cancels.</li>
+      <li><b>Classify.</b> Both factors stay in the denominator &rarr; both are infinite discontinuities (vertical asymptotes at <span class="m">x = 1</span> and <span class="m">x = 5</span>).</li>
+      <li><b>Domain.</b> Cut at 1 and at 5.</li>
+    </ol>
+    <p class="final"><span class="lbl">Answer</span>Infinite discontinuities at <span class="m">x = 1</span> and <span class="m">x = 5</span>.<br>Domain: <span class="m">(&minus;&infin;, 1) &cup; (1, 5) &cup; (5, &infin;)</span></p>
+  </article>
+</section>
+
+<!-- ===================== PAGE 18 middle ===================== -->
+<section id="p18b">
+  <div class="sec-head"><span class="pagetag">Page 18</span><h2>End behavior, no calculator &middot; #11&ndash;14</h2></div>
+  <p class="sec-note">For a polynomial, only the leading term survives at the extremes. For a rational function, compare the top and bottom degrees.</p>
+
+  <article class="prob">
+    <div class="prob-head"><span class="pnum">11</span><span class="stem m">f(x) = x<span class="up">&#8309;</span> &minus; 4x<span class="up">&sup3;</span> + x + 1</span></div>
+    <ol class="st">
+      <li><b>Find the leading term.</b> Highest power is <span class="m">x<span class="up">&#8309;</span></span>, with coefficient <span class="m">+1</span>.</li>
+      <li><b>Degree: even or odd?</b> 5 is odd &rarr; the two ends go opposite directions.</li>
+      <li><b>Sign of the lead?</b> Positive &rarr; the right end goes up.</li>
+      <li><b>Sanity-check with a big number.</b> At <span class="m">x = &minus;100</span>, <span class="m">x<span class="up">&#8309;</span> = &minus;10,000,000,000</span> while <span class="m">&minus;4x<span class="up">&sup3;</span> = +4,000,000</span> &mdash; the leading term swamps everything, so the output is hugely negative.</li>
+    </ol>
+    <p class="final"><span class="lbl">Answer</span><span class="m">x &rarr; &minus;&infin;: f(x) &rarr; &minus;&infin;</span> &nbsp;&middot;&nbsp; <span class="m">x &rarr; &infin;: f(x) &rarr; &infin;</span></p>
+  </article>
+
+  <article class="prob">
+    <div class="prob-head"><span class="pnum">12</span><span class="stem m">f(x) = &minus;x<span class="up">&#8308;</span> &minus; 4x<span class="up">&sup3;</span> &minus; 3x<span class="up">&sup2;</span> + 1</span></div>
+    <ol class="st">
+      <li><b>Leading term:</b> <span class="m">&minus;x<span class="up">&#8308;</span></span>.</li>
+      <li><b>Degree 4 is even</b> &rarr; both ends go the same direction.</li>
+      <li><b>Coefficient is negative</b> &rarr; that shared direction is down. (A plain <span class="m">x<span class="up">&#8308;</span></span> opens up; the minus sign flips it.)</li>
+      <li><b>Check:</b> at <span class="m">x = &plusmn;10</span>, <span class="m">&minus;x<span class="up">&#8308;</span> = &minus;10,000</span> either way.</li>
+    </ol>
+    <p class="final"><span class="lbl">Answer</span><span class="m">x &rarr; &minus;&infin;: f(x) &rarr; &minus;&infin;</span> &nbsp;&middot;&nbsp; <span class="m">x &rarr; &infin;: f(x) &rarr; &minus;&infin;</span></p>
+  </article>
+
+  <article class="prob">
+    <div class="prob-head"><span class="pnum">13</span><span class="stem m">m(x) = <span class="frac"><span>4 + x</span><span>2x + 6</span></span></span></div>
+    <ol class="st">
+      <li><b>Put both parts in standard order.</b> <span class="m"><span class="frac"><span>x + 4</span><span>2x + 6</span></span></span>.</li>
+      <li><b>Compare degrees.</b> Top is degree 1, bottom is degree 1 &mdash; equal.</li>
+      <li><b>Equal degrees &rarr; ratio of leading coefficients.</b> Top lead <span class="m">1</span>, bottom lead <span class="m">2</span>, so the limit is <span class="m">&frac12;</span>.</li>
+      <li><b>Show why (divide every term by <span class="m">x</span>):</b><br>
+        <span class="m"><span class="frac"><span>x + 4</span><span>2x + 6</span></span> = <span class="frac"><span>1 + 4/x</span><span>2 + 6/x</span></span></span> &rarr; as <span class="m">x</span> grows, <span class="m">4/x</span> and <span class="m">6/x</span> vanish, leaving <span class="m"><span class="frac"><span>1</span><span>2</span></span></span>. The same thing happens at <span class="m">&minus;&infin;</span>.</li>
+    </ol>
+    <p class="final"><span class="lbl">Answer</span><span class="m">lim<sub class="up">x&rarr;&minus;&infin;</sub> m(x) = &frac12;</span> &nbsp;&middot;&nbsp; <span class="m">lim<sub class="up">x&rarr;&infin;</sub> m(x) = &frac12;</span> &nbsp;(horizontal asymptote <span class="m">y = &frac12;</span>)</p>
+  </article>
+
+  <article class="prob">
+    <div class="prob-head"><span class="pnum">14</span><span class="stem m">k(x) = <span class="frac"><span>4x<span class="up">&sup2;</span> + 3x &minus; 1</span><span>2x<span class="up">&#8309;</span> + 3x<span class="up">&sup2;</span></span></span></span></div>
+    <ol class="st">
+      <li><b>Degrees:</b> top is 2, bottom is 5.</li>
+      <li><b>Bottom-heavy</b> (denominator degree is larger) &rarr; limit <span class="m">0</span>.</li>
+      <li><b>Why:</b> divide top and bottom by <span class="m">x<span class="up">&#8309;</span></span>:<br>
+        <span class="m"><span class="frac"><span>4/x<span class="up">&sup3;</span> + 3/x<span class="up">&#8308;</span> &minus; 1/x<span class="up">&#8309;</span></span><span>2 + 3/x<span class="up">&sup3;</span></span></span></span> &rarr; the whole numerator goes to <span class="m">0</span> while the denominator goes to <span class="m">2</span>, so the fraction goes to <span class="m">0/2 = 0</span>.</li>
+    </ol>
+    <p class="final"><span class="lbl">Answer</span><span class="m">lim<sub class="up">x&rarr;&minus;&infin;</sub> k(x) = 0</span> &nbsp;&middot;&nbsp; <span class="m">lim<sub class="up">x&rarr;&infin;</sub> k(x) = 0</span></p>
+  </article>
+</section>
+
+<!-- ===================== PAGE 18-19 limit notation ===================== -->
+<section id="p18c">
+  <div class="sec-head"><span class="pagetag">Pages 18&ndash;19</span><h2>End behavior in limit notation &middot; #17&ndash;20</h2></div>
+  <p class="sec-note">Each of these has a graph printed next to it &mdash; do the algebra first, then confirm it against the picture.</p>
+
+  <article class="prob">
+    <div class="prob-head"><span class="pnum">17</span><span class="stem m">f(x) = <span class="frac"><span>x<span class="up">&sup2;</span> &minus; 16</span><span>3x &minus; 9</span></span></span></div>
+    <ol class="st">
+      <li><b>Degrees:</b> top 2, bottom 1 &rarr; top-heavy.</li>
+      <li><b>Top-heavy means no horizontal asymptote</b> &mdash; the outputs run to infinity instead of settling.</li>
+      <li><b>Divide the leading terms to see which way.</b> <span class="m"><span class="frac"><span>x<span class="up">&sup2;</span></span><span>3x</span></span> = <span class="frac"><span>x</span><span>3</span></span></span> &mdash; it behaves like a line with positive slope far out.</li>
+      <li><b>Read off both ends.</b> A positive-slope line goes down on the left, up on the right &mdash; which matches the two arms on the printed graph.</li>
+    </ol>
+    <p class="final"><span class="lbl">Answer</span><span class="m">lim<sub class="up">x&rarr;&minus;&infin;</sub> f(x) = &minus;&infin;</span> &nbsp;&middot;&nbsp; <span class="m">lim<sub class="up">x&rarr;&infin;</sub> f(x) = &infin;</span></p>
+  </article>
+
+  <article class="prob">
+    <div class="prob-head"><span class="pnum">18</span><span class="stem m">f(x) = <span class="frac"><span>&minus;3x<span class="up">&sup2;</span> + 12x</span><span>x<span class="up">&sup2;</span> &minus; 2x &minus; 3</span></span></span></div>
+    <ol class="st">
+      <li><b>Degrees:</b> 2 and 2 &mdash; equal.</li>
+      <li><b>Take the ratio of the leading coefficients only.</b> <span class="m">&minus;3 &divide; 1 = &minus;3</span>. The <span class="m">12x</span> and the <span class="m">&minus;2x &minus; 3</span> play no part.</li>
+      <li><b>Both ends get the same value</b> when degrees are equal.</li>
+      <li><b>Confirm on the graph:</b> that's the dashed horizontal line at <span class="m">y = &minus;3</span> the curve flattens onto at the far left and far right.</li>
+    </ol>
+    <p class="final"><span class="lbl">Answer</span><span class="m">lim<sub class="up">x&rarr;&minus;&infin;</sub> f(x) = &minus;3</span> &nbsp;&middot;&nbsp; <span class="m">lim<sub class="up">x&rarr;&infin;</sub> f(x) = &minus;3</span></p>
+  </article>
+
+  <article class="prob">
+    <div class="prob-head"><span class="pnum">19</span><span class="stem m">f(x) = &minus;<span class="frac"><span>4</span><span>x<span class="up">&sup2;</span> &minus; x &minus; 6</span></span></span></div>
+    <ol class="st">
+      <li><b>Degrees:</b> the numerator <span class="m">&minus;4</span> is a constant (degree 0); the denominator is degree 2.</li>
+      <li><b>Bottom-heavy</b> &rarr; limit <span class="m">0</span> at both ends.</li>
+      <li><b>Why:</b> at <span class="m">x = 1000</span> the denominator is about a million, and <span class="m">&minus;4</span> divided by a million is essentially zero.</li>
+      <li><b>Graph check:</b> both arms flatten onto the <span class="m">x</span>-axis, which is the horizontal asymptote <span class="m">y = 0</span>.</li>
+    </ol>
+    <p class="final"><span class="lbl">Answer</span><span class="m">lim<sub class="up">x&rarr;&minus;&infin;</sub> f(x) = 0</span> &nbsp;&middot;&nbsp; <span class="m">lim<sub class="up">x&rarr;&infin;</sub> f(x) = 0</span></p>
+  </article>
+
+  <article class="prob">
+    <div class="prob-head"><span class="pnum">20</span><span class="stem">Read the end behavior from the graph</span></div>
+    <ol class="st">
+      <li><b>Left arm.</b> Put your finger on the curve and slide left. It flattens out and hugs a horizontal line at height <span class="m">&minus;5</span>, getting closer but never leaving it.</li>
+      <li><b>That flattening is a limit</b> &mdash; the height it hugs is the answer for <span class="m">x &rarr; &minus;&infin;</span>.</li>
+      <li><b>Right arm.</b> Slide right instead: the curve climbs steeply and never levels off, so it grows without bound.</li>
+    </ol>
+    <p class="final"><span class="lbl">Answer</span><span class="m">lim<sub class="up">x&rarr;&minus;&infin;</sub> f(x) = &minus;5</span> &nbsp;&middot;&nbsp; <span class="m">lim<sub class="up">x&rarr;&infin;</sub> f(x) = &infin;</span></p>
+  </article>
+</section>
+
+<!-- ===================== PAGE 19 IVT ===================== -->
+<section id="p19">
+  <div class="sec-head"><span class="pagetag">Page 19</span><h2>Locating zeros with the IVT &middot; #21&ndash;22</h2></div>
+  <p class="sec-note">Both are polynomials, so both are continuous &mdash; say so, because that's what licenses the theorem. Then hunt for a <strong>sign change</strong> between consecutive integers.</p>
+
+  <article class="prob">
+    <div class="prob-head"><span class="pnum">21</span><span class="stem m">f(x) = x<span class="up">&sup2;</span> &minus; 5x + 3</span><span class="stem">on <span class="m">0 &le; x &le; 6</span></span></div>
+    <ol class="st">
+      <li><b>State why the IVT applies.</b> <span class="m">f</span> is a polynomial, so it is continuous on <span class="m">[0, 6]</span>.</li>
+      <li><b>Evaluate at every integer in the range.</b> Show the arithmetic:
+        <ul>
+          <li><span class="m">f(0) = 0 &minus; 0 + 3 = 3</span></li>
+          <li><span class="m">f(1) = 1 &minus; 5 + 3 = &minus;1</span></li>
+          <li><span class="m">f(2) = 4 &minus; 10 + 3 = &minus;3</span></li>
+          <li><span class="m">f(3) = 9 &minus; 15 + 3 = &minus;3</span></li>
+          <li><span class="m">f(4) = 16 &minus; 20 + 3 = &minus;1</span></li>
+          <li><span class="m">f(5) = 25 &minus; 25 + 3 = 3</span></li>
+          <li><span class="m">f(6) = 36 &minus; 30 + 3 = 9</span></li>
+        </ul></li>
+      <li><b>Put it in a table and add a sign row.</b>
+        <div class="scroll"><table>
+          <tr><th>x</th><td>0</td><td>1</td><td>2</td><td>3</td><td>4</td><td>5</td><td>6</td></tr>
+          <tr><th>f(x)</th><td>3</td><td>&minus;1</td><td>&minus;3</td><td>&minus;3</td><td>&minus;1</td><td>3</td><td>9</td></tr>
+          <tr><th>sign</th><td>+</td><td>&minus;</td><td>&minus;</td><td>&minus;</td><td>&minus;</td><td>+</td><td>+</td></tr>
+        </table></div></li>
+      <li><b>Find every place the sign flips.</b> <span class="m">+ &rarr; &minus;</span> between <span class="m">x = 0</span> and <span class="m">x = 1</span>; <span class="m">&minus; &rarr; +</span> between <span class="m">x = 4</span> and <span class="m">x = 5</span>.</li>
+      <li><b>Write the conclusion in IVT language.</b> Since <span class="m">f</span> is continuous and changes sign, it must equal 0 somewhere inside each of those intervals.</li>
+    </ol>
+    <p class="final"><span class="lbl">Answer</span>A zero between <span class="m">x = 0</span> and <span class="m">x = 1</span>, and another between <span class="m">x = 4</span> and <span class="m">x = 5</span>.</p>
+  </article>
+
+  <article class="prob">
+    <div class="prob-head"><span class="pnum">22</span><span class="stem m">f(x) = 2x<span class="up">&sup3;</span> + 15x<span class="up">&sup2;</span> &minus; 4x &minus; 33</span></div>
+    <ol class="st">
+      <li><b>State continuity.</b> Polynomial &rarr; continuous everywhere, so the IVT applies on any interval.</li>
+      <li><b>Decide how many zeros to look for.</b> Degree 3 &rarr; at most 3 real zeros. Once you've bracketed three, stop.</li>
+      <li><b>Start sampling integers near zero and work outward.</b> A sample of the arithmetic:
+        <ul>
+          <li><span class="m">f(1) = 2 + 15 &minus; 4 &minus; 33 = &minus;20</span></li>
+          <li><span class="m">f(2) = 2(8) + 15(4) &minus; 8 &minus; 33 = 16 + 60 &minus; 41 = 35</span></li>
+          <li><span class="m">f(&minus;1) = &minus;2 + 15 + 4 &minus; 33 = &minus;16</span></li>
+          <li><span class="m">f(&minus;2) = 2(&minus;8) + 15(4) + 8 &minus; 33 = &minus;16 + 60 &minus; 25 = 19</span></li>
+          <li><span class="m">f(&minus;7) = 2(&minus;343) + 15(49) + 28 &minus; 33 = &minus;686 + 735 &minus; 5 = 44</span></li>
+          <li><span class="m">f(&minus;8) = 2(&minus;512) + 15(64) + 32 &minus; 33 = &minus;1024 + 960 &minus; 1 = &minus;65</span></li>
+        </ul></li>
+      <li><b>Lay out the table.</b>
+        <div class="scroll"><table>
+          <tr><th>x</th><td>&minus;8</td><td>&minus;7</td><td>&minus;2</td><td>&minus;1</td><td>0</td><td>1</td><td>2</td></tr>
+          <tr><th>f(x)</th><td>&minus;65</td><td>44</td><td>19</td><td>&minus;16</td><td>&minus;33</td><td>&minus;20</td><td>35</td></tr>
+          <tr><th>sign</th><td>&minus;</td><td>+</td><td>+</td><td>&minus;</td><td>&minus;</td><td>&minus;</td><td>+</td></tr>
+        </table></div></li>
+      <li><b>Collect the sign changes.</b> Three of them &mdash; and a cubic can't have more, so the search is complete.</li>
+    </ol>
+    <p class="final"><span class="lbl">Answer</span>Zeros between <span class="m">x = &minus;8</span> and <span class="m">x = &minus;7</span>, between <span class="m">x = &minus;2</span> and <span class="m">x = &minus;1</span>, and between <span class="m">x = 1</span> and <span class="m">x = 2</span>.</p>
+    <p class="aside">Note the outputs stay negative from <span class="m">&minus;1</span> through <span class="m">1</span> &mdash; no sign change there, so no zero is claimed in that stretch.</p>
+  </article>
+</section>
+
+<!-- ===================== PAGE 21 ===================== -->
+<section id="p21">
+  <div class="sec-head"><span class="pagetag">Page 21</span><h2>Continuity, end behavior, and zeros &middot; #1&ndash;3</h2></div>
+  <p class="sec-note">Three questions per function, all answered by one factorization: leftover denominator factors give asymptotes, cancelled factors give holes, leftover numerator factors give zeros, and the degrees give end behavior.</p>
+
+  <article class="prob">
+    <div class="prob-head"><span class="pnum">1</span><span class="stem m">g(x) = <span class="frac"><span>2x &minus; 1</span><span>x<span class="up">&sup2;</span> &minus; 4x &minus; 32</span></span></span></div>
+    <ol class="st">
+      <li><b>Factor the denominator.</b> Two numbers multiplying to <span class="m">&minus;32</span>, adding to <span class="m">&minus;4</span>: <span class="m">&minus;8</span> and <span class="m">+4</span>.<br>
+        <span class="m">x<span class="up">&sup2;</span> &minus; 4x &minus; 32 = (x &minus; 8)(x + 4)</span></li>
+      <li><b>Bad values:</b> <span class="m">x = 8</span> and <span class="m">x = &minus;4</span>.</li>
+      <li><b>Check for cancelling.</b> The numerator <span class="m">2x &minus; 1</span> matches neither factor &rarr; nothing cancels &rarr; both are vertical asymptotes.</li>
+      <li><b>Describe continuity.</b> Continuous everywhere except those two points; write the domain by cutting at <span class="m">&minus;4</span> and <span class="m">8</span>.</li>
+      <li><b>End behavior:</b> degree 1 over degree 2 &rarr; bottom-heavy &rarr; both limits are <span class="m">0</span>, horizontal asymptote <span class="m">y = 0</span>.</li>
+      <li><b>Zeros:</b> set the numerator equal to zero. <span class="m">2x &minus; 1 = 0 &rarr; x = &frac12;</span>, and <span class="m">&frac12;</span> is in the domain, so it counts.</li>
+    </ol>
+    <p class="final"><span class="lbl">Answer</span>
+      <b>Continuity:</b> infinite discontinuities at <span class="m">x = &minus;4</span> and <span class="m">x = 8</span>; domain <span class="m">(&minus;&infin;, &minus;4) &cup; (&minus;4, 8) &cup; (8, &infin;)</span><br>
+      <b>End behavior:</b> <span class="m">lim<sub class="up">x&rarr;&plusmn;&infin;</sub> g(x) = 0</span><br>
+      <b>Zero:</b> <span class="m">x = &frac12;</span></p>
+  </article>
+
+  <article class="prob">
+    <div class="prob-head"><span class="pnum">2</span><span class="stem m">h(x) = <span class="frac"><span>x<span class="up">&sup3;</span> &minus; 3x<span class="up">&sup2;</span> + 2x &minus; 6</span><span>x<span class="up">&sup2;</span> + 2x &minus; 15</span></span></span></div>
+    <ol class="st">
+      <li><b>Factor the numerator by grouping</b> (four terms &rarr; group in pairs):<br>
+        <span class="m">(x<span class="up">&sup3;</span> &minus; 3x<span class="up">&sup2;</span>) + (2x &minus; 6) = x<span class="up">&sup2;</span>(x &minus; 3) + 2(x &minus; 3) = (x &minus; 3)(x<span class="up">&sup2;</span> + 2)</span></li>
+      <li><b>Factor the denominator.</b> Two numbers multiplying to <span class="m">&minus;15</span>, adding to <span class="m">2</span>: <span class="m">5</span> and <span class="m">&minus;3</span> &rarr; <span class="m">(x + 5)(x &minus; 3)</span>.</li>
+      <li><b>Bad values:</b> <span class="m">x = &minus;5</span> and <span class="m">x = 3</span>.</li>
+      <li><b>Cancel.</b> <span class="m">h(x) = <span class="frac"><span>(x &minus; 3)(x<span class="up">&sup2;</span> + 2)</span><span>(x + 5)(x &minus; 3)</span></span> = <span class="frac"><span>x<span class="up">&sup2;</span> + 2</span><span>x + 5</span></span></span>, for <span class="m">x &ne; 3</span>.</li>
+      <li><b>Classify.</b> <span class="m">x = 3</span> cancelled &rarr; hole; its height is the reduced form at 3: <span class="m">(9 + 2)/(3 + 5) = <span class="frac"><span>11</span><span>8</span></span></span>. <span class="m">x = &minus;5</span> survived &rarr; vertical asymptote.</li>
+      <li><b>End behavior.</b> Original degrees: 3 over 2 &rarr; top-heavy, so no horizontal asymptote. Divide the leading terms: <span class="m">x<span class="up">&sup3;</span>/x<span class="up">&sup2;</span> = x</span>, which behaves like a positive-slope line &rarr; down on the left, up on the right.</li>
+      <li><b>Zeros.</b> Set the surviving numerator to zero: <span class="m">x<span class="up">&sup2;</span> + 2 = 0 &rarr; x<span class="up">&sup2;</span> = &minus;2</span>, which has no real solution.</li>
+    </ol>
+    <p class="final"><span class="lbl">Answer</span>
+      <b>Continuity:</b> hole at <span class="m">(3, 11/8)</span>, infinite discontinuity at <span class="m">x = &minus;5</span>; domain <span class="m">(&minus;&infin;, &minus;5) &cup; (&minus;5, 3) &cup; (3, &infin;)</span><br>
+      <b>End behavior:</b> <span class="m">x &rarr; &minus;&infin;: h(x) &rarr; &minus;&infin;</span>; <span class="m">x &rarr; &infin;: h(x) &rarr; &infin;</span><br>
+      <b>Zeros:</b> none (no real zeros)</p>
+    <p class="aside">Extra credit detail: long division gives <span class="m"><span class="frac"><span>x<span class="up">&sup2;</span> + 2</span><span>x + 5</span></span> = x &minus; 5 + <span class="frac"><span>27</span><span>x + 5</span></span></span>, so the graph rides the slant asymptote <span class="m">y = x &minus; 5</span> at the ends.</p>
+  </article>
+
+  <article class="prob">
+    <div class="prob-head"><span class="pnum">3</span><span class="stem m">f(x) = <span class="frac"><span>x<span class="up">&sup2;</span> + 5x &minus; 14</span><span>2x<span class="up">&sup2;</span> + x &minus; 10</span></span></span></div>
+    <ol class="st">
+      <li><b>Factor the numerator.</b> Multiply to <span class="m">&minus;14</span>, add to <span class="m">5</span>: <span class="m">7</span> and <span class="m">&minus;2</span> &rarr; <span class="m">(x + 7)(x &minus; 2)</span>.</li>
+      <li><b>Factor the denominator</b> (leading coefficient isn't 1, so use the AC method). <span class="m">a&middot;c = 2(&minus;10) = &minus;20</span>; need two numbers multiplying to <span class="m">&minus;20</span> and adding to <span class="m">1</span>: <span class="m">5</span> and <span class="m">&minus;4</span>.<br>
+        <span class="m">2x<span class="up">&sup2;</span> + 5x &minus; 4x &minus; 10 = x(2x + 5) &minus; 2(2x + 5) = (2x + 5)(x &minus; 2)</span></li>
+      <li><b>Bad values:</b> <span class="m">2x + 5 = 0 &rarr; x = &minus;<span class="frac"><span>5</span><span>2</span></span></span>, and <span class="m">x = 2</span>.</li>
+      <li><b>Cancel.</b> <span class="m">f(x) = <span class="frac"><span>x + 7</span><span>2x + 5</span></span></span>, for <span class="m">x &ne; 2</span>.</li>
+      <li><b>Classify.</b> <span class="m">x = 2</span> cancelled &rarr; hole at height <span class="m">(2 + 7)/(2(2) + 5) = 9/9 = 1</span>, so the hole is <span class="m">(2, 1)</span>. <span class="m">x = &minus;5/2</span> survived &rarr; vertical asymptote.</li>
+      <li><b>End behavior.</b> Degrees 2 and 2 &mdash; equal &rarr; ratio of leading coefficients <span class="m">1/2</span>, both ends.</li>
+      <li><b>Zeros.</b> <span class="m">x + 7 = 0 &rarr; x = &minus;7</span>. It's in the domain, so it's a genuine zero. Note <span class="m">x = 2</span> is <em>not</em> a zero &mdash; it's the hole.</li>
+    </ol>
+    <p class="final"><span class="lbl">Answer</span>
+      <b>Continuity:</b> hole at <span class="m">(2, 1)</span>, infinite discontinuity at <span class="m">x = &minus;5/2</span>; domain <span class="m">(&minus;&infin;, &minus;5/2) &cup; (&minus;5/2, 2) &cup; (2, &infin;)</span><br>
+      <b>End behavior:</b> <span class="m">lim<sub class="up">x&rarr;&plusmn;&infin;</sub> f(x) = &frac12;</span> (horizontal asymptote <span class="m">y = &frac12;</span>)<br>
+      <b>Zero:</b> <span class="m">x = &minus;7</span></p>
+  </article>
+</section>
+
+<!-- ===================== PAGE 22 ===================== -->
+<section id="p22">
+  <div class="sec-head"><span class="pagetag">Page 22</span><h2>Solving for parameters &amp; the function test &middot; #4&ndash;5</h2></div>
+
+  <article class="prob">
+    <div class="prob-head"><span class="pnum">4</span><span class="stem">Find <span class="m">a</span> and <span class="m">b</span> so that <span class="m">f</span> is continuous</span></div>
+    <p class="kind"><span class="m">f(x) = x<span class="up">&sup2;</span> + a</span> for <span class="m">x &ge; 3</span>; <span class="m">bx + a</span> for <span class="m">&minus;3 &lt; x &lt; 3</span>; <span class="m">&radic;<span style="text-decoration:overline">&minus;b &minus; x</span></span> for <span class="m">x &le; &minus;3</span></p>
+    <ol class="st">
+      <li><b>Find the places that could break.</b> Each piece is continuous on its own, so the only suspects are the two boundaries: <span class="m">x = 3</span> and <span class="m">x = &minus;3</span>. Continuity means the pieces must meet at both.</li>
+      <li><b>Set up the equation at <span class="m">x = 3</span>.</b> Middle piece approaching from the left vs. the top piece owning the right:<br>
+        <span class="m">b(3) + a = (3)<span class="up">&sup2;</span> + a</span></li>
+      <li><b>Solve it.</b> The <span class="m">a</span> appears on both sides and cancels:<br>
+        <span class="m">3b + a = 9 + a &rarr; 3b = 9 &rarr; b = 3</span><br>
+        <em>Do this equation first</em> &mdash; it's the one that collapses to a single variable.</li>
+      <li><b>Set up the equation at <span class="m">x = &minus;3</span>.</b> The radical piece owns <span class="m">x = &minus;3</span>; the middle piece approaches from the right:<br>
+        <span class="m">&radic;<span style="text-decoration:overline">&minus;b &minus; (&minus;3)</span> = b(&minus;3) + a</span>, i.e. <span class="m">&radic;<span style="text-decoration:overline">3 &minus; b</span> = &minus;3b + a</span></li>
+      <li><b>Substitute <span class="m">b = 3</span>.</b> Left side: <span class="m">&radic;<span style="text-decoration:overline">3 &minus; 3</span> = &radic;0 = 0</span>. Right side: <span class="m">&minus;9 + a</span>.<br>
+        <span class="m">&minus;9 + a = 0 &rarr; a = 9</span></li>
+      <li><b>Check both boundaries.</b> At <span class="m">x = 3</span>: <span class="m">9 + 9 = 18</span> and <span class="m">3(3) + 9 = 18</span>. &#10003; At <span class="m">x = &minus;3</span>: <span class="m">&radic;0 = 0</span> and <span class="m">3(&minus;3) + 9 = 0</span>. &#10003;</li>
+      <li><b>Check the radical is even legal.</b> <span class="m">&minus;b &minus; x &ge; 0 &rarr; &minus;3 &minus; x &ge; 0 &rarr; x &le; &minus;3</span> &mdash; exactly the interval that piece is defined on. Everything is consistent.</li>
+    </ol>
+    <p class="final"><span class="lbl">Answer</span><span class="m">a = 9</span>, <span class="m">b = 3</span></p>
+  </article>
+
+  <article class="prob">
+    <div class="prob-head"><span class="pnum">5</span><span class="stem">Explain why the relation is not a function</span></div>
+    <p class="kind"><span class="m">y = 2x</span> for <span class="m">x &le; 1</span>; <span class="m">y = 3</span> for <span class="m">x &ge; 1</span></p>
+    <ol class="st">
+      <li><b>Look at the inequality signs, not the formulas.</b> The first says <span class="m">x &le; 1</span>; the second says <span class="m">x &ge; 1</span>. Both include <span class="m">x = 1</span>.</li>
+      <li><b>Evaluate at the overlap.</b> First rule: <span class="m">y = 2(1) = 2</span>. Second rule: <span class="m">y = 3</span>.</li>
+      <li><b>Apply the definition.</b> A function assigns each input <em>exactly one</em> output. The input <span class="m">x = 1</span> has two, so this fails.</li>
+      <li><b>Say it graphically too.</b> The vertical line <span class="m">x = 1</span> hits the graph at <span class="m">(1, 2)</span> and <span class="m">(1, 3)</span> &mdash; it fails the vertical line test.</li>
+    </ol>
+    <p class="final"><span class="lbl">Answer</span>At <span class="m">x = 1</span> both rules apply, giving <span class="m">y = 2</span> and <span class="m">y = 3</span>. One input with two outputs is not a function. (Changing the second condition to <span class="m">x &gt; 1</span> would fix it.)</p>
+  </article>
+</section>
+
+<footer>
+  <p>Page 20 of your packet is the printed answer key for pages 17&ndash;19 &mdash; every result above matches it. Page 16 is blank.</p>
+</footer>
+</div>
