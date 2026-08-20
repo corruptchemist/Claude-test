@@ -1,0 +1,1109 @@
+<title>Wi-Fi Strip Chart</title>
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="default">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500;600&family=IBM+Plex+Sans+Condensed:wght@500;600&family=IBM+Plex+Sans:wght@400;500;600&display=swap">
+
+<style>
+/* -- tokens: light (cool ruled paper) ------------------------------- */
+:root {
+  --paper:      #E9EDF1;
+  --panel:      #F8FAFC;
+  --panel-sunk: #EDF1F5;
+  --ink:        #16202B;
+  --ink-2:      #4A5A6A;
+  --ink-3:      #7C8B99;
+  --rule:       #C7D2DC;
+  --rule-faint: #DCE3EA;
+  --edge:       #C3CED8;
+  --edge-soft:  #DAE2E9;
+  --pen-a:      #0F5FD0;
+  --pen-b:      #C0562A;
+  --good:       #1B7F5A;
+  --warn:       #9A6A12;
+  --crit:       #B23B2E;
+  --shadow:     0 1px 0 rgba(22,32,43,.05), 0 6px 18px -12px rgba(22,32,43,.35);
+
+  --f-sans: "IBM Plex Sans", ui-sans-serif, system-ui, -apple-system, sans-serif;
+  --f-cond: "IBM Plex Sans Condensed", "IBM Plex Sans", ui-sans-serif, system-ui, sans-serif;
+  --f-mono: "IBM Plex Mono", ui-monospace, "SF Mono", Menlo, monospace;
+}
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme="light"]) {
+    --paper:      #0E151C;
+    --panel:      #141D26;
+    --panel-sunk: #101922;
+    --ink:        #E6EDF3;
+    --ink-2:      #9FB0BF;
+    --ink-3:      #6C7F8E;
+    --rule:       #22303C;
+    --rule-faint: #1A2630;
+    --edge:       #253340;
+    --edge-soft:  #1C2833;
+    --pen-a:      #5B9CFF;
+    --pen-b:      #FF8A5B;
+    --good:       #3FBF8A;
+    --warn:       #E0A93C;
+    --crit:       #FF6B5A;
+    --shadow:     0 1px 0 rgba(0,0,0,.3), 0 8px 22px -14px rgba(0,0,0,.8);
+  }
+}
+:root[data-theme="dark"] {
+  --paper:      #0E151C;
+  --panel:      #141D26;
+  --panel-sunk: #101922;
+  --ink:        #E6EDF3;
+  --ink-2:      #9FB0BF;
+  --ink-3:      #6C7F8E;
+  --rule:       #22303C;
+  --rule-faint: #1A2630;
+  --edge:       #253340;
+  --edge-soft:  #1C2833;
+  --pen-a:      #5B9CFF;
+  --pen-b:      #FF8A5B;
+  --good:       #3FBF8A;
+  --warn:       #E0A93C;
+  --crit:       #FF6B5A;
+  --shadow:     0 1px 0 rgba(0,0,0,.3), 0 8px 22px -14px rgba(0,0,0,.8);
+}
+
+* { box-sizing: border-box; }
+
+body {
+  margin: 0;
+  background: var(--paper);
+  color: var(--ink);
+  font-family: var(--f-sans);
+  font-size: 15px;
+  line-height: 1.5;
+  -webkit-text-size-adjust: 100%;
+  -webkit-font-smoothing: antialiased;
+}
+
+.sheet {
+  max-width: 920px;
+  margin: 0 auto;
+  padding: calc(28px + env(safe-area-inset-top)) calc(20px + env(safe-area-inset-right))
+           calc(40px + env(safe-area-inset-bottom)) calc(20px + env(safe-area-inset-left));
+  display: flex;
+  flex-direction: column;
+  gap: 22px;
+}
+
+/* -- masthead ------------------------------------------------------- */
+.masthead {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: flex-end;
+  justify-content: space-between;
+  gap: 12px;
+  padding-bottom: 14px;
+  border-bottom: 2px solid var(--ink);
+}
+.wordmark {
+  margin: 0;
+  font-family: var(--f-cond);
+  font-weight: 600;
+  font-size: clamp(26px, 6vw, 36px);
+  letter-spacing: -0.01em;
+  text-wrap: balance;
+}
+.tagline {
+  margin: 3px 0 0;
+  font-family: var(--f-cond);
+  font-size: 13px;
+  letter-spacing: .06em;
+  text-transform: uppercase;
+  color: var(--ink-3);
+}
+.pill {
+  display: inline-flex;
+  align-items: center;
+  gap: 7px;
+  padding: 5px 11px 5px 9px;
+  border: 1px solid var(--edge);
+  border-radius: 999px;
+  background: var(--panel);
+  font-family: var(--f-mono);
+  font-size: 12px;
+  letter-spacing: .04em;
+  text-transform: uppercase;
+  color: var(--ink-2);
+  white-space: nowrap;
+}
+.pill .dot { width: 8px; height: 8px; border-radius: 50%; background: var(--ink-3); flex: none; }
+.pill.is-live { color: var(--good); border-color: var(--good); }
+.pill.is-live .dot { background: var(--good); animation: pulse 1.8s ease-in-out infinite; }
+.pill.is-warn { color: var(--warn); border-color: var(--warn); }
+.pill.is-warn .dot { background: var(--warn); }
+.pill.is-crit { color: var(--crit); border-color: var(--crit); }
+.pill.is-crit .dot { background: var(--crit); }
+@keyframes pulse { 0%,100% { opacity: 1; } 50% { opacity: .28; } }
+@media (prefers-reduced-motion: reduce) { .pill.is-live .dot { animation: none; } }
+
+/* -- controls ------------------------------------------------------- */
+.controls { display: flex; flex-wrap: wrap; align-items: center; gap: 10px; }
+.btn {
+  appearance: none;
+  font-family: var(--f-cond);
+  font-size: 14px; font-weight: 600;
+  letter-spacing: .04em; text-transform: uppercase;
+  padding: 10px 16px; min-height: 44px;
+  border-radius: 3px; border: 1px solid var(--edge);
+  background: var(--panel); color: var(--ink);
+  cursor: pointer;
+  transition: background .12s ease, border-color .12s ease;
+}
+.btn:hover { border-color: var(--ink-3); }
+.btn:active { background: var(--panel-sunk); }
+.btn:focus-visible { outline: 2px solid var(--pen-a); outline-offset: 2px; }
+.btn-primary { background: var(--ink); border-color: var(--ink); color: var(--paper); min-width: 168px; }
+.btn-primary:hover { background: var(--ink-2); border-color: var(--ink-2); }
+.btn-quiet { background: transparent; color: var(--ink-2); }
+
+.field { display: inline-flex; align-items: center; gap: 8px; }
+.field-label {
+  font-family: var(--f-cond); font-size: 12px;
+  letter-spacing: .08em; text-transform: uppercase; color: var(--ink-3);
+}
+.field select {
+  appearance: none;
+  font-family: var(--f-mono); font-size: 13px;
+  padding: 10px 12px; min-height: 44px;
+  border: 1px solid var(--edge); border-radius: 3px;
+  background: var(--panel); color: var(--ink);
+}
+.field select:focus-visible { outline: 2px solid var(--pen-a); outline-offset: 2px; }
+
+/* -- readout panel -------------------------------------------------- */
+.readouts {
+  display: grid;
+  grid-template-columns: 1.5fr 1fr 1fr;
+  border: 1px solid var(--edge); border-radius: 4px;
+  background: var(--panel); box-shadow: var(--shadow);
+  overflow: hidden;
+}
+@media (max-width: 620px) {
+  .readouts { grid-template-columns: 1fr 1fr; }
+  .readout-lead { grid-column: 1 / -1; border-bottom: 1px solid var(--edge-soft); }
+}
+.readout {
+  padding: 16px 18px 15px;
+  border-left: 1px solid var(--edge-soft);
+  display: flex; flex-direction: column; gap: 2px; min-width: 0;
+}
+.readout:first-child { border-left: 0; }
+.readout-label {
+  font-family: var(--f-cond); font-size: 11px; font-weight: 600;
+  letter-spacing: .12em; text-transform: uppercase; color: var(--ink-3);
+}
+.readout-value {
+  font-family: var(--f-mono); font-weight: 500;
+  font-variant-numeric: tabular-nums;
+  font-size: 30px; line-height: 1.15; letter-spacing: -0.02em;
+  display: flex; align-items: baseline; gap: 5px;
+}
+.readout-lead .readout-value { font-size: clamp(38px, 10vw, 54px); color: var(--pen-a); }
+.readout-unit { font-size: 13px; font-weight: 400; letter-spacing: 0; color: var(--ink-3); }
+.readout-sub {
+  font-family: var(--f-mono); font-size: 11.5px;
+  color: var(--ink-3); font-variant-numeric: tabular-nums;
+}
+
+/* -- window averages ------------------------------------------------ */
+.windows {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  border: 1px solid var(--edge); border-radius: 4px;
+  background: var(--panel-sunk); overflow: hidden;
+}
+.win { padding: 12px 16px; border-left: 1px solid var(--edge-soft); min-width: 0; }
+.win:first-child { border-left: 0; }
+.win-label {
+  display: block;
+  font-family: var(--f-cond); font-size: 10.5px; font-weight: 600;
+  letter-spacing: .1em; text-transform: uppercase; color: var(--ink-3);
+}
+.win-value {
+  display: block;
+  font-family: var(--f-mono); font-size: 21px; font-weight: 500;
+  font-variant-numeric: tabular-nums; margin-top: 2px;
+}
+.win-unit { font-size: 11px; color: var(--ink-3); }
+.win-sub {
+  display: block;
+  font-family: var(--f-mono); font-size: 11px; color: var(--ink-3);
+  font-variant-numeric: tabular-nums;
+}
+
+/* -- chart ---------------------------------------------------------- */
+.chart-frame {
+  border: 1px solid var(--edge); border-radius: 4px;
+  background: var(--panel); box-shadow: var(--shadow); overflow: hidden;
+}
+.chart-head {
+  display: flex; flex-wrap: wrap; align-items: center;
+  justify-content: space-between; gap: 10px;
+  padding: 10px 14px; border-bottom: 1px solid var(--edge-soft);
+}
+.pens { display: flex; gap: 14px; }
+.pen {
+  display: inline-flex; align-items: center; gap: 6px;
+  font-family: var(--f-mono); font-size: 11.5px; color: var(--ink-2);
+}
+.pen-swatch { width: 16px; height: 3px; border-radius: 2px; flex: none; }
+.pen-a .pen-swatch { background: var(--pen-a); }
+.pen-b .pen-swatch { background: var(--pen-b); }
+
+.segmented {
+  display: inline-flex;
+  border: 1px solid var(--edge); border-radius: 3px; overflow: hidden;
+}
+.seg {
+  appearance: none;
+  font-family: var(--f-mono); font-size: 12px;
+  padding: 8px 13px; min-height: 38px;
+  border: 0; border-left: 1px solid var(--edge);
+  background: var(--panel); color: var(--ink-2);
+  cursor: pointer;
+  transition: background .12s ease, color .12s ease;
+}
+.seg:first-child { border-left: 0; }
+.seg:hover { background: var(--panel-sunk); }
+.seg:focus-visible { outline: 2px solid var(--pen-a); outline-offset: -2px; }
+.seg[aria-pressed="true"] { background: var(--ink); color: var(--paper); }
+#chart { display: block; width: 100%; height: 300px; }
+@media (max-width: 620px) { #chart { height: 250px; } }
+
+/* -- variables table ------------------------------------------------ */
+.vars {
+  border: 1px solid var(--edge); border-radius: 4px;
+  background: var(--panel); box-shadow: var(--shadow); overflow: hidden;
+}
+.vars-head {
+  padding: 12px 16px; border-bottom: 1px solid var(--edge-soft);
+  font-family: var(--f-cond); font-size: 12px; font-weight: 600;
+  letter-spacing: .12em; text-transform: uppercase; color: var(--ink-3);
+}
+.vgroup {
+  font-family: var(--f-cond); font-size: 11px; font-weight: 600;
+  letter-spacing: .12em; text-transform: uppercase; color: var(--ink-2);
+  padding: 13px 16px 7px;
+  background: var(--panel-sunk);
+  border-top: 1px solid var(--edge-soft);
+}
+.vrow {
+  display: grid;
+  grid-template-columns: 1fr auto;
+  align-items: baseline;
+  gap: 10px 16px;
+  padding: 9px 16px;
+  border-top: 1px solid var(--edge-soft);
+}
+.vrow:first-of-type { border-top: 0; }
+.vname { font-size: 14px; color: var(--ink); }
+.vdesc { display: block; font-size: 12.5px; color: var(--ink-3); line-height: 1.4; }
+.vval {
+  font-family: var(--f-mono); font-size: 14px;
+  font-variant-numeric: tabular-nums;
+  white-space: nowrap; text-align: right; color: var(--ink);
+}
+.vval.is-muted { color: var(--ink-3); }
+
+/* -- notes ---------------------------------------------------------- */
+.note { border: 1px solid var(--edge); border-radius: 4px; background: transparent; padding: 0 16px; }
+.note > summary {
+  list-style: none; cursor: pointer; padding: 13px 0;
+  font-family: var(--f-cond); font-size: 12px; font-weight: 600;
+  letter-spacing: .1em; text-transform: uppercase; color: var(--ink-2);
+  display: flex; align-items: center; gap: 8px;
+}
+.note > summary::-webkit-details-marker { display: none; }
+.note > summary::before { content: "+"; font-family: var(--f-mono); font-size: 15px; color: var(--ink-3); }
+.note[open] > summary::before { content: "\2212"; }
+.note > summary:focus-visible { outline: 2px solid var(--pen-a); outline-offset: 2px; }
+.note-body { padding: 0 0 16px; font-size: 14px; color: var(--ink-2); max-width: 66ch; }
+.note-body p { margin: 0 0 10px; }
+.note-body p:last-child { margin-bottom: 0; }
+.note-body ol, .note-body ul { margin: 0 0 10px; padding-left: 20px; }
+.note-body li { margin-bottom: 5px; }
+.note-body strong { color: var(--ink); font-weight: 600; }
+
+.colophon {
+  font-family: var(--f-mono); font-size: 11.5px; color: var(--ink-3);
+  border-top: 1px solid var(--edge-soft); padding-top: 14px;
+}
+</style>
+
+<div class="sheet">
+
+  <header class="masthead">
+    <div>
+      <h1 class="wordmark">Wi-Fi Strip Chart</h1>
+      <p class="tagline">Continuous throughput &amp; latency recorder</p>
+    </div>
+    <span class="pill" id="pill" role="status" aria-live="polite">
+      <span class="dot"></span><span id="pillText">Idle</span>
+    </span>
+  </header>
+
+  <section class="controls" aria-label="Recorder controls">
+    <button class="btn btn-primary" id="toggle" type="button">Start recording</button>
+    <label class="field">
+      <span class="field-label">Sample every</span>
+      <select id="interval">
+        <option value="1000" selected>1 s</option>
+        <option value="2000">2 s</option>
+        <option value="5000">5 s</option>
+        <option value="15000">15 s</option>
+      </select>
+    </label>
+    <button class="btn" id="export" type="button" hidden>Export log</button>
+    <button class="btn btn-quiet" id="clear" type="button">Clear</button>
+  </section>
+
+  <section class="readouts" aria-label="Live readings">
+    <div class="readout readout-lead">
+      <span class="readout-label">Throughput</span>
+      <span class="readout-value"><span id="dlValue">&mdash;</span><span class="readout-unit">Mbps</span></span>
+      <span class="readout-sub" id="dlSub">not started</span>
+    </div>
+    <div class="readout">
+      <span class="readout-label">Latency</span>
+      <span class="readout-value"><span id="ltValue">&mdash;</span><span class="readout-unit">ms</span></span>
+      <span class="readout-sub" id="ltSub">time to first byte</span>
+    </div>
+    <div class="readout">
+      <span class="readout-label">Jitter</span>
+      <span class="readout-value"><span id="jtValue">&mdash;</span><span class="readout-unit">ms</span></span>
+      <span class="readout-sub" id="jtSub">latency variation</span>
+    </div>
+  </section>
+
+  <section class="windows" aria-label="Average speed by time window">
+    <div class="win">
+      <span class="win-label">Last 10 s</span>
+      <span class="win-value"><span id="w10">&mdash;</span> <span class="win-unit">Mbps</span></span>
+      <span class="win-sub" id="w10sub">0 samples</span>
+    </div>
+    <div class="win">
+      <span class="win-label">Last 30 s</span>
+      <span class="win-value"><span id="w30">&mdash;</span> <span class="win-unit">Mbps</span></span>
+      <span class="win-sub" id="w30sub">0 samples</span>
+    </div>
+    <div class="win">
+      <span class="win-label">Last 60 s</span>
+      <span class="win-value"><span id="w60">&mdash;</span> <span class="win-unit">Mbps</span></span>
+      <span class="win-sub" id="w60sub">0 samples</span>
+    </div>
+  </section>
+
+  <section class="chart-frame" aria-label="Speed chart">
+    <div class="chart-head">
+      <div class="segmented" role="group" aria-label="Chart time window">
+        <button class="seg" type="button" data-win="10000" aria-pressed="false">10 s</button>
+        <button class="seg" type="button" data-win="30000" aria-pressed="true">30 s</button>
+        <button class="seg" type="button" data-win="60000" aria-pressed="false">60 s</button>
+        <button class="seg" type="button" data-win="0" aria-pressed="false">Full</button>
+      </div>
+      <div class="pens">
+        <span class="pen pen-a"><span class="pen-swatch"></span>Speed</span>
+        <span class="pen pen-b"><span class="pen-swatch"></span>Latency</span>
+      </div>
+    </div>
+    <canvas id="chart" role="img" aria-label="Line graph of Wi-Fi speed and latency over the selected time window"></canvas>
+  </section>
+
+  <section class="vars" aria-label="All measured variables">
+    <div class="vars-head">All variables</div>
+
+    <div class="vgroup">Speed</div>
+    <div class="vrow"><span><span class="vname">Current throughput</span><span class="vdesc">Most recent burst measurement.</span></span><span class="vval" id="vNow">&mdash;</span></div>
+    <div class="vrow"><span><span class="vname">Peak</span><span class="vdesc">Fastest sample this session.</span></span><span class="vval" id="vPeak">&mdash;</span></div>
+    <div class="vrow"><span><span class="vname">Floor</span><span class="vdesc">Slowest successful sample.</span></span><span class="vval" id="vFloor">&mdash;</span></div>
+    <div class="vrow"><span><span class="vname">Median</span><span class="vdesc">Typical speed, ignoring outliers.</span></span><span class="vval" id="vMedian">&mdash;</span></div>
+    <div class="vrow"><span><span class="vname">Standard deviation</span><span class="vdesc">How much throughput swings around the mean.</span></span><span class="vval" id="vStdev">&mdash;</span></div>
+
+    <div class="vgroup">Latency</div>
+    <div class="vrow"><span><span class="vname">Time to first byte</span><span class="vdesc">Request sent &rarr; first byte back. The true round trip.</span></span><span class="vval" id="vTtfb">&mdash;</span></div>
+    <div class="vrow"><span><span class="vname">Median latency</span><span class="vdesc">Half of round trips are faster than this.</span></span><span class="vval" id="vLatMed">&mdash;</span></div>
+    <div class="vrow"><span><span class="vname">Best / worst</span><span class="vdesc">Fastest and slowest round trip recorded.</span></span><span class="vval" id="vLatRange">&mdash;</span></div>
+    <div class="vrow"><span><span class="vname">Jitter</span><span class="vdesc">Mean change between consecutive round trips. This is what breaks calls.</span></span><span class="vval" id="vJitter">&mdash;</span></div>
+    <div class="vrow"><span><span class="vname">Probe loss</span><span class="vdesc">Share of requests that failed outright.</span></span><span class="vval" id="vLoss">&mdash;</span></div>
+
+    <div class="vgroup">Connection</div>
+    <div class="vrow"><span><span class="vname">DNS lookup</span><span class="vdesc">Name resolution. 0 once the answer is cached.</span></span><span class="vval" id="vDns">&mdash;</span></div>
+    <div class="vrow"><span><span class="vname">TCP connect</span><span class="vdesc">Handshake to open the socket. 0 when the connection is reused.</span></span><span class="vval" id="vTcp">&mdash;</span></div>
+    <div class="vrow"><span><span class="vname">TLS handshake</span><span class="vdesc">Encryption setup. 0 when the connection is reused.</span></span><span class="vval" id="vTls">&mdash;</span></div>
+    <div class="vrow"><span><span class="vname">Transfer time</span><span class="vdesc">First byte &rarr; last byte of the body.</span></span><span class="vval" id="vTransfer">&mdash;</span></div>
+    <div class="vrow"><span><span class="vname">Total request</span><span class="vdesc">Everything above, start to finish.</span></span><span class="vval" id="vTotal">&mdash;</span></div>
+    <div class="vrow"><span><span class="vname">Protocol</span><span class="vdesc">HTTP version negotiated with the server.</span></span><span class="vval" id="vProto">&mdash;</span></div>
+    <div class="vrow"><span><span class="vname">Connection reuse</span><span class="vdesc">Whether the socket was already open.</span></span><span class="vval" id="vReuse">&mdash;</span></div>
+    <div class="vrow"><span><span class="vname">Payload per probe</span><span class="vdesc">Bytes over the wire, compression included.</span></span><span class="vval" id="vProbeSize">&mdash;</span></div>
+    <div class="vrow"><span><span class="vname">Compression</span><span class="vdesc">Uncompressed size divided by bytes actually sent.</span></span><span class="vval" id="vCompress">&mdash;</span></div>
+    <div class="vrow"><span><span class="vname">Parallel streams</span><span class="vdesc">Simultaneous downloads used per speed measurement.</span></span><span class="vval" id="vStreams">&mdash;</span></div>
+    <div class="vrow"><span><span class="vname">Network status</span><span class="vdesc">Whether the device reports itself online.</span></span><span class="vval" id="vOnline">&mdash;</span></div>
+
+    <div class="vgroup">Reported by the browser</div>
+    <div class="vrow"><span><span class="vname">Effective type</span><span class="vdesc">The browser's own connection class, e.g. 4g.</span></span><span class="vval is-muted" id="vEffType">&mdash;</span></div>
+    <div class="vrow"><span><span class="vname">Estimated downlink</span><span class="vdesc">The browser's own bandwidth estimate.</span></span><span class="vval is-muted" id="vDownlink">&mdash;</span></div>
+    <div class="vrow"><span><span class="vname">Estimated round trip</span><span class="vdesc">The browser's own latency estimate.</span></span><span class="vval is-muted" id="vRtt">&mdash;</span></div>
+    <div class="vrow"><span><span class="vname">Data saver</span><span class="vdesc">Whether reduced-data mode is switched on.</span></span><span class="vval is-muted" id="vSaveData">&mdash;</span></div>
+
+    <div class="vgroup">Session</div>
+    <div class="vrow"><span><span class="vname">Samples recorded</span><span class="vdesc">Points held in the chart buffer.</span></span><span class="vval" id="vSamples">0</span></div>
+    <div class="vrow"><span><span class="vname">Dropped probes</span><span class="vdesc">Failed requests, including off-screen gaps.</span></span><span class="vval" id="vDropped">0</span></div>
+    <div class="vrow"><span><span class="vname">Recording time</span><span class="vdesc">Time actually spent measuring.</span></span><span class="vval" id="vElapsed">0:00</span></div>
+    <div class="vrow"><span><span class="vname">Data used</span><span class="vdesc">Total bytes this app has pulled to measure.</span></span><span class="vval" id="vData">0 B</span></div>
+    <div class="vrow"><span><span class="vname">Data rate</span><span class="vdesc">How much of your connection this app itself consumes.</span></span><span class="vval" id="vBurn">&mdash;</span></div>
+  </section>
+
+  <details class="note" open>
+    <summary>What this actually measures</summary>
+    <div class="note-body">
+      <p>This page is sandboxed and cannot reach any outside server, so it cannot run a
+      conventional speed test against a distant test node. Instead it repeatedly re-downloads
+      <strong>itself</strong> from the server it was loaded from, and times the transfer.</p>
+      <ul>
+        <li><strong>Latency</strong> and <strong>jitter</strong> are accurate. They are real round
+        trips across your Wi-Fi, your router, and out to the host.</li>
+        <li><strong>Throughput</strong> opens several parallel downloads and divides total bytes by
+        the transfer window.</li>
+      </ul>
+      <p>Read throughput as a <strong>floor, not a ceiling</strong>. The probe payload is small
+      (see <em>Payload per probe</em>), so on a fast link the transfer finishes before TCP reaches
+      full speed &mdash; a 400&nbsp;Mbps connection can read far lower. It is reliable for what this
+      app is for: watching <em>change</em> over time, and finding where in your home the connection
+      degrades. For an absolute number, use a dedicated speed test.</p>
+      <p>Sampling every second costs bandwidth of its own; <em>Data rate</em> shows exactly how
+      much. Slow the interval down if you plan to leave it running.</p>
+    </div>
+  </details>
+
+  <details class="note">
+    <summary>Keep it on your iPad</summary>
+    <div class="note-body">
+      <ol>
+        <li>Open this page in <strong>Safari</strong>.</li>
+        <li>Tap the <strong>Share</strong> button in the toolbar.</li>
+        <li>Choose <strong>Add to Home Screen</strong>.</li>
+      </ol>
+      <p>It gets its own icon and opens straight to the recorder. Chart history is saved on the
+      device, so it is still there when you come back.</p>
+      <p>One limit worth knowing: iPadOS suspends web pages that are not on screen, so recording
+      pauses when you switch apps or lock the screen, and resumes when you return. A gap in the
+      chart marks where that happened. Nothing measures continuously in the background without a
+      native app.</p>
+    </div>
+  </details>
+
+  <footer class="colophon">Readings stay on this device. Nothing is uploaded.</footer>
+</div>
+
+<script>
+(function () {
+  "use strict";
+
+  /* -- configuration ------------------------------------------------ */
+  var MAX_POINTS = 900;   // ~15 min at 1 s
+  var STORE_CAP  = 600;
+  var BURST      = 4;     // parallel connections per speed measurement
+  var STORE_KEY  = "wifi-strip-chart.v2";
+
+  var $ = function (id) { return document.getElementById(id); };
+  var elPill = $("pill"), elPillText = $("pillText");
+  var elToggle = $("toggle"), elInterval = $("interval");
+  var elExport = $("export"), elClear = $("clear");
+  var canvas = $("chart"), ctx = canvas.getContext("2d");
+
+  /* -- state -------------------------------------------------------- */
+  var samples = [];      // {t, mbps|null, ms|null, ok}
+  var last = null;       // richest detail from the most recent solo probe
+  var running = false, inFlight = false;
+  var timer = null, rafId = null;
+  var strategy = null;   // "query" | "plain" | "blocked"
+  var totals = { bytes: 0, fails: 0, probes: 0, recordedMs: 0 };
+  var runStartedAt = 0;
+  var chartWindow = 30000;   // ms; 0 = full session
+
+  /* -- persistence -------------------------------------------------- */
+  function save() {
+    try {
+      localStorage.setItem(STORE_KEY, JSON.stringify({
+        samples: samples.slice(-STORE_CAP), totals: totals, last: last
+      }));
+    } catch (e) { /* private mode or quota - recording still works */ }
+  }
+  function load() {
+    try {
+      var d = JSON.parse(localStorage.getItem(STORE_KEY) || "null");
+      if (!d) return;
+      if (Array.isArray(d.samples)) samples = d.samples.slice(-MAX_POINTS);
+      if (d.totals) totals = d.totals;
+      if (d.last) last = d.last;
+    } catch (e) { /* corrupt or unavailable - start fresh */ }
+  }
+
+  /* -- formatting --------------------------------------------------- */
+  function fmtRate(v) {
+    if (v == null || !isFinite(v)) return "\u2014";
+    return v >= 100 ? v.toFixed(0) : v >= 10 ? v.toFixed(1) : v.toFixed(2);
+  }
+  function fmtMs(v) {
+    if (v == null || !isFinite(v)) return "\u2014";
+    return v >= 100 ? v.toFixed(0) : v >= 10 ? v.toFixed(1) : v.toFixed(2);
+  }
+  function fmtBytes(b) {
+    if (b == null) return "\u2014";
+    if (b >= 1048576) return (b / 1048576).toFixed(1) + " MB";
+    if (b >= 1024) return Math.round(b / 1024) + " KB";
+    return Math.round(b) + " B";
+  }
+  function fmtClock(ms) {
+    var s = Math.floor(ms / 1000);
+    var h = Math.floor(s / 3600), m = Math.floor((s % 3600) / 60), r = s % 60;
+    return (h > 0 ? h + ":" + (m < 10 ? "0" : "") : "") + m + ":" + (r < 10 ? "0" : "") + r;
+  }
+
+  /* -- probing ------------------------------------------------------ */
+  var baseUrl = location.href.split("#")[0];
+  var seq = 0;
+
+  function probeUrl() {
+    if (strategy === "plain") return baseUrl;
+    var sep = baseUrl.indexOf("?") === -1 ? "?" : "&";
+    return baseUrl + sep + "_sc=" + Date.now().toString(36) + (seq++).toString(36);
+  }
+
+  // One timed same-origin request. Resource Timing supplies the phase
+  // breakdown (DNS / TCP / TLS / TTFB / transfer); wall clock is the fallback.
+  function timedFetch(url) {
+    var t0 = performance.now();
+    return fetch(url, { cache: "no-store", credentials: "omit" })
+      .then(function (res) {
+        if (!res.ok) throw new Error("http " + res.status);
+        return res.arrayBuffer();
+      })
+      .then(function (buf) {
+        var wall = performance.now() - t0;
+        return new Promise(function (resolve) {
+          setTimeout(function () {
+            var abs = new URL(url, location.href).href;
+            var list = performance.getEntriesByName(abs);
+            var e = list.length ? list[list.length - 1] : null;
+            var out = {
+              ok: true, wall: wall, bytes: buf.byteLength,
+              ttfb: wall, transfer: null, total: wall,
+              dns: null, tcp: null, tls: null,
+              start: null, end: null,
+              proto: null, reused: null,
+              encoded: null, decoded: buf.byteLength, cached: false
+            };
+            if (e) {
+              if (e.responseStart > 0 && e.requestStart > 0) {
+                out.ttfb = e.responseStart - e.requestStart;
+                out.transfer = e.responseEnd - e.responseStart;
+                out.start = e.responseStart;
+                out.end = e.responseEnd;
+              }
+              if (e.duration > 0) out.total = e.duration;
+              if (e.domainLookupEnd >= e.domainLookupStart) out.dns = e.domainLookupEnd - e.domainLookupStart;
+              if (e.connectEnd >= e.connectStart) out.tcp = e.connectEnd - e.connectStart;
+              if (e.secureConnectionStart > 0) out.tls = e.connectEnd - e.secureConnectionStart;
+              if (e.transferSize > 0) out.bytes = e.transferSize;
+              else if (e.encodedBodySize > 0) out.bytes = e.encodedBodySize;
+              if (e.encodedBodySize > 0) out.encoded = e.encodedBodySize;
+              if (e.decodedBodySize > 0) out.decoded = e.decodedBodySize;
+              out.proto = e.nextHopProtocol || null;
+              out.reused = (e.connectEnd === e.connectStart);
+              out.cached = (e.transferSize === 0 && e.duration < 3);
+            }
+            resolve(out);
+          }, 0);
+        });
+      })
+      .catch(function () { return { ok: false }; });
+  }
+
+  // Decide once how we can reach the origin: cache-busted, plain, or not at all.
+  function resolveStrategy() {
+    strategy = "query";
+    return timedFetch(probeUrl()).then(function (r) {
+      if (r.ok && !r.cached) return "query";
+      strategy = "plain";
+      return timedFetch(probeUrl()).then(function (r2) {
+        strategy = r2.ok ? "plain" : "blocked";
+        return strategy;
+      });
+    });
+  }
+
+  /* -- one measurement cycle ---------------------------------------- */
+  function cycle() {
+    if (inFlight || !running) return Promise.resolve();
+    inFlight = true;
+    if (performance.clearResourceTimings) performance.clearResourceTimings();
+
+    return timedFetch(probeUrl()).then(function (solo) {
+      totals.probes++;
+      if (!solo.ok) return null;
+      last = solo;
+
+      var jobs = [];
+      for (var i = 0; i < BURST; i++) jobs.push(timedFetch(probeUrl()));
+      return Promise.all(jobs).then(function (rs) {
+        totals.probes += rs.length;
+        var good = rs.filter(function (r) { return r.ok && r.bytes > 0; });
+        totals.fails += rs.length - good.length;
+        if (!good.length) return { ms: solo.ttfb, mbps: null, bytes: solo.bytes };
+
+        var bytes = 0, first = Infinity, lastEnd = -Infinity, wallMax = 0;
+        good.forEach(function (r) {
+          bytes += r.bytes;
+          wallMax = Math.max(wallMax, r.wall);
+          if (r.start != null && r.end != null && r.end > r.start) {
+            first = Math.min(first, r.start);
+            lastEnd = Math.max(lastEnd, r.end);
+          }
+        });
+        var windowMs = (first < lastEnd) ? (lastEnd - first) : wallMax;
+        var mbps = windowMs > 0.5 ? (bytes * 8) / (windowMs / 1000) / 1e6 : null;
+        return { ms: solo.ttfb, mbps: mbps, bytes: bytes + solo.bytes };
+      });
+    }).then(function (result) {
+      if (!running) return;
+      if (result) {
+        totals.bytes += result.bytes;
+        push({ t: Date.now(), mbps: result.mbps, ms: result.ms, ok: true });
+      } else {
+        totals.fails++;
+        push({ t: Date.now(), mbps: null, ms: null, ok: false });
+      }
+      render();
+      save();
+    }).catch(function () {
+      totals.fails++;
+      push({ t: Date.now(), mbps: null, ms: null, ok: false });
+      render();
+    }).then(function () { inFlight = false; });
+  }
+
+  function push(s) {
+    samples.push(s);
+    if (samples.length > MAX_POINTS) samples.splice(0, samples.length - MAX_POINTS);
+  }
+
+  /* -- statistics --------------------------------------------------- */
+  function within(ms) {
+    if (!ms) return samples;
+    var cut = Date.now() - ms;
+    return samples.filter(function (s) { return s.t >= cut; });
+  }
+  function rates(list)   { return (list || samples).filter(function (s) { return s.ok && s.mbps != null; }).map(function (s) { return s.mbps; }); }
+  function latency(list) { return (list || samples).filter(function (s) { return s.ok && s.ms != null; }).map(function (s) { return s.ms; }); }
+
+  function mean(a) { return a.length ? a.reduce(function (x, y) { return x + y; }, 0) / a.length : null; }
+  function median(a) {
+    if (!a.length) return null;
+    var b = a.slice().sort(function (x, y) { return x - y; });
+    var m = Math.floor(b.length / 2);
+    return b.length % 2 ? b[m] : (b[m - 1] + b[m]) / 2;
+  }
+  function stdev(a) {
+    if (a.length < 2) return null;
+    var m = mean(a);
+    return Math.sqrt(a.reduce(function (s, v) { return s + (v - m) * (v - m); }, 0) / (a.length - 1));
+  }
+  // Mean absolute difference between consecutive round trips.
+  function jitter(a) {
+    if (a.length < 2) return null;
+    var w = a.slice(-30), sum = 0;
+    for (var i = 1; i < w.length; i++) sum += Math.abs(w[i] - w[i - 1]);
+    return sum / (w.length - 1);
+  }
+
+  /* -- rendering ---------------------------------------------------- */
+  function setPill(cls, text) {
+    elPill.className = "pill" + (cls ? " " + cls : "");
+    elPillText.textContent = text;
+  }
+  function setVal(id, text, muted) {
+    var el = $(id);
+    el.textContent = text;
+    el.classList.toggle("is-muted", !!muted || text === "\u2014");
+  }
+  function ms(v) { return v == null ? "\u2014" : fmtMs(v) + " ms"; }
+
+  function elapsedMs() { return totals.recordedMs + (running ? Date.now() - runStartedAt : 0); }
+
+  function renderWindow(id, subId, ms_) {
+    var list = within(ms_), r = rates(list);
+    var avg = mean(r);
+    $(id).textContent = fmtRate(avg);
+    var drops = list.filter(function (s) { return !s.ok; }).length;
+    $(subId).textContent = r.length
+      ? r.length + " sample" + (r.length === 1 ? "" : "s") + (drops ? " \u00b7 " + drops + " dropped" : "")
+      : (list.length ? list.length + " logged, none timed" : "0 samples");
+  }
+
+  function render() {
+    var all = samples;
+    var r = rates(all), l = latency(all);
+    var newest = all.length ? all[all.length - 1] : null;
+
+    $("dlValue").textContent = newest && newest.mbps != null ? fmtRate(newest.mbps) : "\u2014";
+    $("ltValue").textContent = newest && newest.ms != null ? fmtMs(newest.ms) : "\u2014";
+    var j = jitter(l);
+    $("jtValue").textContent = j != null ? fmtMs(j) : "\u2014";
+
+    if (!all.length) $("dlSub").textContent = running ? "measuring\u2026" : "not started";
+    else if (newest && !newest.ok) $("dlSub").textContent = "probe failed";
+    else {
+      var med = median(r);
+      $("dlSub").textContent = med != null ? "median " + fmtRate(med) + " Mbps" : "transfer too fast to time";
+    }
+    $("ltSub").textContent = l.length ? "median " + fmtMs(median(l)) + " ms" : "time to first byte";
+    $("jtSub").textContent = j == null ? "latency variation" : (j < 10 ? "steady" : j < 30 ? "some variation" : "unstable");
+
+    renderWindow("w10", "w10sub", 10000);
+    renderWindow("w30", "w30sub", 30000);
+    renderWindow("w60", "w60sub", 60000);
+
+    /* variables - speed */
+    setVal("vNow", newest && newest.mbps != null ? fmtRate(newest.mbps) + " Mbps" : "\u2014");
+    setVal("vPeak", r.length ? fmtRate(Math.max.apply(null, r)) + " Mbps" : "\u2014");
+    setVal("vFloor", r.length ? fmtRate(Math.min.apply(null, r)) + " Mbps" : "\u2014");
+    setVal("vMedian", r.length ? fmtRate(median(r)) + " Mbps" : "\u2014");
+    setVal("vStdev", stdev(r) != null ? "\u00b1 " + fmtRate(stdev(r)) + " Mbps" : "\u2014");
+
+    /* variables - latency */
+    setVal("vTtfb", newest && newest.ms != null ? ms(newest.ms) : "\u2014");
+    setVal("vLatMed", l.length ? ms(median(l)) : "\u2014");
+    setVal("vLatRange", l.length ? fmtMs(Math.min.apply(null, l)) + " / " + fmtMs(Math.max.apply(null, l)) + " ms" : "\u2014");
+    setVal("vJitter", ms(j));
+    setVal("vLoss", totals.probes ? (totals.fails / totals.probes * 100).toFixed(1) + " %" : "\u2014");
+
+    /* variables - connection */
+    setVal("vDns", last ? ms(last.dns) : "\u2014");
+    setVal("vTcp", last ? ms(last.tcp) : "\u2014");
+    setVal("vTls", last ? (last.tls == null ? "not reported" : ms(last.tls)) : "\u2014", last && last.tls == null);
+    setVal("vTransfer", last ? ms(last.transfer) : "\u2014");
+    setVal("vTotal", last ? ms(last.total) : "\u2014");
+    setVal("vProto", last && last.proto ? last.proto : "\u2014", !(last && last.proto));
+    setVal("vReuse", last && last.reused != null ? (last.reused ? "reused" : "new socket") : "\u2014");
+    setVal("vProbeSize", last ? fmtBytes(last.bytes) : "\u2014");
+    setVal("vCompress", last && last.encoded && last.decoded
+      ? (last.decoded / last.encoded).toFixed(2) + "\u00d7 (" + fmtBytes(last.decoded) + " \u2192 " + fmtBytes(last.encoded) + ")"
+      : "\u2014");
+    setVal("vStreams", BURST + " + 1");
+    setVal("vOnline", navigator.onLine === false ? "offline" : "online");
+
+    /* variables - browser reported (absent in Safari) */
+    var c = navigator.connection || navigator.mozConnection || navigator.webkitConnection;
+    var NR = "not reported";
+    setVal("vEffType", c && c.effectiveType ? c.effectiveType : NR, !(c && c.effectiveType));
+    setVal("vDownlink", c && typeof c.downlink === "number" ? c.downlink + " Mbps" : NR, !(c && typeof c.downlink === "number"));
+    setVal("vRtt", c && typeof c.rtt === "number" ? c.rtt + " ms" : NR, !(c && typeof c.rtt === "number"));
+    setVal("vSaveData", c && typeof c.saveData === "boolean" ? (c.saveData ? "on" : "off") : NR, !(c && typeof c.saveData === "boolean"));
+
+    /* variables - session */
+    var el = elapsedMs();
+    setVal("vSamples", String(all.length));
+    setVal("vDropped", String(totals.fails));
+    setVal("vElapsed", fmtClock(el));
+    setVal("vData", fmtBytes(totals.bytes));
+    setVal("vBurn", el > 1000 ? fmtBytes(totals.bytes / (el / 1000)) + "/s" : "\u2014");
+
+    draw();
+  }
+
+  /* -- chart -------------------------------------------------------- */
+  function cssVar(n) { return getComputedStyle(document.documentElement).getPropertyValue(n).trim(); }
+  // Gradations read as instrument marks: 0, 250, 500 - but 12.5 stays 12.5.
+  function fmtAxis(v) {
+    if (v >= 100) return v.toFixed(0);
+    return Math.abs(v - Math.round(v)) < 0.05 ? String(Math.round(v)) : v.toFixed(1);
+  }
+  function niceMax(v, floor) {
+    v = Math.max(v, floor);
+    var exp = Math.floor(Math.log10(v)), base = Math.pow(10, exp), n = v / base;
+    var step = n <= 1 ? 1 : n <= 2 ? 2 : n <= 2.5 ? 2.5 : n <= 5 ? 5 : 10;
+    return step * base;
+  }
+
+  function draw() {
+    var W = canvas.clientWidth, H = canvas.clientHeight;
+    if (!W || !H) return;
+    var dpr = Math.min(window.devicePixelRatio || 1, 2);
+    if (canvas.width !== Math.round(W * dpr) || canvas.height !== Math.round(H * dpr)) {
+      canvas.width = Math.round(W * dpr);
+      canvas.height = Math.round(H * dpr);
+    }
+    ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
+    ctx.clearRect(0, 0, W, H);
+
+    var C = {
+      panel: cssVar("--panel"), faint: cssVar("--rule-faint"), rule: cssVar("--rule"),
+      a: cssVar("--pen-a"), b: cssVar("--pen-b"), ink3: cssVar("--ink-3"), crit: cssVar("--crit")
+    };
+    ctx.fillStyle = C.panel;
+    ctx.fillRect(0, 0, W, H);
+
+    var PAD = { l: 48, r: 14, t: 24, b: 24 };
+    var innerH = H - PAD.t - PAD.b, gap = 26;
+    var hA = Math.round((innerH - gap) * 0.64), hB = innerH - gap - hA;
+    var aTop = PAD.t, aBot = aTop + hA, bTop = aBot + gap, bBot = bTop + hB;
+    var plotL = PAD.l, plotR = W - PAD.r, plotW = plotR - plotL;
+
+    // time span for this view
+    var now = Date.now();
+    var span = chartWindow;
+    if (!span) span = Math.max(10000, samples.length ? now - samples[0].t : 10000);
+    var visible = samples.filter(function (s) { return s.t >= now - span; });
+
+    // graph paper
+    ctx.strokeStyle = C.faint;
+    ctx.lineWidth = 1;
+    ctx.beginPath();
+    for (var gx = plotL; gx <= plotR; gx += 13) { ctx.moveTo(Math.round(gx) + 0.5, aTop); ctx.lineTo(Math.round(gx) + 0.5, bBot); }
+    for (var gy = aTop; gy <= bBot; gy += 13) { ctx.moveTo(plotL, Math.round(gy) + 0.5); ctx.lineTo(plotR, Math.round(gy) + 0.5); }
+    ctx.stroke();
+
+    var vr = rates(visible), vl = latency(visible);
+    var maxA = niceMax(vr.length ? Math.max.apply(null, vr) : 0, 5);
+    var maxB = niceMax(vl.length ? Math.max.apply(null, vl) : 0, 25);
+
+    function lane(top, bot, max, unit) {
+      ctx.strokeStyle = C.rule;
+      ctx.lineWidth = 1;
+      ctx.beginPath();
+      for (var d = 0; d <= 2; d++) {
+        var y = Math.round(top + (bot - top) * (d / 2)) + 0.5;
+        ctx.moveTo(plotL, y); ctx.lineTo(plotR, y);
+      }
+      ctx.stroke();
+      ctx.fillStyle = C.ink3;
+      ctx.font = '500 10px "IBM Plex Mono", ui-monospace, monospace';
+      ctx.textAlign = "right"; ctx.textBaseline = "middle";
+      for (var k = 0; k <= 2; k++) {
+        var v = max * (1 - k / 2);
+        ctx.fillText(fmtAxis(v), plotL - 7, top + (bot - top) * (k / 2));
+      }
+      ctx.textBaseline = "alphabetic";
+      ctx.fillText(unit, plotL - 7, top - 8);
+    }
+    lane(aTop, aBot, maxA, "Mbps");
+    lane(bTop, bBot, maxB, "ms");
+
+    // time gridlines + labels
+    ctx.strokeStyle = C.rule;
+    ctx.lineWidth = 1;
+    ctx.beginPath();
+    ctx.fillStyle = C.ink3;
+    ctx.font = '400 10px "IBM Plex Mono", ui-monospace, monospace';
+    ctx.textBaseline = "top";
+    for (var q = 0; q <= 4; q++) {
+      var xg = plotL + plotW * (q / 4);
+      ctx.moveTo(Math.round(xg) + 0.5, aTop); ctx.lineTo(Math.round(xg) + 0.5, bBot);
+      var agoMs = span * (1 - q / 4);
+      var label = q === 4 ? "now" : (span > 90000 ? "-" + fmtClock(agoMs) : "-" + Math.round(agoMs / 1000) + "s");
+      ctx.textAlign = q === 0 ? "left" : q === 4 ? "right" : "center";
+      ctx.fillText(label, xg, bBot + 7);
+    }
+    ctx.stroke();
+
+    if (!visible.length) {
+      ctx.fillStyle = C.ink3;
+      ctx.font = '400 12px "IBM Plex Mono", ui-monospace, monospace';
+      ctx.textAlign = "center"; ctx.textBaseline = "middle";
+      ctx.fillText(samples.length ? "no samples in this window" : "no record yet \u2014 press Start recording",
+                   (plotL + plotR) / 2, (aTop + aBot) / 2);
+      return;
+    }
+
+    function xAt(t) { return plotR - ((now - t) / span) * plotW; }
+
+    // trace, broken wherever probes failed
+    function trace(get, max, top, bot, color, fill) {
+      var segs = [], cur = [];
+      visible.forEach(function (s) {
+        var v = get(s);
+        if (v == null) { if (cur.length) { segs.push(cur); cur = []; } return; }
+        cur.push({ x: xAt(s.t), y: bot - Math.min(v / max, 1) * (bot - top) });
+      });
+      if (cur.length) segs.push(cur);
+
+      if (fill) {
+        ctx.fillStyle = color; ctx.globalAlpha = 0.10;
+        segs.forEach(function (sg) {
+          if (sg.length < 2) return;
+          ctx.beginPath();
+          ctx.moveTo(sg[0].x, bot);
+          sg.forEach(function (p) { ctx.lineTo(p.x, p.y); });
+          ctx.lineTo(sg[sg.length - 1].x, bot);
+          ctx.closePath(); ctx.fill();
+        });
+        ctx.globalAlpha = 1;
+      }
+      ctx.strokeStyle = color; ctx.fillStyle = color;
+      ctx.lineWidth = 1.75; ctx.lineJoin = "round"; ctx.lineCap = "round";
+      segs.forEach(function (sg) {
+        if (sg.length === 1) { ctx.beginPath(); ctx.arc(sg[0].x, sg[0].y, 1.6, 0, Math.PI * 2); ctx.fill(); return; }
+        ctx.beginPath();
+        sg.forEach(function (p, i) { i ? ctx.lineTo(p.x, p.y) : ctx.moveTo(p.x, p.y); });
+        ctx.stroke();
+      });
+      return segs.length ? segs[segs.length - 1][segs[segs.length - 1].length - 1] : null;
+    }
+
+    var tipA = trace(function (s) { return s.mbps; }, maxA, aTop, aBot, C.a, true);
+    var tipB = trace(function (s) { return s.ms; }, maxB, bTop, bBot, C.b, false);
+
+    // the pen nibs at the live edge
+    [[tipA, C.a], [tipB, C.b]].forEach(function (p) {
+      if (!p[0]) return;
+      ctx.fillStyle = C.panel;
+      ctx.beginPath(); ctx.arc(p[0].x, p[0].y, 4.5, 0, Math.PI * 2); ctx.fill();
+      ctx.fillStyle = p[1];
+      ctx.beginPath(); ctx.arc(p[0].x, p[0].y, 3, 0, Math.PI * 2); ctx.fill();
+    });
+
+    // dropped-probe ticks below the baseline
+    ctx.strokeStyle = C.crit; ctx.lineWidth = 2;
+    ctx.beginPath();
+    visible.forEach(function (s) {
+      if (s.ok) return;
+      var x = xAt(s.t);
+      ctx.moveTo(x, bBot); ctx.lineTo(x, bBot + 5);
+    });
+    ctx.stroke();
+  }
+
+  /* -- live scroll -------------------------------------------------- */
+  var reduceMotion = window.matchMedia && window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+  var lastFrame = 0;
+  function loop(ts) {
+    if (!running) { rafId = null; return; }
+    if (ts - lastFrame > 50) { lastFrame = ts; draw(); }
+    rafId = requestAnimationFrame(loop);
+  }
+
+  /* -- controls ----------------------------------------------------- */
+  function start() {
+    if (running) return;
+    running = true;
+    runStartedAt = Date.now();
+    elToggle.textContent = "Pause recording";
+    setPill("is-live", "Recording");
+
+    (strategy ? Promise.resolve(strategy) : resolveStrategy()).then(function (s) {
+      if (s === "blocked") {
+        running = false;
+        elToggle.textContent = "Start recording";
+        setPill("is-crit", "Probe blocked");
+        $("dlSub").textContent = "cannot reach the origin";
+        return;
+      }
+      schedule();
+      cycle();
+      if (!reduceMotion && rafId == null) rafId = requestAnimationFrame(loop);
+    });
+  }
+
+  function schedule() {
+    clearInterval(timer);
+    timer = setInterval(cycle, parseInt(elInterval.value, 10));
+  }
+
+  function stop(reason) {
+    if (!running) return;
+    running = false;
+    totals.recordedMs += Date.now() - runStartedAt;
+    clearInterval(timer); timer = null;
+    if (rafId != null) { cancelAnimationFrame(rafId); rafId = null; }
+    elToggle.textContent = "Start recording";
+    setPill(reason === "hidden" ? "is-warn" : "", reason === "hidden" ? "Paused \u2014 off screen" : "Paused");
+    save(); render();
+  }
+
+  elToggle.addEventListener("click", function () { running ? stop() : start(); });
+  elInterval.addEventListener("change", function () { if (running) schedule(); });
+  elClear.addEventListener("click", function () {
+    samples = []; last = null;
+    totals = { bytes: 0, fails: 0, probes: 0, recordedMs: 0 };
+    runStartedAt = Date.now();
+    save(); render();
+  });
+
+  Array.prototype.forEach.call(document.querySelectorAll(".seg"), function (btn) {
+    btn.addEventListener("click", function () {
+      chartWindow = parseInt(btn.dataset.win, 10);
+      Array.prototype.forEach.call(document.querySelectorAll(".seg"), function (b) {
+        b.setAttribute("aria-pressed", String(b === btn));
+      });
+      draw();
+    });
+  });
+
+  // iPadOS suspends off-screen pages; mark the gap rather than pretend.
+  var wasRunning = false;
+  document.addEventListener("visibilitychange", function () {
+    if (document.hidden) {
+      wasRunning = running;
+      if (running) { stop("hidden"); push({ t: Date.now(), mbps: null, ms: null, ok: false }); }
+    } else if (wasRunning) { wasRunning = false; start(); }
+  });
+  window.addEventListener("offline", function () { if (running) stop(); setPill("is-crit", "Offline"); render(); });
+  window.addEventListener("online", function () { setPill("", "Paused"); render(); });
+
+  /* -- export (downloads capability; absent outside claude.ai) ------- */
+  function toCsv() {
+    var rows = ["timestamp,throughput_mbps,latency_ms,status"];
+    samples.forEach(function (s) {
+      rows.push([
+        new Date(s.t).toISOString(),
+        s.mbps == null ? "" : s.mbps.toFixed(3),
+        s.ms == null ? "" : s.ms.toFixed(2),
+        s.ok ? "ok" : "dropped"
+      ].join(","));
+    });
+    return rows.join("\n");
+  }
+  if (window.claude && typeof window.claude.use === "function") {
+    window.claude.use("downloads").then(function (downloads) {
+      if (!downloads) return;
+      elExport.hidden = false;
+      elExport.addEventListener("click", function () {
+        if (!samples.length) return;
+        var csv = toCsv();
+        downloads.save({ filename: "wifi-strip-chart.csv", data: csv })
+          .catch(function (err) {
+            if (err && err.code === "extension_not_enabled") return downloads.save({ filename: "wifi-strip-chart.txt", data: csv });
+            throw err;
+          })
+          .catch(function (err) {
+            if (err && err.code === "declined") return;
+            elExport.textContent = "Export failed";
+            setTimeout(function () { elExport.textContent = "Export log"; }, 2200);
+          });
+      });
+    });
+  }
+
+  /* -- boot --------------------------------------------------------- */
+  load();
+  render();
+  if (samples.length) setPill("", "Paused");
+  setInterval(function () { if (running) render(); }, 1000);
+
+  if (window.ResizeObserver) new ResizeObserver(draw).observe(canvas);
+  else window.addEventListener("resize", draw);
+  if (window.matchMedia) {
+    var mq = window.matchMedia("(prefers-color-scheme: dark)");
+    if (mq.addEventListener) mq.addEventListener("change", draw); else mq.addListener(draw);
+  }
+  new MutationObserver(draw).observe(document.documentElement, { attributes: true, attributeFilter: ["data-theme"] });
+})();
+</script>
