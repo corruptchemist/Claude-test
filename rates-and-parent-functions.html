@@ -1,0 +1,495 @@
+<title>Rates of Change &amp; Parent Functions</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Newsreader:ital,opsz,wght@0,6..72,400;0,6..72,600;1,6..72,400&family=IBM+Plex+Sans:ital,wght@0,400;0,500;0,600;1,400&family=STIX+Two+Text:ital,wght@0,400;0,600;1,400;1,600&display=swap">
+<style>
+  :root{
+    --ground:#F5F6F8; --card:#FFFFFF;
+    --ink:#171B21; --ink-soft:#4C545F; --ink-faint:#7A828D;
+    --rule:#DCE0E6; --blue:#1F4E79; --blue-soft:#E4EDF5;
+    --pen:#A81E32; --pen-soft:#FAECEE; --grid:#DDE3EA; --note:#F0F3F6;
+  }
+  @media (prefers-color-scheme: dark){
+    :root:not([data-theme="light"]){
+      --ground:#101319; --card:#171B22;
+      --ink:#E8EAEF; --ink-soft:#AEB6C2; --ink-faint:#7E8794;
+      --rule:#2A303A; --blue:#8CBBE3; --blue-soft:#1B2833;
+      --pen:#EE8A99; --pen-soft:#2A1B20; --grid:#232A33; --note:#1C212A;
+    }
+  }
+  :root[data-theme="dark"]{
+    --ground:#101319; --card:#171B22;
+    --ink:#E8EAEF; --ink-soft:#AEB6C2; --ink-faint:#7E8794;
+    --rule:#2A303A; --blue:#8CBBE3; --blue-soft:#1B2833;
+    --pen:#EE8A99; --pen-soft:#2A1B20; --grid:#232A33; --note:#1C212A;
+  }
+  *{box-sizing:border-box}
+  html{width:100%}
+  body{margin:0;width:100%;min-width:0;background:var(--ground);color:var(--ink);overflow-wrap:break-word;
+    font-family:"IBM Plex Sans","Helvetica Neue",Arial,sans-serif;font-size:16px;line-height:1.62;-webkit-font-smoothing:antialiased}
+  .wrap{width:min(920px,100vw);max-width:100%;margin:0 auto;padding:0 20px 96px}
+
+  .masthead{position:relative;padding:54px 0 24px;border-bottom:2px solid var(--ink);overflow:hidden}
+  .masthead::before{content:"";position:absolute;inset:0;
+    background-image:linear-gradient(var(--grid) 1px,transparent 1px),linear-gradient(90deg,var(--grid) 1px,transparent 1px);
+    background-size:26px 26px;
+    -webkit-mask-image:linear-gradient(to bottom,rgba(0,0,0,.5),transparent 78%);
+    mask-image:linear-gradient(to bottom,rgba(0,0,0,.5),transparent 78%)}
+  .masthead>*{position:relative}
+  .eyebrow{font-size:12px;letter-spacing:.14em;text-transform:uppercase;color:var(--blue);font-weight:600;margin:0 0 10px}
+  h1{font-family:"Newsreader",Georgia,serif;font-weight:600;font-size:clamp(33px,5.2vw,50px);line-height:1.06;
+     letter-spacing:-.015em;margin:0 0 14px;text-wrap:balance}
+  .standfirst{font-size:17px;color:var(--ink-soft);max-width:62ch;margin:0}
+
+  .toc{position:sticky;top:0;z-index:5;display:flex;flex-wrap:wrap;gap:6px;padding:10px 0;margin-bottom:34px;
+    background:color-mix(in srgb,var(--ground) 92%,transparent);backdrop-filter:blur(6px);border-bottom:1px solid var(--rule)}
+  .toc a{font-size:13px;text-decoration:none;color:var(--ink-soft);padding:5px 11px;border:1px solid var(--rule);border-radius:2px;white-space:nowrap}
+  .toc a:hover,.toc a:focus-visible{border-color:var(--blue);color:var(--blue);background:var(--blue-soft)}
+
+  section{margin:0 0 48px;scroll-margin-top:64px}
+  .sec-head{display:flex;align-items:baseline;gap:13px;flex-wrap:wrap;margin-bottom:8px}
+  .sec-head>*{min-width:0}
+  .pagetag{font-size:12px;font-weight:600;letter-spacing:.08em;text-transform:uppercase;
+    color:var(--card);background:var(--blue);padding:3px 9px;border-radius:2px}
+  h2{font-family:"Newsreader",Georgia,serif;font-weight:600;font-size:clamp(23px,2.7vw,31px);line-height:1.14;margin:0;letter-spacing:-.01em}
+  .sec-note{color:var(--ink-faint);font-size:14.5px;margin:0 0 20px;max-width:72ch}
+  .assigned{display:inline-block;font-size:12px;font-weight:600;color:var(--pen);background:var(--pen-soft);
+    border-radius:2px;padding:2px 8px;letter-spacing:.03em}
+
+  .prob{background:var(--card);border:1px solid var(--rule);border-left:3px solid var(--blue);
+    border-radius:3px;padding:15px 20px 17px;margin:0 0 14px;min-width:0}
+  .prob-head{margin:0 0 8px;font-size:15.5px;font-weight:600;color:var(--ink)}
+  .prob-head .pnum{font-family:"Newsreader",Georgia,serif;font-size:21px;font-weight:600;color:var(--blue);
+    display:inline-block;margin-right:8px;line-height:1}
+  ol.st{list-style:none;counter-reset:s;padding:0;margin:0 0 11px}
+  ol.st>li{counter-increment:s;position:relative;padding-left:38px;margin:0 0 8px;font-size:15px;color:var(--ink-soft)}
+  ol.st>li::before{content:counter(s);position:absolute;left:0;top:3px;
+    font-family:"IBM Plex Sans",sans-serif;font-size:11.5px;font-weight:600;
+    color:var(--blue);background:var(--blue-soft);border-radius:2px;
+    width:26px;height:20px;display:flex;align-items:center;justify-content:center}
+  ol.st>li b{color:var(--ink);font-weight:600}
+  .why{margin:0 0 10px;font-size:15px;color:var(--ink-soft)}
+  .why b{color:var(--ink)}
+  .final{background:var(--pen-soft);color:var(--pen);border-radius:2px;padding:9px 12px;font-size:15.5px;margin:0}
+  .final .lbl{display:block;font-size:11px;letter-spacing:.12em;text-transform:uppercase;font-weight:600;opacity:.75;margin-bottom:1px}
+  .aside{font-size:14px;color:var(--ink-faint);margin:10px 0 0;border-left:2px solid var(--rule);padding-left:12px}
+
+  .m{font-family:"STIX Two Text",Cambria,Georgia,serif;font-style:italic;font-size:1.06em}
+  .m .up{font-style:normal}
+  .frac{display:inline-flex;flex-direction:column;vertical-align:-.48em;text-align:center;font-size:.94em;max-width:100%}
+  .frac span:first-child{border-bottom:1px solid currentColor;padding:0 .3em}
+  .frac span:last-child{padding:0 .3em}
+
+  .scroll{overflow-x:auto;margin:10px 0}
+  table{border-collapse:collapse;font-size:14px;width:100%;font-variant-numeric:tabular-nums}
+  .scroll table{min-width:460px}
+  th,td{border:1px solid var(--rule);padding:6px 10px;text-align:center;font-family:"STIX Two Text",Georgia,serif}
+  th{background:var(--blue-soft);font-weight:600;font-style:normal;font-family:"IBM Plex Sans",sans-serif;font-size:13px}
+
+  /* parent function cards */
+  .pf{background:var(--card);border:1px solid var(--rule);border-radius:3px;padding:16px 20px 18px;margin:0 0 14px;
+    display:flex;gap:20px;flex-wrap:wrap;align-items:flex-start;min-width:0}
+  .pf-graph{flex:0 0 auto}
+  .pf-body{flex:1 1 300px;min-width:0}
+  .pf h3{margin:0 0 4px;font-family:"IBM Plex Sans",sans-serif;font-size:16px;font-weight:600}
+  .pf h3 .n{font-family:"Newsreader",Georgia,serif;font-size:20px;color:var(--blue);margin-right:8px}
+  .pf .eq{font-family:"STIX Two Text",Georgia,serif;font-style:italic;font-size:19px;color:var(--pen);margin:0 0 10px}
+  dl{margin:0;display:grid;grid-template-columns:auto minmax(0,1fr);gap:4px 14px;font-size:14.5px}
+  dt{color:var(--ink-faint);font-size:12px;letter-spacing:.06em;text-transform:uppercase;font-weight:600;padding-top:3px}
+  dd{margin:0;color:var(--ink-soft)}
+  .gx{stroke:var(--ink-faint);stroke-width:1}
+  .gc{fill:none;stroke:var(--pen);stroke-width:2.6;stroke-linecap:round;stroke-linejoin:round}
+  .gd{fill:var(--pen)}
+  svg{display:block;max-width:100%;height:auto}
+
+  footer{margin-top:52px;padding-top:18px;border-top:1px solid var(--rule);font-size:13.5px;color:var(--ink-faint)}
+  a{color:var(--blue)}
+  :focus-visible{outline:2px solid var(--blue);outline-offset:2px}
+</style>
+
+<div class="wrap">
+<header class="masthead">
+  <p class="eyebrow">AP Precalculus &middot; packet pages 25&ndash;33</p>
+  <h1>Rates of Change &amp; Parent Functions</h1>
+  <p class="standfirst">Two topics back to back: average rate of change (topic 1.2, pages 26&ndash;29) and the parent function catalog you have to memorize (pages 30&ndash;33). Worked answers with the reasoning, plus a drawn graph for every parent function.</p>
+</header>
+
+<nav class="toc" aria-label="Contents">
+  <a href="#p26">p.26 &middot; AROC #1&ndash;8</a>
+  <a href="#p27">p.27 &middot; #14&ndash;17</a>
+  <a href="#p28">p.28 &middot; #18&ndash;20</a>
+  <a href="#p29">p.29 &middot; #21&ndash;22</a>
+  <a href="#pf">p.30&ndash;33 &middot; Parent functions</a>
+</nav>
+
+<section id="p26">
+  <div class="sec-head"><span class="pagetag">Page 26</span><h2>Rates of Change, Practice Set 1 &middot; #1&ndash;8</h2></div>
+  <p class="sec-note"><span class="assigned">Page says: do evens</span> &nbsp;One formula runs this entire topic &mdash; average rate of change is the <strong>slope between the two endpoints</strong>: <span class="m">AROC = <span class="frac"><span>f(b) &minus; f(a)</span><span>b &minus; a</span></span></span>. From a graph, read the two endpoint coordinates. From a formula, evaluate at each endpoint first.</p>
+
+  <div class="prob">
+    <p class="prob-head"><span class="pnum">1</span>Graph, on <span class="m">[&minus;2, 0]</span></p>
+    <ol class="st">
+      <li><b>Read the endpoints off the graph.</b> The marked points are <span class="m">(&minus;2, 4)</span> and <span class="m">(0, 1)</span>.</li>
+      <li><b>Subtract and divide.</b> <span class="m"><span class="frac"><span>1 &minus; 4</span><span>0 &minus; (&minus;2)</span></span> = <span class="frac"><span>&minus;3</span><span>2</span></span></span></li>
+    </ol>
+    <p class="final"><span class="lbl">Answer</span><span class="m">&minus;<span class="frac"><span>3</span><span>2</span></span> = &minus;1.5</span></p>
+  </div>
+
+  <div class="prob">
+    <p class="prob-head"><span class="pnum">2</span>Graph, on <span class="m">[2, 6]</span></p>
+    <ol class="st">
+      <li><b>Endpoints:</b> <span class="m">(2, &minus;1)</span> and <span class="m">(6, &minus;5)</span>.</li>
+      <li><b>Compute:</b> <span class="m"><span class="frac"><span>&minus;5 &minus; (&minus;1)</span><span>6 &minus; 2</span></span> = <span class="frac"><span>&minus;4</span><span>4</span></span></span> &mdash; watch the double negative on top.</li>
+    </ol>
+    <p class="final"><span class="lbl">Answer</span><span class="m">&minus;1</span></p>
+  </div>
+
+  <div class="prob">
+    <p class="prob-head"><span class="pnum">3</span>Graph, on <span class="m">[0, 2]</span></p>
+    <ol class="st">
+      <li><b>Endpoints:</b> <span class="m">(0, 1)</span> and <span class="m">(2, 6)</span>.</li>
+      <li><b>Compute:</b> <span class="m"><span class="frac"><span>6 &minus; 1</span><span>2 &minus; 0</span></span> = <span class="frac"><span>5</span><span>2</span></span></span></li>
+    </ol>
+    <p class="final"><span class="lbl">Answer</span><span class="m"><span class="frac"><span>5</span><span>2</span></span> = 2.5</span></p>
+  </div>
+
+  <div class="prob">
+    <p class="prob-head"><span class="pnum">4</span>Graph, on <span class="m">[&minus;2, 2]</span></p>
+    <ol class="st">
+      <li><b>Endpoints:</b> <span class="m">(&minus;2, &minus;5)</span> (the low point) and <span class="m">(2, 2)</span>.</li>
+      <li><b>Compute:</b> <span class="m"><span class="frac"><span>2 &minus; (&minus;5)</span><span>2 &minus; (&minus;2)</span></span> = <span class="frac"><span>7</span><span>4</span></span></span></li>
+    </ol>
+    <p class="final"><span class="lbl">Answer</span><span class="m"><span class="frac"><span>7</span><span>4</span></span> = 1.75</span></p>
+    <p class="aside">The curve dips and climbs in between, but AROC only ever looks at the two endpoints.</p>
+  </div>
+
+  <div class="prob">
+    <p class="prob-head"><span class="pnum">5</span><span class="m">f(x) = x<span class="up">&sup3;</span> &minus; 8x</span> on <span class="m">[1, 6]</span></p>
+    <ol class="st">
+      <li><b>Evaluate at the left endpoint.</b> <span class="m">f(1) = 1 &minus; 8 = &minus;7</span></li>
+      <li><b>Evaluate at the right endpoint.</b> <span class="m">f(6) = 216 &minus; 48 = 168</span></li>
+      <li><b>Slope between them.</b> <span class="m"><span class="frac"><span>168 &minus; (&minus;7)</span><span>6 &minus; 1</span></span> = <span class="frac"><span>175</span><span>5</span></span></span></li>
+    </ol>
+    <p class="final"><span class="lbl">Answer</span><span class="m">35</span></p>
+  </div>
+
+  <div class="prob">
+    <p class="prob-head"><span class="pnum">6</span><span class="m">g(x) = 5 &minus; <span class="frac"><span>x<span class="up">&sup2;</span></span><span>4</span></span></span> on <span class="m">[1, 4]</span></p>
+    <ol class="st">
+      <li><span class="m">g(1) = 5 &minus; <span class="frac"><span>1</span><span>4</span></span> = <span class="frac"><span>19</span><span>4</span></span> = 4.75</span></li>
+      <li><span class="m">g(4) = 5 &minus; <span class="frac"><span>16</span><span>4</span></span> = 5 &minus; 4 = 1</span></li>
+      <li><span class="m"><span class="frac"><span>1 &minus; 4.75</span><span>4 &minus; 1</span></span> = <span class="frac"><span>&minus;3.75</span><span>3</span></span></span></li>
+    </ol>
+    <p class="final"><span class="lbl">Answer</span><span class="m">&minus;<span class="frac"><span>5</span><span>4</span></span> = &minus;1.25</span></p>
+  </div>
+
+  <div class="prob">
+    <p class="prob-head"><span class="pnum">7</span><span class="m">h(x) = x<span class="up">&sup2;</span> &minus; 2</span> on <span class="m">&minus;4 &le; x &le; &minus;1</span></p>
+    <ol class="st">
+      <li><span class="m">h(&minus;4) = 16 &minus; 2 = 14</span> &mdash; square the negative first, so it turns positive.</li>
+      <li><span class="m">h(&minus;1) = 1 &minus; 2 = &minus;1</span></li>
+      <li><span class="m"><span class="frac"><span>&minus;1 &minus; 14</span><span>&minus;1 &minus; (&minus;4)</span></span> = <span class="frac"><span>&minus;15</span><span>3</span></span></span></li>
+    </ol>
+    <p class="final"><span class="lbl">Answer</span><span class="m">&minus;5</span></p>
+  </div>
+
+  <div class="prob">
+    <p class="prob-head"><span class="pnum">8</span><span class="m">s(t) = (t + 3)<span class="up">&sup2;</span> &minus; 4</span> on <span class="m">&minus;3 &le; t &le; 5</span></p>
+    <ol class="st">
+      <li><span class="m">s(&minus;3) = (0)<span class="up">&sup2;</span> &minus; 4 = &minus;4</span></li>
+      <li><span class="m">s(5) = (8)<span class="up">&sup2;</span> &minus; 4 = 64 &minus; 4 = 60</span></li>
+      <li><span class="m"><span class="frac"><span>60 &minus; (&minus;4)</span><span>5 &minus; (&minus;3)</span></span> = <span class="frac"><span>64</span><span>8</span></span></span></li>
+    </ol>
+    <p class="final"><span class="lbl">Answer</span><span class="m">8</span></p>
+  </div>
+  <p class="aside">Heads up: your packet jumps from #8 here straight to #14 on the next page &mdash; problems 9&ndash;13 are on a page that isn't in this PDF.</p>
+</section>
+
+<section id="p27">
+  <div class="sec-head"><span class="pagetag">Page 27</span><h2>Practice Set 2 &middot; #14&ndash;17</h2></div>
+  <p class="sec-note"><span class="assigned">Page says: do odds</span> &nbsp;#14 and #15 give you three points and ask you to compare three secant slopes. Compute all three, then compare &mdash; the answer to &ldquo;which is largest&rdquo; is never the one you can eyeball reliably.</p>
+
+  <div class="prob">
+    <p class="prob-head"><span class="pnum">14</span>A(2, 2), B(8, 7.8), C(11, 9.6) &mdash; which AROC is largest?</p>
+    <div class="scroll"><table>
+      <tr><th>Interval</th><th>Work</th><th>AROC</th></tr>
+      <tr><td>A &rarr; B</td><td>(7.8 &minus; 2) &divide; (8 &minus; 2) = 5.8/6</td><td>&asymp; 0.97</td></tr>
+      <tr><td>B &rarr; C</td><td>(9.6 &minus; 7.8) &divide; (11 &minus; 8) = 1.8/3</td><td>0.6</td></tr>
+      <tr><td>A &rarr; C</td><td>(9.6 &minus; 2) &divide; (11 &minus; 2) = 7.6/9</td><td>&asymp; 0.84</td></tr>
+    </table></div>
+    <p class="final"><span class="lbl">Answer</span><span class="m">A</span> to <span class="m">B</span> is the largest, at about <span class="m">0.97</span>.</p>
+    <p class="why">The curve is steepest in the middle and flattens out near C, so any interval ending at C gets dragged down. Notice A&rarr;C lands between the other two &mdash; an average over a longer span always sits between the pieces it covers.</p>
+  </div>
+
+  <div class="prob">
+    <p class="prob-head"><span class="pnum">15</span>A(2, 5), B(4, 8), C(8, 11) &mdash; which AROC is smallest?</p>
+    <div class="scroll"><table>
+      <tr><th>Interval</th><th>Work</th><th>AROC</th></tr>
+      <tr><td>A &rarr; B</td><td>(8 &minus; 5) &divide; (4 &minus; 2) = 3/2</td><td>1.5</td></tr>
+      <tr><td>B &rarr; C</td><td>(11 &minus; 8) &divide; (8 &minus; 4) = 3/4</td><td>0.75</td></tr>
+      <tr><td>A &rarr; C</td><td>(11 &minus; 5) &divide; (8 &minus; 2) = 6/6</td><td>1</td></tr>
+    </table></div>
+    <p class="final"><span class="lbl">Answer</span><span class="m">B</span> to <span class="m">C</span> is the smallest, at <span class="m">0.75</span>.</p>
+    <p class="why">Both A&rarr;B and B&rarr;C climb the same 3 units, but B&rarr;C spreads that climb over twice the run, so its rate is half as big. The graph is concave down &mdash; still rising, but rising more slowly the further right you go.</p>
+  </div>
+
+  <div class="prob">
+    <p class="prob-head"><span class="pnum">16</span>AROC of <span class="m">g</span> on <span class="m">&minus;7 &le; x &le; &minus;2</span></p>
+    <ol class="st">
+      <li><b>Use only the endpoints.</b> The labeled points are <span class="m">(&minus;7, &minus;3)</span> and <span class="m">(&minus;2, 6)</span>. Everything wiggling in between is irrelevant.</li>
+      <li><b>Compute carefully &mdash; negatives top and bottom.</b><br><span class="m"><span class="frac"><span>6 &minus; (&minus;3)</span><span>&minus;2 &minus; (&minus;7)</span></span> = <span class="frac"><span>9</span><span>5</span></span></span></li>
+    </ol>
+    <p class="final"><span class="lbl">Answer</span><span class="m"><span class="frac"><span>9</span><span>5</span></span> = 1.8</span></p>
+  </div>
+
+  <div class="prob">
+    <p class="prob-head"><span class="pnum">17</span><span class="m">C(p) = 18 &minus; p<span class="up">&sup2;</span> + p</span>, price from $3 to $4</p>
+    <ol class="st">
+      <li><b>Demand at $3.</b> <span class="m">C(3) = 18 &minus; 9 + 3 = 12</span> treats.</li>
+      <li><b>Demand at $4.</b> <span class="m">C(4) = 18 &minus; 16 + 4 = 6</span> treats.</li>
+      <li><b>Average rate of change.</b> <span class="m"><span class="frac"><span>6 &minus; 12</span><span>4 &minus; 3</span></span> = &minus;6</span></li>
+    </ol>
+    <p class="final"><span class="lbl">Answer</span><span class="m">&minus;6</span> treats per dollar. Because the rate is <em>negative</em>, demand falls as price rises: each $1 increase costs an average of 6 treats of demand, and this customer buys half as many treats at $4 as at $3.</p>
+    <p class="why">The second sentence of the question is asking for that interpretation in words &mdash; write it out, with units. &ldquo;Treats per dollar&rdquo; is the unit, because the output is treats and the input is dollars.</p>
+  </div>
+</section>
+
+<section id="p28">
+  <div class="sec-head"><span class="pagetag">Page 28</span><h2>Applications &middot; #18&ndash;20</h2></div>
+  <p class="sec-note"><span class="assigned">Page says: do evens</span> &nbsp;Same formula, but now the answer needs <strong>units</strong> and a sentence. The units always come straight from the axes: output-units per input-unit.</p>
+
+  <div class="prob">
+    <p class="prob-head"><span class="pnum">18</span>Beetles: <span class="m">P(x) = 24(2<span class="up">x</span>)</span> over the first five weeks <span class="m">[0, 5]</span></p>
+    <ol class="st">
+      <li><b>Start.</b> <span class="m">P(0) = 24(2<span class="up">0</span>) = 24(1) = 24</span> beetles.</li>
+      <li><b>End.</b> <span class="m">P(5) = 24(2<span class="up">5</span>) = 24(32) = 768</span> beetles.</li>
+      <li><b>Average growth rate.</b> <span class="m"><span class="frac"><span>768 &minus; 24</span><span>5 &minus; 0</span></span> = <span class="frac"><span>744</span><span>5</span></span></span></li>
+    </ol>
+    <p class="final"><span class="lbl">Answer</span><span class="m">148.8</span> beetles per week</p>
+    <p class="why">Notice this average badly under-describes the end of the period: the population grows by only 24 in week one but by 384 in week five. Exponential growth is exactly the case where a single average rate hides the story.</p>
+  </div>
+
+  <div class="prob">
+    <p class="prob-head"><span class="pnum">19</span>Cost: <span class="m">C(x) = 0.0002x<span class="up">&sup3;</span> + 0.09x<span class="up">&sup2;</span> + 12x + 1500</span></p>
+    <ol class="st">
+      <li><b>A. From 100 to 300 widgets.</b><br>
+        <span class="m">C(100) = 0.0002(1{,}000{,}000) + 0.09(10{,}000) + 1200 + 1500 = 200 + 900 + 1200 + 1500 = 3800</span><br>
+        <span class="m">C(300) = 0.0002(27{,}000{,}000) + 0.09(90{,}000) + 3600 + 1500 = 5400 + 8100 + 3600 + 1500 = 18{,}600</span><br>
+        <span class="m">AROC = <span class="frac"><span>18{,}600 &minus; 3800</span><span>300 &minus; 100</span></span> = <span class="frac"><span>14{,}800</span><span>200</span></span> = 74</span></li>
+      <li><b>B. From 200 to 500 widgets.</b><br>
+        <span class="m">C(200) = 1600 + 3600 + 2400 + 1500 = 9100</span><br>
+        <span class="m">C(500) = 25{,}000 + 22{,}500 + 6000 + 1500 = 55{,}000</span><br>
+        <span class="m">AROC = <span class="frac"><span>55{,}000 &minus; 9100</span><span>500 &minus; 200</span></span> = <span class="frac"><span>45{,}900</span><span>300</span></span> = 153</span></li>
+    </ol>
+    <p class="final"><span class="lbl">Answers</span>A. <span class="m">$74</span> per widget &nbsp;&middot;&nbsp; B. <span class="m">$153</span> per widget</p>
+    <p class="why">This is <em>marginal cost</em>: the average extra cost of each additional widget over that range. It more than doubles, which says production is getting less efficient at higher volumes.</p>
+  </div>
+
+  <div class="prob">
+    <p class="prob-head"><span class="pnum">20</span>Projectile: <span class="m">h(t) = &minus;16t<span class="up">&sup2;</span> + 48t + 80</span></p>
+    <ol class="st">
+      <li><b>Heights first.</b><br>
+        <span class="m">h(0) = 80</span> ft &nbsp;&middot;&nbsp; <span class="m">h(2) = &minus;64 + 96 + 80 = 112</span> ft &nbsp;&middot;&nbsp; <span class="m">h(4) = &minus;256 + 192 + 80 = 16</span> ft</li>
+      <li><b>A. First two seconds.</b> <span class="m"><span class="frac"><span>112 &minus; 80</span><span>2 &minus; 0</span></span> = <span class="frac"><span>32</span><span>2</span></span> = 16</span></li>
+      <li><b>B. From <span class="m">t = 2</span> to <span class="m">t = 4</span>.</b> <span class="m"><span class="frac"><span>16 &minus; 112</span><span>4 &minus; 2</span></span> = <span class="frac"><span>&minus;96</span><span>2</span></span> = &minus;48</span></li>
+    </ol>
+    <p class="final"><span class="lbl">Answers</span>A. <span class="m">16</span> ft/sec &nbsp;&middot;&nbsp; B. <span class="m">&minus;48</span> ft/sec</p>
+    <p class="why">Average rate of change of <em>height</em> is exactly average <em>velocity</em>. Positive means it's higher at the end than the start (still going up on balance); negative means it's on the way down. The object peaks at <span class="m">t = 1.5</span> s, which is why the second interval is negative.</p>
+  </div>
+</section>
+
+<section id="p29">
+  <div class="sec-head"><span class="pagetag">Page 29</span><h2>Reading rates from a table &middot; #21&ndash;22</h2></div>
+  <p class="sec-note"><span class="assigned">Page says: do #21, show work, pay attention to part C</span> &nbsp;With a table you don't need a formula at all &mdash; subtract neighboring outputs, divide by the gap between the inputs.</p>
+
+  <div class="prob">
+    <p class="prob-head"><span class="pnum">21</span>Skydiver velocity during free fall</p>
+    <p class="why"><b>A. AROC for each ten-second interval</b> (units: ft/sec per second, i.e. acceleration):</p>
+    <div class="scroll"><table>
+      <tr><th>Interval (s)</th><td>0&ndash;10</td><td>10&ndash;20</td><td>20&ndash;30</td><td>30&ndash;40</td><td>40&ndash;50</td><td>50&ndash;60</td></tr>
+      <tr><th>Change in v</th><td>142</td><td>25</td><td>6</td><td>0.8</td><td>1.2</td><td>0</td></tr>
+      <tr><th>AROC</th><td>14.2</td><td>2.5</td><td>0.6</td><td>0.08</td><td>0.12</td><td>0</td></tr>
+    </table></div>
+    <p class="why"><b>B.</b> The highest is the very first interval, <span class="m">0</span> to <span class="m">10</span> seconds, at <span class="m">14.2</span> ft/sec per second. After that the diver approaches terminal velocity, so the rate collapses toward zero.</p>
+    <ol class="st">
+      <li><b>C. Set up the approximation.</b> Over 10&ndash;20 seconds the velocity climbs at an average of <span class="m">2.5</span> ft/sec per second.</li>
+      <li><b>Start from a known value and travel 5 seconds.</b> <span class="m">v(15) &asymp; v(10) + 2.5(15 &minus; 10) = 142 + 12.5</span></li>
+    </ol>
+    <p class="final"><span class="lbl">Answers</span>A. <span class="m">14.2, 2.5, 0.6, 0.08, 0.12, 0</span> ft/sec&sup2; &nbsp;&middot;&nbsp; B. the interval <span class="m">[0, 10]</span> &nbsp;&middot;&nbsp; C. <span class="m">v(15) &asymp; 154.5</span> ft/sec</p>
+    <p class="why">Part C is the one to be careful with: you're using the average rate as if it were constant, then stepping forward from a known data point. Anchor at <span class="m">t = 10</span>, not at <span class="m">t = 0</span>.</p>
+  </div>
+
+  <div class="prob">
+    <p class="prob-head"><span class="pnum">22</span>Population of Eulerville</p>
+    <p class="why"><b>A. AROC for each decade</b> (population is in millions):</p>
+    <div class="scroll"><table>
+      <tr><th>Decade</th><td>1980&ndash;90</td><td>1990&ndash;2000</td><td>2000&ndash;10</td><td>2010&ndash;20</td></tr>
+      <tr><th>Change</th><td>2.9</td><td>2.8</td><td>3.7</td><td>3.5</td></tr>
+      <tr><th>Per year</th><td>0.29</td><td>0.28</td><td>0.37</td><td>0.35</td></tr>
+    </table></div>
+    <p class="why"><b>B.</b> The largest is <span class="m">2000</span> to <span class="m">2010</span> &mdash; 3.7 million per decade, or 0.37 million per year.</p>
+    <ol class="st">
+      <li><b>C. Rate for the last decade:</b> <span class="m">0.35</span> million per year.</li>
+      <li><b>Step forward 8 years from 2010:</b> <span class="m">21.7 + 0.35(8) = 21.7 + 2.8</span></li>
+    </ol>
+    <p class="final"><span class="lbl">Answers</span>A. <span class="m">0.29, 0.28, 0.37, 0.35</span> million/year &nbsp;&middot;&nbsp; B. <span class="m">2000&ndash;2010</span> &nbsp;&middot;&nbsp; C. about <span class="m">24.5</span> million in 2018</p>
+    <p class="why">Either unit is fine in part A as long as you say which: 2.9 million <em>per decade</em> and 0.29 million <em>per year</em> describe the same rate. For part C you must use the per-year version, since 2018 is 8 years past 2010.</p>
+  </div>
+</section>
+
+<section id="pf">
+  <div class="sec-head"><span class="pagetag">Pages 30&ndash;33</span><h2>Parent functions #1&ndash;6</h2></div>
+  <p class="sec-note">Page 30 lists ten parent functions; pages 31&ndash;33 give you the blank template for the first six. Below is every blank filled in, with the graph you need to sketch in the grid. Later pages repeat the same six &mdash; the packet wants them memorized, so cover the answers and rebuild each card from the equation alone.</p>
+
+  <div class="pf">
+    <div class="pf-graph">
+      <svg viewBox="0 0 150 150" width="150" height="150" role="img" aria-label="Horizontal line above the x-axis">
+        <line class="gx" x1="10" y1="75" x2="140" y2="75"></line><line class="gx" x1="75" y1="10" x2="75" y2="140"></line>
+        <line class="gc" x1="14" y1="45" x2="136" y2="45"></line>
+      </svg>
+    </div>
+    <div class="pf-body">
+      <h3><span class="n">1</span>Constant Function</h3>
+      <p class="eq">f(x) = c</p>
+      <dl>
+        <dt>Domain</dt><dd><span class="m">(&minus;&infin;, &infin;)</span></dd>
+        <dt>Range</dt><dd><span class="m">{c}</span> &mdash; the single value <span class="m">c</span></dd>
+        <dt>Zeros</dt><dd>None (if <span class="m">c &ne; 0</span>); every real number if <span class="m">c = 0</span></dd>
+        <dt>y-intercept</dt><dd><span class="m">(0, c)</span></dd>
+        <dt>Symmetry</dt><dd>About the <span class="m">y</span>-axis</dd>
+        <dt>Even/Odd</dt><dd>Even</dd>
+        <dt>End behavior</dt><dd><span class="m">lim<sub class="up">x&rarr;&minus;&infin;</sub> f(x) = c</span> and <span class="m">lim<sub class="up">x&rarr;&infin;</sub> f(x) = c</span></dd>
+        <dt>Continuity</dt><dd>Continuous on <span class="m">(&minus;&infin;, &infin;)</span></dd>
+        <dt>One-to-one</dt><dd>No &mdash; every input gives the same output</dd>
+      </dl>
+    </div>
+  </div>
+
+  <div class="pf">
+    <div class="pf-graph">
+      <svg viewBox="0 0 150 150" width="150" height="150" role="img" aria-label="Diagonal line through the origin with slope one">
+        <line class="gx" x1="10" y1="75" x2="140" y2="75"></line><line class="gx" x1="75" y1="10" x2="75" y2="140"></line>
+        <line class="gc" x1="18" y1="132" x2="132" y2="18"></line>
+      </svg>
+    </div>
+    <div class="pf-body">
+      <h3><span class="n">2</span>Linear (Identity) Function</h3>
+      <p class="eq">f(x) = x</p>
+      <dl>
+        <dt>Domain</dt><dd><span class="m">(&minus;&infin;, &infin;)</span></dd>
+        <dt>Range</dt><dd><span class="m">(&minus;&infin;, &infin;)</span></dd>
+        <dt>Zeros</dt><dd><span class="m">x = 0</span></dd>
+        <dt>y-intercept</dt><dd><span class="m">(0, 0)</span></dd>
+        <dt>Symmetry</dt><dd>About the origin</dd>
+        <dt>Even/Odd</dt><dd>Odd &mdash; <span class="m">f(&minus;x) = &minus;x = &minus;f(x)</span></dd>
+        <dt>End behavior</dt><dd><span class="m">lim<sub class="up">x&rarr;&minus;&infin;</sub> f(x) = &minus;&infin;</span> and <span class="m">lim<sub class="up">x&rarr;&infin;</sub> f(x) = &infin;</span></dd>
+        <dt>Continuity</dt><dd>Continuous on <span class="m">(&minus;&infin;, &infin;)</span></dd>
+        <dt>One-to-one</dt><dd>Yes &mdash; passes the horizontal line test</dd>
+      </dl>
+    </div>
+  </div>
+
+  <div class="pf">
+    <div class="pf-graph">
+      <svg viewBox="0 0 150 150" width="150" height="150" role="img" aria-label="V shape with its vertex at the origin opening upward">
+        <line class="gx" x1="10" y1="75" x2="140" y2="75"></line><line class="gx" x1="75" y1="10" x2="75" y2="140"></line>
+        <polyline class="gc" points="18,18 75,75 132,18"></polyline>
+      </svg>
+    </div>
+    <div class="pf-body">
+      <h3><span class="n">3</span>Absolute Value Function</h3>
+      <p class="eq">f(x) = |x|</p>
+      <dl>
+        <dt>Domain</dt><dd><span class="m">(&minus;&infin;, &infin;)</span></dd>
+        <dt>Range</dt><dd><span class="m">[0, &infin;)</span> &mdash; output is never negative</dd>
+        <dt>Zeros</dt><dd><span class="m">x = 0</span></dd>
+        <dt>y-intercept</dt><dd><span class="m">(0, 0)</span></dd>
+        <dt>Symmetry</dt><dd>About the <span class="m">y</span>-axis</dd>
+        <dt>Even/Odd</dt><dd>Even &mdash; <span class="m">|&minus;x| = |x|</span></dd>
+        <dt>End behavior</dt><dd>Both ends <span class="m">&rarr; &infin;</span></dd>
+        <dt>Continuity</dt><dd>Continuous everywhere (the corner at the origin is a sharp turn, not a break)</dd>
+        <dt>One-to-one</dt><dd>No &mdash; <span class="m">f(&minus;2) = f(2) = 2</span></dd>
+      </dl>
+    </div>
+  </div>
+
+  <div class="pf">
+    <div class="pf-graph">
+      <svg viewBox="0 0 150 150" width="150" height="150" role="img" aria-label="Half parabola starting at the origin and rising to the right">
+        <line class="gx" x1="10" y1="75" x2="140" y2="75"></line><line class="gx" x1="75" y1="10" x2="75" y2="140"></line>
+        <polyline class="gc" points="75,75 82.5,64.4 90,60 105,53.8 120,49 135,45"></polyline>
+        <circle class="gd" cx="75" cy="75" r="3.4"></circle>
+      </svg>
+    </div>
+    <div class="pf-body">
+      <h3><span class="n">4</span>Square Root Function</h3>
+      <p class="eq">f(x) = &radic;<span style="text-decoration:overline">&nbsp;x&nbsp;</span></p>
+      <dl>
+        <dt>Domain</dt><dd><span class="m">[0, &infin;)</span> &mdash; you can't take a real square root of a negative</dd>
+        <dt>Range</dt><dd><span class="m">[0, &infin;)</span></dd>
+        <dt>Zeros</dt><dd><span class="m">x = 0</span></dd>
+        <dt>y-intercept</dt><dd><span class="m">(0, 0)</span></dd>
+        <dt>Symmetry</dt><dd>None</dd>
+        <dt>Even/Odd</dt><dd>Neither</dd>
+        <dt>End behavior</dt><dd><span class="m">lim<sub class="up">x&rarr;&infin;</sub> f(x) = &infin;</span>; there is no left end, since the graph starts at <span class="m">x = 0</span></dd>
+        <dt>Continuity</dt><dd>Continuous on <span class="m">[0, &infin;)</span></dd>
+        <dt>One-to-one</dt><dd>Yes</dd>
+      </dl>
+    </div>
+  </div>
+
+  <div class="pf">
+    <div class="pf-graph">
+      <svg viewBox="0 0 150 150" width="150" height="150" role="img" aria-label="Parabola with its vertex at the origin opening upward">
+        <line class="gx" x1="10" y1="75" x2="140" y2="75"></line><line class="gx" x1="75" y1="10" x2="75" y2="140"></line>
+        <polyline class="gc" points="45,15 52.5,41.25 60,60 67.5,71.25 75,75 82.5,71.25 90,60 97.5,41.25 105,15"></polyline>
+      </svg>
+    </div>
+    <div class="pf-body">
+      <h3><span class="n">5</span>Quadratic Function</h3>
+      <p class="eq">f(x) = x<sup>2</sup></p>
+      <dl>
+        <dt>Domain</dt><dd><span class="m">(&minus;&infin;, &infin;)</span></dd>
+        <dt>Range</dt><dd><span class="m">[0, &infin;)</span></dd>
+        <dt>Zeros</dt><dd><span class="m">x = 0</span> (a double zero &mdash; the graph touches and turns)</dd>
+        <dt>y-intercept</dt><dd><span class="m">(0, 0)</span></dd>
+        <dt>Symmetry</dt><dd>About the <span class="m">y</span>-axis</dd>
+        <dt>Even/Odd</dt><dd>Even &mdash; <span class="m">(&minus;x)<span class="up">&sup2;</span> = x<span class="up">&sup2;</span></span></dd>
+        <dt>End behavior</dt><dd>Both ends <span class="m">&rarr; &infin;</span></dd>
+        <dt>Continuity</dt><dd>Continuous on <span class="m">(&minus;&infin;, &infin;)</span></dd>
+        <dt>One-to-one</dt><dd>No &mdash; <span class="m">f(&minus;3) = f(3) = 9</span></dd>
+      </dl>
+    </div>
+  </div>
+
+  <div class="pf">
+    <div class="pf-graph">
+      <svg viewBox="0 0 150 150" width="150" height="150" role="img" aria-label="Cubic curve rising left to right and flattening at the origin">
+        <line class="gx" x1="10" y1="75" x2="140" y2="75"></line><line class="gx" x1="75" y1="10" x2="75" y2="140"></line>
+        <polyline class="gc" points="51,136 57,101 63,83 69,76 75,75 81,74 87,67 93,49 99,14"></polyline>
+      </svg>
+    </div>
+    <div class="pf-body">
+      <h3><span class="n">6</span>Cubic Function</h3>
+      <p class="eq">f(x) = x<sup>3</sup></p>
+      <dl>
+        <dt>Domain</dt><dd><span class="m">(&minus;&infin;, &infin;)</span></dd>
+        <dt>Range</dt><dd><span class="m">(&minus;&infin;, &infin;)</span></dd>
+        <dt>Zeros</dt><dd><span class="m">x = 0</span> (a triple zero &mdash; the graph flattens as it crosses)</dd>
+        <dt>y-intercept</dt><dd><span class="m">(0, 0)</span></dd>
+        <dt>Symmetry</dt><dd>About the origin</dd>
+        <dt>Even/Odd</dt><dd>Odd &mdash; <span class="m">(&minus;x)<span class="up">&sup3;</span> = &minus;x<span class="up">&sup3;</span></span></dd>
+        <dt>End behavior</dt><dd><span class="m">lim<sub class="up">x&rarr;&minus;&infin;</sub> f(x) = &minus;&infin;</span> and <span class="m">lim<sub class="up">x&rarr;&infin;</sub> f(x) = &infin;</span></dd>
+        <dt>Continuity</dt><dd>Continuous on <span class="m">(&minus;&infin;, &infin;)</span></dd>
+        <dt>One-to-one</dt><dd>Yes</dd>
+      </dl>
+    </div>
+  </div>
+
+  <p class="sec-note" style="margin-top:24px"><strong>Two things the blanks are really testing.</strong> <em>Even vs. odd</em> is a computation, not a vibe: substitute <span class="m">&minus;x</span> and see whether you get <span class="m">f(x)</span> back (even, <span class="m">y</span>-axis symmetry) or <span class="m">&minus;f(x)</span> (odd, origin symmetry). <em>One-to-one</em> is the horizontal line test &mdash; and it's exactly the functions that never turn around (linear, cubic, square root) that pass it. The ones with a vertex or a turning point (constant, absolute value, quadratic) fail.</p>
+</section>
+
+<footer>
+  <p>Page 25 of your packet isn't a problem set &mdash; it's a stray answer key fragment (local max/min values for an earlier A&ndash;C problem), so there's nothing to do there. Pages 34&ndash;41 repeat this same parent-function template for functions 7&ndash;10 and then a from-memory round.</p>
+</footer>
+</div>
