@@ -114,8 +114,13 @@ QUOTE = "megalovania"
 BARE = ("ground", "breakdown", "groundstate")
 
 
+KEY_AT_XML = {1: -1, 97: -6, 113: -4, 129: -1}   # D min, Eb min, F min, D min
+
+
 def sharp_at(m):
-    return KEY_OF[m] == 3      # F minor spells better with flats; Eb minor too
+    # every key this piece visits is a flat one -- D minor (1b), Eb minor (6b),
+    # F minor (4b) -- so nothing here is ever spelled with sharps.
+    return False
 
 
 # ===========================================================================

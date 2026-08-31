@@ -363,3 +363,21 @@ in this repo for THREE FIGHTS.
 
     cd tools && python3 groundstate.py && python3 export_groundstate.py
     python3 render_toby.py ../score/ground-state.mid ../score/ground-state.mp3
+
+## Melody lead sheet
+
+    cd tools && python3 leadsheet.py groundstate ../score/ground-state-melody
+
+Writes `score/ground-state-melody.musicxml` and a 3-page engraved
+`ground-state-melody.pdf`: the tune on one treble staff with chord symbols,
+key changes, and section marks, at concert pitch over all 144 bars so the bar
+numbers line up with the recording.
+
+Engraving runs in-process through **verovio** plus **cairosvg**, so no
+LilyPond or MuseScore install is needed. Verovio writes chord-symbol
+accidentals and the tempo note as SMuFL private-use codepoints in its Leipzig
+font, which cairosvg cannot rasterise — `fix_glyphs()` swaps them for the real
+Unicode music characters in DejaVu Sans before conversion.
+
+`leadsheet.py` takes any module in this repo that exposes `PARTS`, `CHORDS`,
+`ROOT`, `KEY_OF` and `BPM`, so it is not specific to GROUND STATE.
